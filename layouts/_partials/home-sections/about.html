@@ -1,0 +1,21 @@
+<section class="about bg-primary py-10">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col items-center">
+      <div class="flex flex-row items-center gap-10 pb-2">
+        {{ with .Params.image }}
+        <div>
+          <img src="{{ . }}" alt="{{ $.Title }}" class="rounded-lg shadow-themed-lg">
+        </div>
+        {{ end }}
+        <h2 class="font-bold text-text-primary mb-6">
+          {{ .Title }}
+        </h2>
+      </div>
+      <div>
+        <div class="text-text-secondary prose">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

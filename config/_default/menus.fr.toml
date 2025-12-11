@@ -1,0 +1,30 @@
+# French Main Navigation Menu
+# ==============================================================================
+
+[[main]]
+  name = 'Accueil'
+  pageRef = '/'
+  weight = 10
+
+[[main]]
+  name = 'Podcasts'
+  pageRef = '/podcasts'
+  weight = 20
+
+[[main]]
+  name = 'Contact'
+  pageRef = '/contact'
+  weight = 30
+
+
+# Footer Menu
+# ------------------------------------------------------------------------------
+[[footer]]
+  name = 'Politique de Confidentialité'
+  pageRef = '/privacy'
+  weight = 10
+
+[[footer]]
+  name = "Conditions d'Utilisation"
+  pageRef = '/terms'
+  weight = 20

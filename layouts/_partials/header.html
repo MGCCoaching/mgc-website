@@ -1,0 +1,33 @@
+<section class="bg-primary text-primary flex flex-row justify-between items-center px-2 md:px-5 py-1 shadow-xl/30 relative z-50">
+    <div class="flex flex-row items-center gap-1">
+        <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-20 h-auto">
+        <h4 class="pl-5">{{ .Site.Title }}</h4>
+    </div>
+    {{/* Desktop menu - visible on md+ OR landscape orientation */}}
+    <div class="hidden landscape:flex md:flex items-center">
+        <ul class="flex flex-row gap-2 landscape:gap-2 md:gap-4">
+            {{ range .Site.Menus.main }}
+              <li>
+                <a class="btn-menu" href="{{ .URL }}">
+                  <h5 class="landscape:text-base md:text-inherit">{{ .Name }}</h5>
+                </a>
+                {{ if .HasChildren }}
+                  <ul class="flex flex-col items-center gap-2 mt-2">
+                    {{ range .Children }}
+                      <li><a class="btn-menu" href="{{ .URL }}">{{ .Name }}</a></li>
+                    {{ end }}
+                  </ul>
+                {{ end }}
+              </li>
+            {{ end }}
+        </ul>
+    </div>
+    {{/* Hamburger - hidden on md+ AND landscape */}}
+    <button id="menu-toggle" class="flex landscape:hidden md:hidden items-center justify-center" aria-label="Open menu">
+        <span class="material-symbols-outlined leading-none">menu</span>
+    </button>
+</section>
+{{/* Mobile nav - hidden on md+ AND landscape */}}
+<nav id="mobile-nav" class="landscape:hidden md:hidden fixed inset-0 bg-overlay backdrop-blur-xl -translate-y-full transition-transform duration-300 ease-in-out z-40">
+    {{ partial "nav.html" . }}
+</nav>

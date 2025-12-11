@@ -1,0 +1,65 @@
+h1 { @apply text-5xl md:text-6xl lg:text-8xl }
+h2 { @apply text-4xl md:text-4xl lg:text-6xl }
+h3 { @apply text-3xl md:text-3xl lg:text-4xl }
+h4 { @apply text-2xl md:text-2xl lg:text-3xl }
+h5 { @apply text-xl md:text-xl lg:text-2xl }
+
+
+/* =============================================================================
+   Icons
+   ============================================================================= */
+
+   .material-symbols-outlined {
+    @apply text-text-primary;
+  }
+  
+  /* Icon color variants */
+  .icon-accent {
+    @apply text-accent-primary;
+  }
+  
+  .icon-secondary {
+    @apply text-text-secondary;
+  }
+  
+  .icon-inverse {
+    @apply text-text-inverse;
+  }
+  
+  .icon-success {
+    @apply text-success;
+  }
+  
+  .icon-warning {
+    @apply text-warning;
+  }
+  
+  .icon-error {
+    @apply text-error;
+  }
+  
+  /* Icons inherit color from parent (useful in buttons) */
+  .btn .material-symbols-outlined,
+  .btn-menu .material-symbols-outlined {
+    @apply text-inherit;
+  }
+
+  .icon-sm {
+    @apply text-lg;
+    font-variation-settings: 'opsz' 20;
+  }
+  
+  .icon-md {
+    @apply text-2xl;
+    font-variation-settings: 'opsz' 24;
+  }
+  
+  .icon-lg {
+    @apply text-4xl;
+    font-variation-settings: 'opsz' 40;
+  }
+  
+  .icon-xl {
+    @apply text-6xl;
+    font-variation-settings: 'opsz' 48;
+  }

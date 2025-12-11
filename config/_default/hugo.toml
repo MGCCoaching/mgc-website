@@ -1,0 +1,104 @@
+# Hugo Core Configuration
+# ==============================================================================
+
+baseURL = 'https://mgc-coaching.netlify.app'
+title = 'Marie-Gaëtane Comte'
+defaultContentLanguage = 'fr'
+defaultContentLanguageInSubdir = false
+
+# Build Settings
+# ------------------------------------------------------------------------------
+enableRobotsTXT = true
+enableGitInfo = false
+enableEmoji = true
+
+# Content Settings
+# ------------------------------------------------------------------------------
+summaryLength = 70
+pagerSize = 10
+timeout = '60s'
+
+# URL Settings
+# ------------------------------------------------------------------------------
+canonifyURLs = false
+relativeURLs = false
+uglyURLs = false
+
+# Taxonomies
+# ------------------------------------------------------------------------------
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+# Permalinks
+# ------------------------------------------------------------------------------
+[permalinks]
+  posts = '/:year/:month/:slug/'
+  pages = '/:slug/'
+
+# Output Formats
+# ------------------------------------------------------------------------------
+[outputs]
+  home = ['HTML', 'RSS']
+  section = ['HTML', 'RSS']
+  page = ['HTML']
+
+# Minification
+# ------------------------------------------------------------------------------
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
+
+# Module Mounts
+# ------------------------------------------------------------------------------
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
+
+# Build Settings for Tailwind
+# ------------------------------------------------------------------------------
+[build]
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+
+# Markup Settings
+# ------------------------------------------------------------------------------
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = false
+    codeFences = true
+
+# Languages
+# ==============================================================================
+[languages]
+  [languages.en]
+    languageCode = 'en-US'
+    languageName = 'English'
+    weight = 1
+    title = 'Marie-Gaëtane Comte'
+
+  [languages.fr]
+    languageCode = 'fr-FR'
+    languageName = 'Français'
+    weight = 2
+    title = 'Marie-Gaëtane Comte'

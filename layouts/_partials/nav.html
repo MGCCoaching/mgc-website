@@ -1,0 +1,21 @@
+<section class="min-h-screen flex flex-col items-center justify-center">
+  <ul class="flex flex-col items-center gap-4 pb-6">
+      {{ range .Site.Menus.main }}
+        <li>
+          <a class="btn-menu" href="{{ .URL }}">
+            <h2 class="text-inverse" >{{ .Name }}</h2>
+          </a>
+          {{ if .HasChildren }}
+            <ul class="flex flex-col items-center gap-2 mt-2">
+              {{ range .Children }}
+                <li><a class="btn-menu" href="{{ .URL }}">{{ .Name }}</a></li>
+              {{ end }}
+            </ul>
+          {{ end }}
+        </li>
+      {{ end }}
+  </ul>
+  <button id="menu-close" class="p-3 rounded-lg transition-colors" aria-label="Close menu">
+    <span class="material-symbols-outlined icon-lg icon-inverse">close</span>
+  </button>
+</section>

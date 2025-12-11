@@ -1,0 +1,30 @@
+<section class="features bg-secondary py-20 ">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-text-primary text-center mb-4">
+      {{ .Title }}
+    </h2>
+    <div class="text-text-secondary text-center mb-12">
+      {{ .Content }}
+    </div>
+    
+    {{ with .Params.features }}
+      <div class="grid md:grid-cols-3 gap-8">
+        {{ range . }}
+          <div class="bg-primary p-6 rounded-lg shadow-themed">
+            {{ with .icon }}
+              <div class="text-accent-primary text-3xl mb-4">
+                <span class="material-symbols-outlined">{{ . }}</span>
+              </div>
+            {{ end }}
+            <h3 class="text-xl font-semibold text-text-primary mb-2">
+              {{ .title }}
+            </h3>
+            <p class="text-text-secondary">
+              {{ .description }}
+            </p>
+          </div>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</section>

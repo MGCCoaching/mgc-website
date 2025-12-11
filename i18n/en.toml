@@ -1,0 +1,49 @@
+# English UI Translations
+# ==============================================================================
+
+[readMore]
+other = 'Read more'
+
+[postedOn]
+other = 'Posted on'
+
+[byAuthor]
+other = 'by'
+
+[shareOn]
+other = 'Share on'
+
+[tableOfContents]
+other = 'Table of Contents'
+
+[relatedPosts]
+other = 'Related Posts'
+
+[nextPost]
+other = 'Next Post'
+
+[prevPost]
+other = 'Previous Post'
+
+[searchPlaceholder]
+other = 'Search...'
+
+[noResults]
+other = 'No results found'
+
+[home]
+other = 'Home'
+
+[backToTop]
+other = 'Back to top'
+
+[lastUpdated]
+other = 'Last updated'
+
+[minuteRead]
+one = '{{ .Count }} minute read'
+other = '{{ .Count }} minutes read'
+
+[comments]
+one = '{{ .Count }} comment'
+other = '{{ .Count }} comments'

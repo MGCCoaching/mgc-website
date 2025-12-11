@@ -1,0 +1,11 @@
+{{ define "main" }}
+  {{/* Get all sections, sorted by weight */}} 
+  {{ $sections := site.GetPage "home-sections" }} 
+  {{ with $sections }} 
+    {{ range .Pages.ByWeight }} 
+      {{ $sectionType := .Params.section | default "default" }} 
+      {{/* Render the appropriate partial for each section type */}} 
+      {{ partial (printf "home-sections/%s.html" $sectionType) . }}
+    {{ end }} 
+  {{ end }} 
+{{ end }}

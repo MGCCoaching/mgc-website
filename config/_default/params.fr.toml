@@ -1,0 +1,68 @@
+# French Site Parameters
+# ==============================================================================
+
+# SEO & Meta Tags
+# ------------------------------------------------------------------------------
+description = 'Description de votre site pour les moteurs de recherche et le partage social'
+author = 'Votre Nom'
+keywords = ['mot-clé1', 'mot-clé2', 'mot-clé3']
+
+# Open Graph / Social Media
+# ------------------------------------------------------------------------------
+[social]
+  twitter = '@yourusername'
+  facebook = ''
+  linkedin = ''
+  github = ''
+
+[opengraph]
+  image = '/images/og-default.jpg'
+  imageWidth = 1200
+  imageHeight = 630
+
+# Twitter Cards
+# ------------------------------------------------------------------------------
+[twitter]
+  card = 'summary_large_image'
+  site = '@yourusername'
+  creator = '@yourusername'
+
+# Schema.org / JSON-LD
+# ------------------------------------------------------------------------------
+[schema]
+  type = 'Organization'
+  name = 'Nom de Votre Organisation'
+  logo = '/images/logo.png'
+
+# Site Features
+# ------------------------------------------------------------------------------
+[features]
+  darkMode = false
+  analytics = false
+  comments = false
+
+# Google Analytics (if enabled)
+# ------------------------------------------------------------------------------
+[analytics]
+  googleAnalyticsID = ''
+
+# Contact Information
+# ------------------------------------------------------------------------------
+[contact]
+  email = 'contact@example.org'
+  phone = ''
+  address = ''
+
+# Copyright
+# ------------------------------------------------------------------------------
+copyright = '© {year} Nom de Votre Site. Tous droits réservés.'
+
+# Robots & Indexing
+# ------------------------------------------------------------------------------
+[robots]
+  index = true
+  follow = true
+  noarchive = false
+  nosnippet = false
+
+
