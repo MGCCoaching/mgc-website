@@ -6,60 +6,124 @@ h5 { @apply text-xl md:text-xl lg:text-2xl }
 
 
 /* =============================================================================
-   Icons
+   Icons - Material Symbols
    ============================================================================= */
 
-   .material-symbols-outlined {
-    @apply text-text-primary;
-  }
-  
-  /* Icon color variants */
-  .icon-accent {
-    @apply text-accent-primary;
-  }
-  
-  .icon-secondary {
-    @apply text-text-secondary;
-  }
-  
-  .icon-inverse {
-    @apply text-text-inverse;
-  }
-  
-  .icon-success {
-    @apply text-success;
-  }
-  
-  .icon-warning {
-    @apply text-warning;
-  }
-  
-  .icon-error {
-    @apply text-error;
-  }
-  
-  /* Icons inherit color from parent (useful in buttons) */
-  .btn .material-symbols-outlined,
-  .btn-menu .material-symbols-outlined {
-    @apply text-inherit;
-  }
+.material-symbols-outlined {
+  @apply text-text-primary;
+  /* Default size - inherited from parent font-size */
+}
 
-  .icon-sm {
-    @apply text-lg;
-    font-variation-settings: 'opsz' 20;
-  }
-  
-  .icon-md {
-    @apply text-2xl;
-    font-variation-settings: 'opsz' 24;
-  }
-  
-  .icon-lg {
-    @apply text-4xl;
-    font-variation-settings: 'opsz' 40;
-  }
-  
-  .icon-xl {
-    @apply text-6xl;
-    font-variation-settings: 'opsz' 48;
-  }
+/* Icon color variants */
+.icon-accent {
+  @apply text-accent-primary;
+}
+
+.icon-secondary {
+  @apply text-text-secondary;
+}
+
+.icon-inverse {
+  @apply text-text-inverse;
+}
+
+.icon-success {
+  @apply text-success;
+}
+
+.icon-warning {
+  @apply text-warning;
+}
+
+.icon-error {
+  @apply text-error;
+}
+
+/* Icons inherit color from parent (useful in buttons) */
+.btn .material-symbols-outlined,
+.btn-menu .material-symbols-outlined {
+  @apply text-inherit;
+}
+
+/* Icon Size Utilities
+   -------------------------------------------------------------------------- */
+
+/* Extra Small - 16px */
+.icon-xs {
+  @apply text-base;
+  font-variation-settings: 'opsz' 20;
+}
+
+/* Small - 20px */
+.icon-sm {
+  @apply text-xl;
+  font-variation-settings: 'opsz' 20;
+}
+
+/* Medium (Default) - 24px */
+.icon-md {
+  @apply text-2xl;
+  font-variation-settings: 'opsz' 24;
+}
+
+/* Large - 32px */
+.icon-lg {
+  @apply text-4xl;
+  font-variation-settings: 'opsz' 40;
+}
+
+/* Extra Large - 48px */
+.icon-xl {
+  @apply text-6xl;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 2X Large - 64px */
+.icon-2xl {
+  @apply text-8xl;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 3X Large - 96px */
+.icon-3xl {
+  font-size: 6rem;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 4X Large - 128px */
+.icon-4xl {
+  font-size: 8rem;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* Icon Weight Utilities
+   -------------------------------------------------------------------------- */
+.icon-thin {
+  font-variation-settings: 'wght' 100;
+}
+
+.icon-light {
+  font-variation-settings: 'wght' 200;
+}
+
+.icon-regular {
+  font-variation-settings: 'wght' 400;
+}
+
+.icon-medium {
+  font-variation-settings: 'wght' 500;
+}
+
+.icon-bold {
+  font-variation-settings: 'wght' 700;
+}
+
+/* Icon Fill Styles
+   -------------------------------------------------------------------------- */
+.icon-filled {
+  font-variation-settings: 'FILL' 1;
+}
+
+.icon-outlined {
+  font-variation-settings: 'FILL' 0;
+}

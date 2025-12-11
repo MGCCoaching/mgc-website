@@ -22,18 +22,18 @@
             {{ end }}
             {{/* Dark mode toggle - desktop */}}
             <button class="dark-mode-toggle rounded-lg  transition-colors" aria-label="Toggle dark mode">
-                <span class="material-symbols-outlined">dark_mode</span>
+                <span class="material-symbols-outlined icon-lg">dark_mode</span>
             </button>
         </ul>
     </div>
     {{/* Hamburger and dark mode toggle for mobile */}}
-    <div class="flex landscape:hidden sm:hidden items-center gap-2">
+    <div class="flex landscape:hidden sm:hidden items-center justify-center gap-4">
         {{/* Dark mode toggle - mobile */}}
-        <button class="dark-mode-toggle rounded-lg transition-colors" aria-label="Toggle dark mode">
+        <button class="dark-mode-toggle rounded-lg transition-colors icon-lg" aria-label="Toggle dark mode">
             <span class="material-symbols-outlined">dark_mode</span>
         </button>
         <button id="menu-toggle" class="flex items-center justify-center" aria-label="Open menu">
-            <span class="material-symbols-outlined leading-none">menu</span>
+            <span class="material-symbols-outlined leading-none icon-lg">menu</span>
         </button>
     </div>
 </section>

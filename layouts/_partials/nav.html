@@ -6,7 +6,7 @@
       {{ range .Site.Menus.main }}
         <li>
           <a class="btn-menu" href="{{ .URL }}">
-            <h2 class="text-inverse" >{{ .Name }}</h2>
+            <h2 class=" text-white drop-shadow-lg" >{{ .Name }}</h2>
           </a>
           {{ if .HasChildren }}
             <ul class="flex flex-col items-center gap-2 mt-2">
@@ -18,7 +18,7 @@
         </li>
       {{ end }}
   </ul>
-  <button id="menu-close" class="p-3 rounded-lg transition-colors" aria-label="Close menu">
-    <span class="material-symbols-outlined icon-lg icon-inverse">close</span>
+  <button id="menu-close" class="p-3 rounded-lg transition-colors " aria-label="Close menu">
+    <span class="material-symbols-outlined icon-lg text-white drop-shadow-lg">close</span>
   </button>
 </section>
