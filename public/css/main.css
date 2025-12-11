@@ -350,14 +350,8 @@
   .bg-cover {
     background-size: cover;
   }
-  .bg-bottom {
-    background-position: bottom;
-  }
   .bg-center {
     background-position: center;
-  }
-  .bg-top {
-    background-position: top;
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
@@ -488,59 +482,9 @@
       gap: calc(var(--spacing) * 4);
     }
   }
-  .md\:bg-position-\[center_6rem\] {
-    @media (width >= 48rem) {
-      background-position: center 6rem;
-    }
-  }
-  .md\:bg-position-\[center_bottom_1rem\] {
-    @media (width >= 48rem) {
-      background-position: center bottom 1rem;
-    }
-  }
-  .md\:bg-position-\[center_bottom_8rem\] {
-    @media (width >= 48rem) {
-      background-position: center bottom 8rem;
-    }
-  }
   .md\:bg-position-\[center_bottom_40rem\] {
     @media (width >= 48rem) {
       background-position: center bottom 40rem;
-    }
-  }
-  .md\:bg-position-\[center_bottom_50rem\] {
-    @media (width >= 48rem) {
-      background-position: center bottom 50rem;
-    }
-  }
-  .md\:bg-position-\[center_bottom_55rem\] {
-    @media (width >= 48rem) {
-      background-position: center bottom 55rem;
-    }
-  }
-  .md\:bg-position-\[center_bottom_60rem\] {
-    @media (width >= 48rem) {
-      background-position: center bottom 60rem;
-    }
-  }
-  .md\:bg-position-\[center_center_1rem\] {
-    @media (width >= 48rem) {
-      background-position: center center 1rem;
-    }
-  }
-  .md\:bg-position-\[center_center_5rem\] {
-    @media (width >= 48rem) {
-      background-position: center center 5rem;
-    }
-  }
-  .md\:bg-position-\[center_top_1rem\] {
-    @media (width >= 48rem) {
-      background-position: center top 1rem;
-    }
-  }
-  .md\:bg-position-\[center_top_6rem\] {
-    @media (width >= 48rem) {
-      background-position: center top 6rem;
     }
   }
   .md\:px-5 {
@@ -548,14 +492,14 @@
       padding-inline: calc(var(--spacing) * 5);
     }
   }
+  .md\:px-32 {
+    @media (width >= 48rem) {
+      padding-inline: calc(var(--spacing) * 32);
+    }
+  }
   .md\:text-inherit {
     @media (width >= 48rem) {
       color: inherit;
-    }
-  }
-  .lg\:bg-position-\[center_bottom_50rem\] {
-    @media (width >= 64rem) {
-      background-position: center bottom 50rem;
     }
   }
   .lg\:bg-position-\[center_bottom_55rem\] {

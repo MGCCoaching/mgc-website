@@ -1,0 +1,90 @@
+# Hugo Build Output
+# ==============================================================================
+public/
+resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# Dependencies
+# ==============================================================================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment Files
+# ==============================================================================
+.env
+.env.local
+.env.*.local
+
+# OS Files
+# ==============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# IDE & Editor Files
+# ==============================================================================
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Temporary & Cache Files
+# ==============================================================================
+*.tmp
+*.temp
+*.cache
+*.log
+.sass-cache/
+.postcss-cache/
+
+# Build & Deploy
+# ==============================================================================
+dist/
+.netlify/
+.vercel/
+
+# Local Development
+# ==============================================================================
+.hugo_server/
+hugo_cache/
+
+# Backups
+# ==============================================================================
+*.bak
+*.backup
+*.orig
