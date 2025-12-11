@@ -1,13 +1,21 @@
 <section class="about bg-primary py-10">
   <div class="container mx-auto px-4">
     <div class="flex flex-col items-center">
-      <div class="flex flex-row items-center gap-10 pb-2">
+      <div class="flex flex-row items-center gap-4 pb-5 ">
         {{ with .Params.image }}
-        <div>
-          <img src="{{ . }}" alt="{{ $.Title }}" class="rounded-lg shadow-themed-lg">
-        </div>
+          <div class="relative w-64 h-80">
+            <div class="absolute top-8 left-8 w-full h-full animate-on-scroll-fade-right">
+              <img src="{{ . }}" class="rounded-lg shadow-lg opacity-40 rotate-12  photo-stack-layer-1">
+            </div>
+            <div class="absolute top-4 left-4 w-full h-full animate-on-scroll-fade-right">
+              <img src="{{ . }}" class="rounded-lg shadow-lg opacity-70 rotate-10 photo-stack-layer-2">
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full -rotate-10 animate-on-scroll-fade-right">
+              <img src="{{ . }}" class="rounded-lg shadow-2xl photo-stack-layer-3">
+            </div>
+          </div>
         {{ end }}
-        <h2 class="font-bold text-text-primary mb-6">
+        <h2 class="font-bold text-center text-text-primary animate-on-scroll-fade-right">
           {{ .Title }}
         </h2>
       </div>

@@ -5,6 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initDarkMode();
+    initScrollAnimations();
   });
   
   // Mobile Menu Toggle
@@ -92,4 +93,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+  }
+
+  // Scroll Animations
+  // -----------------------------------------------------------------------------
+  function initScrollAnimations() {
+    // Find all elements with animation classes
+    const animatedElements = document.querySelectorAll('[class*="animate-on-scroll"]');
+    
+    if (animatedElements.length === 0) return;
+
+    // Create intersection observer
+    const observerOptions = {
+      threshold: 0.1, // Trigger when 10% of element is visible
+      rootMargin: '0px 0px -50px 0px' // Start animation slightly before element enters viewport
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add 'visible' class when element enters viewport
+          entry.target.classList.add('animate-visible');
+          
+          // Optional: Stop observing after animation (one-time animation)
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    animatedElements.forEach(element => {
+      observer.observe(element);
+    });
   }
