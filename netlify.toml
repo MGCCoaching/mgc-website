@@ -43,3 +43,9 @@
   to = "/:splat"
   status = 301
   force = false
+
+[[redirects]]
+from = "/contact/"
+to = "/merci/"
+status = 302
+conditions = {Form = "contact"}

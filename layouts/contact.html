@@ -1,0 +1,343 @@
+{{ define "main" }}
+{{/* Hero Section */}}
+<section class="bg-primary relative overflow-hidden">
+  {{/* Background decoratif */}}
+  <div class="absolute top-0 right-0 w-1/2 h-full bg-accent opacity-30 -skew-x-12 translate-x-1/4 hidden lg:block"></div>
+  
+  <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+    
+    {{/* Header */}}
+    <div class="text-center mb-12 md:mb-16">
+      <span class="inline-block bg-accent-primary text-white text-sm font-medium px-4 py-1 rounded-full mb-4 animate-on-scroll-fade-up">
+        Parlons de votre projet
+      </span>
+      <h1 class="font-bold text-text-primary mb-4 animate-on-scroll-fade-up animate-stagger-1">
+        {{ .Title }}
+      </h1>
+      <p class="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto animate-on-scroll-fade-up animate-stagger-2">
+        Prêt à transformer votre prise de parole ? Je suis là pour vous accompagner.
+      </p>
+    </div>
+
+    {{/* Main Grid - Asymétrique */}}
+    <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+      
+      {{/* Colonne gauche - Infos créatives (2 cols sur desktop) */}}
+      <div class="lg:col-span-2 order-2 lg:order-1 space-y-6">
+        
+        {{/* Carte profil créative */}}
+        <div class="bg-secondary rounded-2xl overflow-hidden shadow-themed-lg animate-on-scroll-fade-right">
+          {{/* Header avec gradient */}}
+          <div class="bg-gradient-to-r from-accent-primary to-accent-secondary p-6 relative">
+            <div class="absolute inset-0 opacity-20">
+              <div class="absolute top-2 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+              <div class="absolute bottom-4 right-8 w-8 h-8 border-2 border-white rounded-full"></div>
+              <div class="absolute top-8 right-4 w-4 h-4 bg-white rounded-full"></div>
+            </div>
+            <div class="relative flex items-center gap-4">
+              <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-white shadow-lg overflow-hidden">
+                <img src="/img/profil.jpg" alt="Marie-Gaëtane Comte" class="w-full h-full object-cover">
+              </div>
+              <div class="text-white">
+                <h2 class="text-xl font-bold">Marie-Gaëtane Comte</h2>
+                <p class="text-white/80 text-sm">Coach & Formatrice Média</p>
+              </div>
+            </div>
+          </div>
+          
+          {{/* Contenu */}}
+          <div class="p-6 space-y-4">
+            {{/* Email - style message */}}
+            <a href="mailto:contact@mgc-coaching.fr" class="block group">
+              <div class="flex items-start gap-3 p-4 bg-primary rounded-xl hover:shadow-themed transition-all relative">
+                <div class="bg-accent-primary text-white p-2 rounded-lg shrink-0">
+                  <span class="material-symbols-outlined">mail</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Email</p>
+                  <p class="text-text-primary font-medium truncate group-hover:text-accent-primary transition-colors">contact@mgc-coaching.fr</p>
+                </div>
+                <span class="material-symbols-outlined text-text-tertiary group-hover:text-accent-primary group-hover:translate-x-1 transition-all">chevron_right</span>
+              </div>
+            </a>
+
+            {{/* Téléphone - style appel */}}
+            <a href="tel:+33600000000" class="block group">
+              <div class="flex items-start gap-3 p-4 bg-primary rounded-xl hover:shadow-themed transition-all">
+                <div class="bg-success text-white p-2 rounded-lg shrink-0">
+                  <span class="material-symbols-outlined">call</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Téléphone</p>
+                  <p class="text-text-primary font-medium group-hover:text-accent-primary transition-colors">+33 6 00 00 00 00</p>
+                </div>
+                <span class="material-symbols-outlined text-text-tertiary group-hover:text-success group-hover:translate-x-1 transition-all">chevron_right</span>
+              </div>
+            </a>
+
+            {{/* Localisation */}}
+            <div class="flex items-start gap-3 p-4 bg-primary rounded-xl">
+              <div class="bg-warning text-white p-2 rounded-lg shrink-0">
+                <span class="material-symbols-outlined">location_on</span>
+              </div>
+              <div>
+                <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Localisation</p>
+                <p class="text-text-primary font-medium">Paris & Visioconférence</p>
+                <p class="text-text-secondary text-sm">Disponible partout en France</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{/* Réseaux sociaux - Style créatif */}}
+        <div class="animate-on-scroll-fade-right animate-stagger-2">
+          <p class="text-text-secondary text-sm mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined icon-sm">hub</span>
+            Connectons-nous
+          </p>
+          
+          <div class="grid grid-cols-2 gap-3">
+            {{/* LinkedIn */}}
+            <a href="https://linkedin.com/in/marie-gaetane-comte" target="_blank" rel="noopener" 
+               class="group relative bg-secondary rounded-xl p-4 hover:bg-[#0077B5] transition-all duration-300 overflow-hidden">
+              <div class="absolute inset-0 bg-[#0077B5] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="relative flex flex-col items-center gap-2">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <svg class="w-6 h-6 text-[#0077B5] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </div>
+                <span class="text-text-primary text-xs font-medium group-hover:text-white transition-colors">LinkedIn</span>
+              </div>
+            </a>
+
+            {{/* Instagram */}}
+            <a href="https://instagram.com/" target="_blank" rel="noopener" 
+               class="group relative bg-secondary rounded-xl p-4 hover:bg-gradient-to-br hover:from-[#833AB4] hover:via-[#FD1D1D] hover:to-[#F77737] transition-all duration-300 overflow-hidden">
+              <div class="relative flex flex-col items-center gap-2">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                  <svg class="w-6 h-6 text-[#E4405F] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+                <span class="text-text-primary text-xs font-medium group-hover:text-white transition-colors">Instagram</span>
+              </div>
+            </a>
+
+            {{/* YouTube */}}
+            
+          </div>
+        </div>
+
+        {{/* Badge réponse - style moderne */}}
+        <div class="hidden md:block animate-on-scroll-fade-right animate-stagger-3">
+          <div class="relative bg-gradient-to-r from-accent-primary to-accent-secondary rounded-2xl p-1">
+            <div class="bg-primary rounded-xl p-5">
+              <div class="flex items-center gap-4">
+                <div class="relative">
+                  <div class="w-14 h-14 bg-accent rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-accent-primary icon-lg">schedule</span>
+                  </div>
+                  <div class="absolute -top-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-xs">check</span>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-text-primary font-bold text-lg">Réponse sous 24-48h</p>
+                  <p class="text-text-secondary text-sm">Du lundi au vendredi</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {{/* Colonne droite - Formulaire (3 cols sur desktop) */}}
+      <div class="lg:col-span-3 order-1 lg:order-2">
+        <div class="bg-secondary rounded-2xl p-6 md:p-10 shadow-themed-lg animate-on-scroll-fade-up">
+          
+          {{/* Header formulaire */}}
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-border-primary">
+            <div>
+              <h2 class="text-2xl font-bold text-text-primary">Envoyez-moi un message</h2>
+              <p class="text-text-secondary mt-1">Je vous répondrai rapidement</p>
+            </div>
+            <div class="flex items-center gap-2 text-success">
+              <span class="material-symbols-outlined icon-sm">verified</span>
+              <span class="text-sm font-medium">Formulaire sécurisé</span>
+            </div>
+          </div>
+          
+          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+            {{/* Honeypot anti-spam */}}
+            <input type="hidden" name="form-name" value="contact">
+            <p class="hidden">
+              <label>Ne pas remplir : <input name="bot-field"></label>
+            </p>
+
+            {{/* Nom & Email - 2 colonnes sur tablette+ */}}
+            <div class="grid sm:grid-cols-2 gap-5">
+              {{/* Nom */}}
+              <div class="space-y-2">
+                <label for="name" class="flex items-center gap-2 text-text-primary font-medium">
+                  <span class="material-symbols-outlined icon-sm text-accent-primary">person</span>
+                  Nom complet
+                </label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required
+                  placeholder="Marie Dupont"
+                  class="w-full px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary placeholder-tertiary focus:border-accent-primary focus:outline-none transition-colors"
+                >
+              </div>
+
+              {{/* Email */}}
+              <div class="space-y-2">
+                <label for="email" class="flex items-center gap-2 text-text-primary font-medium">
+                  <span class="material-symbols-outlined icon-sm text-accent-primary">mail</span>
+                  Email
+                </label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required
+                  placeholder="marie@exemple.com"
+                  class="w-full px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary placeholder-tertiary focus:border-accent-primary focus:outline-none transition-colors"
+                >
+              </div>
+            </div>
+
+            {{/* Téléphone & Sujet - 2 colonnes sur tablette+ */}}
+            <div class="grid sm:grid-cols-2 gap-5">
+              {{/* Téléphone */}}
+              <div class="space-y-2">
+                <label for="phone" class="flex items-center gap-2 text-text-primary font-medium">
+                  <span class="material-symbols-outlined icon-sm text-accent-primary">phone</span>
+                  Téléphone
+                  <span class="text-text-tertiary text-sm font-normal">(optionnel)</span>
+                </label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone"
+                  placeholder="+33 6 00 00 00 00"
+                  class="w-full px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary placeholder-tertiary focus:border-accent-primary focus:outline-none transition-colors"
+                >
+              </div>
+
+              {{/* Sujet */}}
+              <div class="space-y-2">
+                <label for="subject" class="flex items-center gap-2 text-text-primary font-medium">
+                  <span class="material-symbols-outlined icon-sm text-accent-primary">category</span>
+                  Sujet
+                </label>
+                <select 
+                  id="subject" 
+                  name="subject" 
+                  required
+                  class="w-full px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary focus:border-accent-primary focus:outline-none transition-colors appearance-none cursor-pointer"
+                  style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23475569%22%3E%3Cpath d=%22M7 10l5 5 5-5H7z%22/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.5rem;"
+                >
+                  <option value="">Choisissez...</option>
+                  <option value="media-training">📺 Média Training</option>
+                  <option value="prise-parole">🎤 Prise de parole en public</option>
+                  <option value="animation">🎯 Animation d'événement</option>
+                  <option value="autre">💬 Autre demande</option>
+                </select>
+              </div>
+            </div>
+
+            {{/* Message */}}
+            <div class="space-y-2">
+              <label for="message" class="flex items-center gap-2 text-text-primary font-medium">
+                <span class="material-symbols-outlined icon-sm text-accent-primary">edit_note</span>
+                Votre message
+              </label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5" 
+                required
+                placeholder="Décrivez votre projet, vos objectifs, ou posez-moi vos questions..."
+                class="w-full px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary placeholder-tertiary focus:border-accent-primary focus:outline-none transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            {{/* Bouton submit */}}
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+              <button type="submit" class="btn btn-primary btn-lg w-full sm:w-auto">
+                <span class="material-symbols-outlined">send</span>
+                Envoyer mon message
+              </button>
+              <p class="text-text-tertiary text-sm text-center sm:text-left">
+                En soumettant ce formulaire, vous acceptez d'être recontacté.
+              </p>
+            </div>
+          </form>
+        </div>
+
+        {{/* Badge réponse - mobile uniquement */}}
+        <div class="flex md:hidden items-center gap-4 mt-6 p-4 bg-accent rounded-xl animate-on-scroll-fade-up animate-stagger-3">
+          <div class="bg-accent-primary p-2 rounded-full">
+            <span class="material-symbols-outlined text-white">schedule</span>
+          </div>
+          <div>
+            <p class="text-text-primary font-semibold">Réponse sous 24-48h</p>
+            <p class="text-text-secondary text-sm">Du lundi au vendredi</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{{/* Section FAQ rapide */}}
+<section class="bg-secondary py-16 md:py-20">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up">Questions fréquentes</h2>
+      <p class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">Avant de me contacter, peut-être trouverez-vous votre réponse ici</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {{/* FAQ 1 */}}
+      <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-1">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-accent-primary">help</span>
+          <h3 class="font-semibold text-text-primary">Comment se déroule une séance ?</h3>
+        </div>
+        <p class="text-text-secondary text-sm">
+          Chaque séance est personnalisée selon vos objectifs : exercices pratiques, mises en situation, et feedback constructif.
+        </p>
+      </div>
+
+      {{/* FAQ 2 */}}
+      <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-2">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-accent-primary">payments</span>
+          <h3 class="font-semibold text-text-primary">Quels sont vos tarifs ?</h3>
+        </div>
+        <p class="text-text-secondary text-sm">
+          Les tarifs varient selon la prestation. Contactez-moi pour un devis personnalisé adapté à vos besoins.
+        </p>
+      </div>
+
+      {{/* FAQ 3 */}}
+      <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-3">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-accent-primary">videocam</span>
+          <h3 class="font-semibold text-text-primary">Proposez-vous des séances à distance ?</h3>
+        </div>
+        <p class="text-text-secondary text-sm">
+          Oui ! Je propose des accompagnements en présentiel à Paris et en visioconférence partout en France.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
