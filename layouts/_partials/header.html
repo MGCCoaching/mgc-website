@@ -1,26 +1,38 @@
 <section class="bg-primary text-primary flex flex-col sm:flex-row justify-between items-center px-2 sm:px-5 py-2 sm:py-3 shadow-xl/30 relative z-30 md:px-32">
     <div class="flex flex-row items-center gap-1">
-        <div class="shadow-xl rounded-full"><img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-20 h-auto rounded-full border"></div>
+      <a href="{{ site.Home.RelPermalink }}" class="shadow-xl rounded-full">
+        <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-20 h-auto rounded-full border">
+      </a>
+      <div>
         <h4 class="pl-5">{{ .Site.Title }}</h4>
+        <p class="pl-5 text-sm ">Coach & Formatrice Média</p>
+      </div>
     </div>
     {{/* Desktop menu - visible on sm+ (640px+) */}}
     <div class="hidden sm:flex items-center gap-4">
-        <ul class="flex flex-row items-center gap-2 sm:gap-4">
-            {{ range .Site.Menus.main }}
-              <li class="flex items-center">
-                <a class="btn-menu flex items-center" href="{{ .URL }}">
-                  <span class="text-lg font-medium">{{ .Name }}</span>
-                </a>
-                {{ if .HasChildren }}
-                  <ul class="flex flex-col items-center gap-2 mt-2">
-                    {{ range .Children }}
-                      <li><a class="btn-menu" href="{{ .URL }}">{{ .Name }}</a></li>
-                    {{ end }}
-                  </ul>
+      <ul class="flex flex-row items-center gap-2 sm:gap-4">
+        {{ range .Site.Menus.main }}
+          {{/* Vérifier si c'est la page Podcasts et si elle est désactivée */}}
+          {{ $showItem := true }}
+          {{ if eq .Name "Podcasts" }}
+            {{ $showItem = site.Params.pages.podcasts }}
+          {{ end }}
+          {{ if $showItem }}
+          <li class="flex items-center">
+            <a class="btn-menu flex items-center" href="{{ .URL }}">
+              <span class="text-lg font-medium">{{ .Name }}</span>
+            </a>
+            {{ if .HasChildren }}
+              <ul class="flex flex-col items-center gap-2 mt-2">
+                {{ range .Children }}
+                  <li><a class="btn-menu" href="{{ .URL }}">{{ .Name }}</a></li>
                 {{ end }}
-              </li>
+              </ul>
             {{ end }}
-        </ul>
+          </li>
+          {{ end }}
+        {{ end }}
+    </ul>
         {{/* Dark mode toggle - desktop */}}
         <button class="dark-mode-toggle p-2 rounded-lg hover:bg-tertiary transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
             <span class="material-symbols-outlined text-2xl leading-none">dark_mode</span>
@@ -39,6 +51,6 @@
     </div>
 </section>
 {{/* Mobile nav - hidden on sm+ (640px+) */}}
-<nav id="mobile-nav" class="sm:hidden fixed inset-0 bg-overlay backdrop-blur-xl -translate-y-full transition-transform duration-300 ease-in-out z-40">
+<nav id="mobile-nav" class="sm:hidden fixed inset-0 -translate-y-full transition-transform duration-300 ease-in-out z-40">
     {{ partial "nav.html" . }}
 </nav>
