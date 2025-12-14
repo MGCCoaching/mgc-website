@@ -3,11 +3,10 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
-    --color-amber-900: oklch(41.4% 0.112 45.904);
     --color-purple-500: oklch(62.7% 0.265 303.9);
     --color-black: #000;
     --color-white: #fff;
@@ -35,6 +34,8 @@
     --text-5xl--line-height: 1;
     --text-6xl: 3.75rem;
     --text-6xl--line-height: 1;
+    --text-7xl: 4.5rem;
+    --text-7xl--line-height: 1;
     --text-8xl: 6rem;
     --text-8xl--line-height: 1;
     --font-weight-normal: 400;
@@ -52,6 +53,7 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --font-script: 'Pacifico', cursive;
     --color-bg-primary: #ffffff;
     --color-bg-secondary: #e5f9fb;
     --color-bg-tertiary: #faf9e3;
@@ -283,6 +285,9 @@
   }
   .order-2 {
     order: 2;
+  }
+  .row-span-2 {
+    grid-row: span 2 / span 2;
   }
   .container {
     width: 100%;
@@ -608,26 +613,11 @@
   .bg-accent-primary {
     background-color: var(--color-accent-primary);
   }
-  .bg-accent-secondary {
-    background-color: var(--color-accent-secondary);
-  }
-  .bg-amber-900 {
-    background-color: var(--color-amber-900);
-  }
-  .bg-bg-accent {
-    background-color: var(--color-bg-accent);
-  }
-  .bg-bg-tertiary {
-    background-color: var(--color-bg-tertiary);
-  }
   .bg-black\/50 {
     background-color: color-mix(in srgb, #000 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
     }
-  }
-  .bg-info {
-    background-color: var(--color-info);
   }
   .bg-success {
     background-color: var(--color-success);
@@ -730,6 +720,9 @@
   }
   .text-center {
     text-align: center;
+  }
+  .font-script {
+    font-family: var(--font-script);
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -1127,6 +1120,12 @@
       line-height: var(--tw-leading, var(--text-5xl--line-height));
     }
   }
+  .md\:text-7xl {
+    @media (width >= 48rem) {
+      font-size: var(--text-7xl);
+      line-height: var(--tw-leading, var(--text-7xl--line-height));
+    }
+  }
   .md\:text-xl {
     @media (width >= 48rem) {
       font-size: var(--text-xl);
@@ -1243,6 +1242,9 @@ h5 {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
+}
+p {
+  font-size: 1.1rem;
 }
 .material-symbols-outlined {
   color: var(--color-text-primary);
@@ -1563,6 +1565,9 @@ body {
   --color-info: #22d3e6;
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-overlay: rgba(0, 0, 0, 0.7);
+}
+.font-script {
+  font-family: var(--font-script);
 }
 .bg-primary {
   background-color: var(--color-bg-primary);

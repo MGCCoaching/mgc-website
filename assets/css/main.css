@@ -185,8 +185,9 @@ body {
 
 @theme {
   /* Font Families */
-  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+  --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-script: 'Pacifico', cursive;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
   
@@ -236,37 +237,35 @@ body {
   --default-mono-font-family: var(--font-mono);
   
   /* Light Mode Colors */
-/* Light Mode Colors */
---color-bg-primary: #ffffff;
---color-bg-secondary: #e5f9fb;
---color-bg-tertiary: #faf9e3;
---color-bg-accent: #d4f4f7;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #e5f9fb;
+  --color-bg-tertiary: #faf9e3;
+  --color-bg-accent: #d4f4f7;
 
---color-text-primary: #18282a;
---color-text-secondary: #3a5456;
---color-text-tertiary: #7a9496;
---color-text-accent: #0d8a96;
---color-text-inverse: #ffffff;
+  --color-text-primary: #18282a;
+  --color-text-secondary: #3a5456;
+  --color-text-tertiary: #7a9496;
+  --color-text-accent: #0d8a96;
+  --color-text-inverse: #ffffff;
 
---color-border-primary: #cce8eb;
---color-border-secondary: #a8d4d8;
---color-border-accent: #40c4d0;
+  --color-border-primary: #cce8eb;
+  --color-border-secondary: #a8d4d8;
+  --color-border-accent: #40c4d0;
 
---color-accent-primary: #14b8c6;
---color-accent-secondary: #40c4d0;
---color-accent-hover: #0d9aa6;
+  --color-accent-primary: #14b8c6;
+  --color-accent-secondary: #40c4d0;
+  --color-accent-hover: #0d9aa6;
 
---color-success: #22c55e;
---color-warning: #eab308;
---color-error: #ef4444;
---color-info: #0ea5e9;
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+  --color-info: #0ea5e9;
 
---color-shadow: rgba(24, 40, 42, 0.1);
---color-overlay: rgba(24, 40, 42, 0.5);
+  --color-shadow: rgba(24, 40, 42, 0.1);
+  --color-overlay: rgba(24, 40, 42, 0.5);
 }
 
 /* Dark Mode Overrides - These will transition smoothly! */
-/* Dark Mode */
 .dark {
   --color-bg-primary: #111827;
   --color-bg-secondary: #1a2634;
@@ -296,6 +295,14 @@ body {
   --color-overlay: rgba(0, 0, 0, 0.7);
 }
 
+/* =============================================================================
+   Font Utility Classes
+   ============================================================================= */
+
+/* Script font (Pacifico) - for decorative text like "Votre voix compte" */
+.font-script {
+  font-family: var(--font-script);
+}
 
 /* =============================================================================
    Utility Classes - Easy to Use
