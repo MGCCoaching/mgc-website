@@ -236,63 +236,66 @@ body {
   --default-mono-font-family: var(--font-mono);
   
   /* Light Mode Colors */
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f8fafc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-accent: #e0f2fe;
-  
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-tertiary: #94a3b8;
-  --color-text-accent: #0369a1;
-  --color-text-inverse: #ffffff;
-  
-  --color-border-primary: #e2e8f0;
-  --color-border-secondary: #cbd5e1;
-  --color-border-accent: #7dd3fc;
-  
-  --color-accent-primary: #0ea5e9;
-  --color-accent-secondary: #06b6d4;
-  --color-accent-hover: #0284c7;
-  
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
-  
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-overlay: rgba(0, 0, 0, 0.5);
+/* Light Mode Colors */
+--color-bg-primary: #ffffff;
+--color-bg-secondary: #e5f9fb;
+--color-bg-tertiary: #faf9e3;
+--color-bg-accent: #d4f4f7;
+
+--color-text-primary: #18282a;
+--color-text-secondary: #3a5456;
+--color-text-tertiary: #7a9496;
+--color-text-accent: #0d8a96;
+--color-text-inverse: #ffffff;
+
+--color-border-primary: #cce8eb;
+--color-border-secondary: #a8d4d8;
+--color-border-accent: #40c4d0;
+
+--color-accent-primary: #14b8c6;
+--color-accent-secondary: #40c4d0;
+--color-accent-hover: #0d9aa6;
+
+--color-success: #22c55e;
+--color-warning: #eab308;
+--color-error: #ef4444;
+--color-info: #0ea5e9;
+
+--color-shadow: rgba(24, 40, 42, 0.1);
+--color-overlay: rgba(24, 40, 42, 0.5);
 }
 
 /* Dark Mode Overrides - These will transition smoothly! */
+/* Dark Mode */
 .dark {
-  --color-bg-primary: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-bg-tertiary: #334155;
-  --color-bg-accent: #0c4a6e;
-  
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #cbd5e1;
-  --color-text-tertiary: #64748b;
-  --color-text-accent: #38bdf8;
-  --color-text-inverse: #0f172a;
-  
-  --color-border-primary: #334155;
-  --color-border-secondary: #475569;
-  --color-border-accent: #0369a1;
-  
-  --color-accent-primary: #38bdf8;
-  --color-accent-secondary: #22d3ee;
-  --color-accent-hover: #7dd3fc;
-  
-  --color-success: #4ade80;
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1a2634;
+  --color-bg-tertiary: #1f2d3a;
+  --color-bg-accent: #2a3040;
+
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #6b7280;
+  --color-text-accent: #fcd34d;
+  --color-text-inverse: #ffffff;
+
+  --color-border-primary: #374151;
+  --color-border-secondary: #4b5563;
+  --color-border-accent: #f59e0b;
+
+  --color-accent-primary: #442d7e;
+  --color-accent-secondary: #3f357d;
+  --color-accent-hover: #537b9c;
+
+  --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-error: #f87171;
-  --color-info: #60a5fa;
-  
+  --color-info: #22d3e6;
+
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-overlay: rgba(0, 0, 0, 0.7);
 }
+
 
 /* =============================================================================
    Utility Classes - Easy to Use
