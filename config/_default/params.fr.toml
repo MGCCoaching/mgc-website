@@ -3,9 +3,18 @@
 
 # SEO & Meta Tags
 # ------------------------------------------------------------------------------
-description = 'Description de votre site pour les moteurs de recherche et le partage social'
-author = 'Votre Nom'
-keywords = ['mot-clé1', 'mot-clé2', 'mot-clé3']
+description = 'Révélez votre voix unique grâce au coaching média. Je vous aide à construire une marque personnelle forte et crédible en ligne. Parlez avec impact et authenticité pour fidéliser votre audience sur tous les canaux médiatiques.'
+author = 'Marie-Gaëtane COMPTE'
+keywords = [
+  "coaching média", 
+  "media training", 
+  "prise de parole en public", 
+  "communication professionnelle", 
+  "gestion du stress à l'oral",  # <- Apostrophe préservée car encadrée par des guillemets doubles
+  "storytelling", 
+  "préparation interview", 
+  "communication de crise"
+]
 
 # Open Graph / Social Media
 # ------------------------------------------------------------------------------
@@ -16,7 +25,7 @@ keywords = ['mot-clé1', 'mot-clé2', 'mot-clé3']
   github = ''
 
 [opengraph]
-  image = '/images/og-default.jpg'
+  image = 'img/logo.jpg'
   imageWidth = 1200
   imageHeight = 630
 
@@ -32,7 +41,7 @@ keywords = ['mot-clé1', 'mot-clé2', 'mot-clé3']
 [schema]
   type = 'Organization'
   name = 'Nom de Votre Organisation'
-  logo = '/logo.png'
+  logo = 'img/logo.png'
 
 # Site Features
 # ------------------------------------------------------------------------------
