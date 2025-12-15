@@ -19,12 +19,24 @@
 
 # Footer Menu
 # ------------------------------------------------------------------------------
+
 [[footer]]
-  name = 'Politique de Confidentialité'
-  pageRef = '/privacy'
+  name = 'Accueil'
+  pageRef = '/'
   weight = 10
 
 [[footer]]
-  name = "Conditions d'Utilisation"
-  pageRef = '/terms'
+  name = 'Podcasts'
+  pageRef = '/podcasts'
   weight = 20
+
+[[footer]]
+  name = 'Contact'
+  pageRef = '/contact'
+  weight = 30
+
+[[footer]]
+  name = 'Mentions légale'
+  pageRef = '/legale'
+  weight = 40
+

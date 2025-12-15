@@ -1,9 +1,20 @@
-<section class="min-h-screen flex flex-col items-center justify-center">
-  <ul class="flex flex-col items-center gap-4 pb-6">
+<section class="min-h-[full] flex flex-col items-center bg-primary justify-center h-dvh">
+  <div class="flex flex-row items-center gap-1 pb-10">
+    <a href="{{ site.Home.RelPermalink }}" class="shadow-xl rounded-full">
+      <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-60 h-auto  border rounded-full">
+    </a>
+  </div>
+    <ul class="flex flex-col items-center gap-4 pb-6 text-inverse">
       {{ range .Site.Menus.main }}
+        {{/* Vérifier si c'est la page Podcasts et si elle est désactivée */}}
+        {{ $showItem := true }}
+        {{ if eq .Name "Podcasts" }}
+          {{ $showItem = site.Params.pages.podcasts }}
+        {{ end }}
+        {{ if $showItem }}
         <li>
           <a class="btn-menu" href="{{ .URL }}">
-            <h2 class="text-inverse" >{{ .Name }}</h2>
+            <h2 class="drop-shadow-lg">{{ .Name }}</h2>
           </a>
           {{ if .HasChildren }}
             <ul class="flex flex-col items-center gap-2 mt-2">
@@ -13,9 +24,11 @@
             </ul>
           {{ end }}
         </li>
+        {{ end }}
       {{ end }}
-  </ul>
-  <button id="menu-close" class="p-3 rounded-lg transition-colors" aria-label="Close menu">
-    <span class="material-symbols-outlined icon-lg icon-inverse">close</span>
+    </ul>
+
+  <button id="menu-close" class=" rounded-lg transition-colors " aria-label="Close menu">
+    <span class="material-symbols-outlined icon-lg text-text-inverse drop-shadow-lg">close</span>
   </button>
 </section>

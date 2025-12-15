@@ -8,149 +8,374 @@
 @custom-variant landscape (@media (orientation: landscape));
 
 /* =============================================================================
+   Smooth Dark Mode Transitions
+   ============================================================================= */
+
+/* Add smooth transitions to html and body for color changes */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth transitions for all elements that change with theme */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Exclude elements that should NOT transition */
+*:where(
+  /* Animations and transforms shouldn't be slowed */
+  [class*="animate-"],
+  [class*="transition-transform"],
+  [class*="duration-"],
+  
+  /* Interactive elements keep their own transitions */
+  button:hover,
+  a:hover,
+  
+  /* Don't interfere with custom transitions */
+  [style*="transition"]
+) {
+  transition-property: transform, opacity, scale, rotate, translate;
+}
+
+/* Smooth icon rotation when switching */
+.dark-mode-toggle .material-symbols-outlined {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode-toggle:hover .material-symbols-outlined {
+  transform: rotate(20deg);
+}
+
+/* Optional: Add a subtle glow effect to the toggle button */
+.dark-mode-toggle {
+  position: relative;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dark-mode-toggle:active {
+  transform: scale(0.95);
+}
+
+/* =============================================================================
+   Scroll Animations
+   ============================================================================= */
+
+/* Hide elements initially */
+[class*="animate-on-scroll"] {
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+/* Fade in from bottom */
+.animate-on-scroll-fade-up {
+  transform: translateY(30px);
+}
+
+.animate-on-scroll-fade-up.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade in from left */
+.animate-on-scroll-fade-left {
+  transform: translateX(-30px);
+}
+
+.animate-on-scroll-fade-left.animate-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade in from right */
+.animate-on-scroll-fade-right {
+  transform: translateX(30px);
+}
+
+.animate-on-scroll-fade-right.animate-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale in (zoom) */
+.animate-on-scroll-scale {
+  transform: scale(0.9);
+}
+
+.animate-on-scroll-scale.animate-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Rotate in */
+.animate-on-scroll-rotate {
+  transform: rotate(-10deg) scale(0.9);
+}
+
+.animate-on-scroll-rotate.animate-visible {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Photo stack animation - Each layer animates in sequence */
+.photo-stack-layer-1 {
+  opacity: 0;
+  transform: translate(1.5rem, 1.5rem) rotate(6deg) scale(0.9);
+  transition: all 0.6s ease;
+}
+
+.photo-stack-layer-2 {
+  opacity: 0;
+  transform: translate(0.75rem, 0.75rem) rotate(-3deg) scale(0.9);
+  transition: all 0.6s ease 0.2s; /* 0.2s delay */
+}
+
+.photo-stack-layer-3 {
+  opacity: 0;
+  transform: rotate(2deg) scale(0.9);
+  transition: all 0.6s ease 0.4s; /* 0.4s delay */
+}
+
+/* When visible, animate to final position */
+.animate-visible .photo-stack-layer-1 {
+  opacity: 0.7;
+  transform: translate(1.5rem, 1.5rem) rotate(6deg) scale(1);
+}
+
+.animate-visible .photo-stack-layer-2 {
+  opacity: 0.85;
+  transform: translate(0.75rem, 0.75rem) rotate(-3deg) scale(1);
+}
+
+.animate-visible .photo-stack-layer-3 {
+  opacity: 1;
+  transform: rotate(2deg) scale(1);
+}
+
+/* Stagger animation for multiple elements */
+.animate-stagger-1 {
+  transition-delay: 0.1s;
+}
+
+.animate-stagger-2 {
+  transition-delay: 0.2s;
+}
+
+.animate-stagger-3 {
+  transition-delay: 0.3s;
+}
+
+.animate-stagger-4 {
+  transition-delay: 0.4s;
+}
+
+.animate-stagger-5 {
+  transition-delay: 0.5s;
+}
+
+/* =============================================================================
    Color System - Tailwind v4 Theme Extension
    ============================================================================= */
 
 @theme {
-  /* Background Colors */
+  /* Font Families */
+  --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-script: 'Pacifico', cursive;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  
+  /* Spacing */
+  --spacing: 0.25rem;
+  
+  /* Container */
+  --container-2xl: 42rem;
+  
+  /* Text Sizes */
+  --text-sm: 0.875rem;
+  --text-sm--line-height: calc(1.25 / 0.875);
+  --text-base: 1rem;
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg: 1.125rem;
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: calc(2.5 / 2.25);
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  
+  /* Font Weights */
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Border Radius */
+  --radius-lg: 0.5rem;
+  
+  /* Transitions */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --blur-xl: 24px;
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Font Family Defaults */
+  --default-font-family: var(--font-sans);
+  --default-mono-font-family: var(--font-mono);
+  
+  /* Light Mode Colors */
   --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f8fafc;
-  --color-bg-tertiary: #f1f5f9;
-  --color-bg-accent: #e0f2fe;
-  
-  /* Text Colors */
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-tertiary: #94a3b8;
-  --color-text-accent: #0369a1;
+  --color-bg-secondary: #e5f9fb;
+  --color-bg-tertiary: #faf9e3;
+  --color-bg-accent: #d4f4f7;
+
+  --color-text-primary: #18282a;
+  --color-text-secondary: #3a5456;
+  --color-text-tertiary: #7a9496;
+  --color-text-accent: #0d8a96;
   --color-text-inverse: #ffffff;
-  
-  /* Border Colors */
-  --color-border-primary: #e2e8f0;
-  --color-border-secondary: #cbd5e1;
-  --color-border-accent: #7dd3fc;
-  
-  /* Accent Colors */
-  --color-accent-primary: #0ea5e9;
-  --color-accent-secondary: #06b6d4;
-  --color-accent-hover: #0284c7;
-  
-  /* Semantic Colors */
+
+  --color-border-primary: #cce8eb;
+  --color-border-secondary: #a8d4d8;
+  --color-border-accent: #40c4d0;
+
+  --color-accent-primary: #14b8c6;
+  --color-accent-secondary: #40c4d0;
+  --color-accent-hover: #0d9aa6;
+
   --color-success: #22c55e;
-  --color-warning: #f59e0b;
+  --color-warning: #eab308;
   --color-error: #ef4444;
-  --color-info: #3b82f6;
-  
-  /* Utility Colors */
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-overlay: rgba(0, 0, 0, 0.5);
+  --color-info: #0ea5e9;
+
+  --color-shadow: rgba(24, 40, 42, 0.1);
+  --color-overlay: rgba(24, 40, 42, 0.5);
 }
 
-/* Dark Mode Overrides */
+/* Dark Mode Overrides - These will transition smoothly! */
 .dark {
-  --color-bg-primary: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-bg-tertiary: #334155;
-  --color-bg-accent: #0c4a6e;
-  
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #cbd5e1;
-  --color-text-tertiary: #64748b;
-  --color-text-accent: #38bdf8;
-  --color-text-inverse: #0f172a;
-  
-  --color-border-primary: #334155;
-  --color-border-secondary: #475569;
-  --color-border-accent: #0369a1;
-  
-  --color-accent-primary: #38bdf8;
-  --color-accent-secondary: #22d3ee;
-  --color-accent-hover: #7dd3fc;
-  
-  --color-success: #4ade80;
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1a2634;
+  --color-bg-tertiary: #1f2d3a;
+  --color-bg-accent: #2a3040;
+
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #6b7280;
+  --color-text-accent: #fcd34d;
+  --color-text-inverse: #ffffff;
+
+  --color-border-primary: #374151;
+  --color-border-secondary: #4b5563;
+  --color-border-accent: #f59e0b;
+
+  --color-accent-primary: #442d7e;
+  --color-accent-secondary: #3f357d;
+  --color-accent-hover: #537b9c;
+
+  --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-error: #f87171;
-  --color-info: #60a5fa;
-  
+  --color-info: #22d3e6;
+
   --color-shadow: rgba(0, 0, 0, 0.4);
   --color-overlay: rgba(0, 0, 0, 0.7);
 }
+
+/* =============================================================================
+   Font Utility Classes
+   ============================================================================= */
+
+/* Script font (Pacifico) - for decorative text like "Votre voix compte" */
+.font-script {
+  font-family: var(--font-script);
+}
+
 /* =============================================================================
    Utility Classes - Easy to Use
    ============================================================================= */
 
 /* Background Colors
    -------------------------------------------------------------------------- */
-   .bg-primary { background-color: var(--color-bg-primary); }
-   .bg-secondary { background-color: var(--color-bg-secondary); }
-   .bg-tertiary { background-color: var(--color-bg-tertiary); }
-   .bg-accent { background-color: var(--color-bg-accent); }
-   .bg-accent-primary { background-color: var(--color-accent-primary); }
-   .bg-accent-secondary { background-color: var(--color-accent-secondary); }
-   .bg-success { background-color: var(--color-success); }
-   .bg-warning { background-color: var(--color-warning); }
-   .bg-error { background-color: var(--color-error); }
-   .bg-info { background-color: var(--color-info); }
-   .bg-overlay { background-color: var(--color-overlay); }
-   
-   /* Text Colors
-      -------------------------------------------------------------------------- */
-   .text-primary { color: var(--color-text-primary); }
-   .text-secondary { color: var(--color-text-secondary); }
-   .text-tertiary { color: var(--color-text-tertiary); }
-   .text-accent { color: var(--color-text-accent); }
-   .text-inverse { color: var(--color-text-inverse); }
-   .text-success { color: var(--color-success); }
-   .text-warning { color: var(--color-warning); }
-   .text-error { color: var(--color-error); }
-   .text-info { color: var(--color-info); }
-   
-   /* Border Colors
-      -------------------------------------------------------------------------- */
-   .border-primary { border-color: var(--color-border-primary); }
-   .border-secondary { border-color: var(--color-border-secondary); }
-   .border-accent { border-color: var(--color-border-accent); }
-   .border-success { border-color: var(--color-success); }
-   .border-warning { border-color: var(--color-warning); }
-   .border-error { border-color: var(--color-error); }
-   .border-info { border-color: var(--color-info); }
-   
-   /* Ring Colors (for focus states)
-      -------------------------------------------------------------------------- */
-   .ring-primary { --tw-ring-color: var(--color-border-primary); }
-   .ring-secondary { --tw-ring-color: var(--color-border-secondary); }
-   .ring-accent { --tw-ring-color: var(--color-accent-primary); }
-   
-   /* Hover States
-      -------------------------------------------------------------------------- */
-   .hover\:bg-primary:hover { background-color: var(--color-bg-primary); }
-   .hover\:bg-secondary:hover { background-color: var(--color-bg-secondary); }
-   .hover\:bg-tertiary:hover { background-color: var(--color-bg-tertiary); }
-   .hover\:bg-accent:hover { background-color: var(--color-bg-accent); }
-   .hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
-   .hover\:text-primary:hover { color: var(--color-text-primary); }
-   .hover\:text-accent:hover { color: var(--color-text-accent); }
-   .hover\:border-accent:hover { border-color: var(--color-border-accent); }
-   
-   /* Focus States
-      -------------------------------------------------------------------------- */
-   .focus\:border-accent:focus { border-color: var(--color-border-accent); }
-   .focus\:ring-accent:focus { --tw-ring-color: var(--color-accent-primary); }
-   
-   /* Shadow Utilities
-      -------------------------------------------------------------------------- */
-   .shadow-themed { box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -2px var(--color-shadow); }
-   .shadow-themed-lg { box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -4px var(--color-shadow); }
-   
-   /* Placeholder Colors
-      -------------------------------------------------------------------------- */
-   .placeholder-tertiary::placeholder { color: var(--color-text-tertiary); }
-   
-   /* Divide Colors (for borders between children)
-      -------------------------------------------------------------------------- */
-   .divide-primary > * + * { border-color: var(--color-border-primary); }
-   .divide-secondary > * + * { border-color: var(--color-border-secondary); }
+.bg-primary { background-color: var(--color-bg-primary); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+.bg-tertiary { background-color: var(--color-bg-tertiary); }
+.bg-accent { background-color: var(--color-bg-accent); }
+.bg-accent-primary { background-color: var(--color-accent-primary); }
+.bg-accent-secondary { background-color: var(--color-accent-secondary); }
+.bg-success { background-color: var(--color-success); }
+.bg-warning { background-color: var(--color-warning); }
+.bg-error { background-color: var(--color-error); }
+.bg-info { background-color: var(--color-info); }
+.bg-overlay { background-color: var(--color-overlay); }
 
+/* Text Colors
+   -------------------------------------------------------------------------- */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-accent { color: var(--color-text-accent); }
+.text-inverse { color: var(--color-text-inverse); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+.text-info { color: var(--color-info); }
 
+/* Border Colors
+   -------------------------------------------------------------------------- */
+.border-primary { border-color: var(--color-border-primary); }
+.border-secondary { border-color: var(--color-border-secondary); }
+.border-accent { border-color: var(--color-border-accent); }
+.border-success { border-color: var(--color-success); }
+.border-warning { border-color: var(--color-warning); }
+.border-error { border-color: var(--color-error); }
+.border-info { border-color: var(--color-info); }
 
+/* Ring Colors (for focus states)
+   -------------------------------------------------------------------------- */
+.ring-primary { --tw-ring-color: var(--color-border-primary); }
+.ring-secondary { --tw-ring-color: var(--color-border-secondary); }
+.ring-accent { --tw-ring-color: var(--color-accent-primary); }
 
+/* Hover States
+   -------------------------------------------------------------------------- */
+.hover\:bg-primary:hover { background-color: var(--color-bg-primary); }
+.hover\:bg-secondary:hover { background-color: var(--color-bg-secondary); }
+.hover\:bg-tertiary:hover { background-color: var(--color-bg-tertiary); }
+.hover\:bg-accent:hover { background-color: var(--color-bg-accent); }
+.hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
+.hover\:text-primary:hover { color: var(--color-text-primary); }
+.hover\:text-accent:hover { color: var(--color-text-accent); }
+.hover\:border-accent:hover { border-color: var(--color-border-accent); }
+
+/* Focus States
+   -------------------------------------------------------------------------- */
+.focus\:border-accent:focus { border-color: var(--color-border-accent); }
+.focus\:ring-accent:focus { --tw-ring-color: var(--color-accent-primary); }
+
+/* Shadow Utilities
+   -------------------------------------------------------------------------- */
+.shadow-themed { box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -2px var(--color-shadow); }
+.shadow-themed-lg { box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -4px var(--color-shadow); }
+
+/* Placeholder Colors
+   -------------------------------------------------------------------------- */
+.placeholder-tertiary::placeholder { color: var(--color-text-tertiary); }
+
+/* Divide Colors (for borders between children)
+   -------------------------------------------------------------------------- */
+.divide-primary > * + * { border-color: var(--color-border-primary); }
+.divide-secondary > * + * { border-color: var(--color-border-secondary); }

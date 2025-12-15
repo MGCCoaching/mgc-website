@@ -66,3 +66,8 @@ copyright = '© {year} Nom de Votre Site. Tous droits réservés.'
   nosnippet = false
 
 
+# Pages Features
+# ------------------------------------------------------------------------------
+[pages]
+  podcasts = false  # true pour activer, false pour désactiver
+

@@ -1,0 +1,4 @@
++++
+title = 'Merci !'
+layout = 'merci'
++++
