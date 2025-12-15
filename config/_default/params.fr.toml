@@ -25,7 +25,7 @@ keywords = [
   github = ''
 
 [opengraph]
-  image = 'img/logo.jpg'
+  image = '/img/logo.jpg'
   imageWidth = 1200
   imageHeight = 630
 
@@ -41,7 +41,7 @@ keywords = [
 [schema]
   type = 'Organization'
   name = 'Nom de Votre Organisation'
-  logo = 'img/logo.png'
+  logo = '/img/logo.png'
 
 # Site Features
 # ------------------------------------------------------------------------------
