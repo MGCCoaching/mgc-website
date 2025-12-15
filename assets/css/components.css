@@ -95,3 +95,40 @@
   .btn-pill {
     @apply rounded-full;
   }
+
+/* =============================================================================
+   Netlify Forms - Responsive Fixes
+   ============================================================================= */
+
+/* Ensure Netlify forms widget doesn't overflow on mobile */
+[data-netlify-identity],
+[data-netlify-identity] > div,
+[data-netlify-identity] iframe {
+  @apply max-w-full !important;
+  @apply w-full;
+}
+
+/* Fix for Netlify widget container */
+div[data-netlify-identity-button] {
+  @apply max-w-full overflow-hidden;
+}
+
+/* Responsive padding and margins for small screens */
+@media (max-width: 640px) {
+  [data-netlify-identity] {
+    @apply px-4;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+
+  [data-netlify-identity] iframe {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* Fix iframe overflow */
+iframe[src*="netlify"] {
+  @apply max-w-full;
+  width: 100% !important;
+}
