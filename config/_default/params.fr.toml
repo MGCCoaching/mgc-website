@@ -32,7 +32,7 @@ keywords = ['mot-clé1', 'mot-clé2', 'mot-clé3']
 [schema]
   type = 'Organization'
   name = 'Nom de Votre Organisation'
-  logo = '/images/logo.png'
+  logo = '/logo.png'
 
 # Site Features
 # ------------------------------------------------------------------------------
