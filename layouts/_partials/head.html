@@ -1,10 +1,62 @@
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ .Title }} </title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" />
-    {{ with (templates.Defer (dict "key" "global")) }}
-      {{ partial "css.html" . }}
-    {{ end }}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> {{ .Title }} </title>
+
+{{/* --- 1. Balises Méta SEO classiques --- */}}
+{{ with .Site.Params.description }}
+<meta name="description" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.keywords }}
+<meta name="keywords" content="{{ delimit . ", " }}">
+{{ end }}
+
+{{/* --- 2. Balises Open Graph (OG) pour le partage social --- */}}
+<meta property="og:title" content="{{ .Title }}">
+{{ with .Site.Params.description }}
+<meta property="og:description" content="{{ . }}">
+{{ end }}
+<meta property="og:type" content="website">
+{{ with .Site.Params.opengraph.image }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{ end }}
+
+{{/* --- 3. Twitter Cards --- */}}
+{{ with .Site.Params.twitter.card }}
+<meta name="twitter:card" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.twitter.site }}
+<meta name="twitter:site" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.twitter.creator }}
+<meta name="twitter:creator" content="{{ . }}">
+{{ end }}
+
+{{/* --- 4. Schema.org (JSON-LD) pour le logo/organisation --- */}}
+{{ with .Site.Params.schema }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{{ .type }}",
+  "name": "{{ .name }}",
+  "logo": "{{ .logo | absURL }}",
+  "url": "{{ $.Site.BaseURL }}"
+}
+</script>
+{{ end }}
+
+{{/* --- 5. Robots Meta Tag (pour l'indexation) --- */}}
+{{ if not .Site.Params.robots.index }}
+<meta name="robots" content="noindex">
+{{ end }}
+
+{{/* --- 6. Liens CSS & Polices d'origine --- */}}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" />
+{{ with (templates.Defer (dict "key" "global")) }}
+  {{ partial "css.html" . }}
+{{ end }}
