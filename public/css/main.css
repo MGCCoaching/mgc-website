@@ -827,6 +827,9 @@
   .uppercase {
     text-transform: uppercase;
   }
+  .italic {
+    font-style: italic;
+  }
   .opacity-0 {
     opacity: 0%;
   }
