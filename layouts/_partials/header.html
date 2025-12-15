@@ -1,56 +1,62 @@
-<section class="bg-primary text-primary flex flex-col sm:flex-row justify-between items-center px-2 sm:px-5 py-2 sm:py-3 shadow-xl/20 relative z-30 md:px-32">
-    <div class="flex flex-row items-center gap-1">
-      <a href="{{ site.Home.RelPermalink }}" class="shadow-xl rounded-full">
-        <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-20 h-auto rounded-full border">
+<section class="bg-primary text-primary relative z-30 px-2 sm:px-5 md:px-32 py-2 sm:py-3 shadow-xl/20">
+  {{/* Mobile layout */}}
+  <div class="flex sm:hidden flex-col items-center gap-2">
+    {{/* Logo + texte centré */}}
+    <div class="flex items-center gap-2">
+      <a href="{{ site.Home.RelPermalink }}" class="shadow-xl rounded-full shrink-0">
+        <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-30 h-auto rounded-full border">
       </a>
       <div>
-        <h3 class="pl-5 uppercase">{{ .Site.Title }}</h3>
-        <p class="pl-5 text-sm font-script md:text-xl">Coach & Formatrice Média</p>
+        <h3 class="uppercase leading-tight text-lg">{{ .Site.Title }}</h3>
+        <p class="text-xs font-script">Coach & Formatrice Média</p>
       </div>
     </div>
-    {{/* Desktop menu - visible on sm+ (640px+) */}}
-    <div class="hidden sm:flex items-center gap-4">
-      <ul class="flex flex-row items-center gap-2 sm:gap-4">
+    {{/* Boutons en dessous */}}
+    <div class="flex items-center gap-4">
+      <button class="dark-mode-toggle p-1.5 rounded-lg transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
+        <span class="material-symbols-outlined text-xl leading-none">dark_mode</span>
+      </button>
+      <button id="menu-toggle" class="p-1.5 flex items-center justify-center" aria-label="Open menu">
+        <span class="material-symbols-outlined text-xl leading-none">menu</span>
+      </button>
+    </div>
+  </div>
+
+  {{/* Desktop layout */}}
+  <div class="hidden sm:flex flex-row justify-between items-center">
+    <div class="flex items-center gap-1">
+      <a href="{{ site.Home.RelPermalink }}" class="shadow-xl rounded-full shrink-0">
+        <img src="/img/logo.png" alt="Marie-Gaëtane Comte logo" class="w-20 h-auto rounded-full border">
+      </a>
+      <div class="pl-5">
+        <h2 class="uppercase text-2xl lg:text-3xl">{{ .Site.Title }}</h2>
+        <p class="text-sm font-script md:text-xl">Coach & Formatrice Média</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <ul class="flex flex-row items-center gap-4">
         {{ range .Site.Menus.main }}
-          {{/* Vérifier si c'est la page Podcasts et si elle est désactivée */}}
           {{ $showItem := true }}
           {{ if eq .Name "Podcasts" }}
             {{ $showItem = site.Params.pages.podcasts }}
           {{ end }}
           {{ if $showItem }}
-          <li class="flex items-center">
-            <a class="btn-menu flex items-center" href="{{ .URL }}">
-              <span class="text-lg font-medium">{{ .Name }}</span>
+          <li>
+            <a class="btn-menu" href="{{ .URL }}">
+              <h5>{{ .Name }}</h5>
             </a>
-            {{ if .HasChildren }}
-              <ul class="flex flex-col items-center gap-2 mt-2">
-                {{ range .Children }}
-                  <li><a class="btn-menu" href="{{ .URL }}">{{ .Name }}</a></li>
-                {{ end }}
-              </ul>
-            {{ end }}
           </li>
           {{ end }}
         {{ end }}
-    </ul>
-        {{/* Dark mode toggle - desktop */}}
-        <button class="dark-mode-toggle p-2 rounded-lg  transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
-            <span class="material-symbols-outlined text-2xl leading-none">dark_mode</span>
-        </button>
+      </ul>
+      <button class="dark-mode-toggle p-2 rounded-lg transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
+        <span class="material-symbols-outlined text-2xl leading-none">dark_mode</span>
+      </button>
     </div>
-    {{/* Mobile buttons - visible below sm (< 640px) */}}
-    <div class="flex sm:hidden items-center gap-2">
-        {{/* Dark mode toggle - mobile */}}
-        <button class="dark-mode-toggle p-2 rounded-lg transition-colors flex items-center justify-center" aria-label="Toggle dark mode">
-            <span class="material-symbols-outlined text-2xl leading-none">dark_mode</span>
-        </button>
-        {{/* Hamburger menu */}}
-        <button id="menu-toggle" class="p-2 flex items-center justify-center" aria-label="Open menu">
-            <span class="material-symbols-outlined text-2xl leading-none">menu</span>
-        </button>
-    </div>
+  </div>
 </section>
-{{/* Mobile nav - hidden on sm+ (640px+) */}}
-<nav id="mobile-nav" class="sm:hidden  fixed inset-0 -translate-y-full transition-transform duration-300 ease-in-out z-40">
-    {{ partial "nav.html" . }}
+
+{{/* Mobile nav */}}
+<nav id="mobile-nav" class="sm:hidden fixed inset-0 -translate-y-full transition-transform duration-300 ease-in-out z-40">
+  {{ partial "nav.html" . }}
 </nav>
