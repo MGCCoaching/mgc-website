@@ -4,49 +4,49 @@
 # SEO & Meta Tags
 # ------------------------------------------------------------------------------
 description = 'Révélez votre voix unique grâce au coaching média. Je vous aide à construire une marque personnelle forte et crédible en ligne. Parlez avec impact et authenticité pour fidéliser votre audience sur tous les canaux médiatiques.'
-author = 'Marie-Gaëtane COMPTE'
+author = 'Marie-Gaëtane Comte'
 keywords = [
   "coaching média", 
   "media training", 
   "prise de parole en public", 
   "communication professionnelle", 
-  "gestion du stress à l'oral",  # <- Apostrophe préservée car encadrée par des guillemets doubles
+  "gestion du stress à l'oral",
   "storytelling", 
   "préparation interview", 
-  "communication de crise"
+  "communication de crise",
+  "coach média Amiens",
+  "formation prise de parole"
 ]
 
 # Open Graph / Social Media
 # ------------------------------------------------------------------------------
 [social]
-  twitter = '@yourusername'
-  facebook = ''
-  linkedin = ''
-  github = ''
+  linkedin = 'https://linkedin.com/in/marie-gaetane-comte'
+  instagram = 'https://instagram.com/'
 
 [opengraph]
   image = '/img/logo.webp'
   imageWidth = 1200
   imageHeight = 630
 
-# Twitter Cards
+# Twitter Cards (optionnel - à supprimer si pas de compte Twitter)
 # ------------------------------------------------------------------------------
 [twitter]
   card = 'summary_large_image'
-  site = '@yourusername'
-  creator = '@yourusername'
+  # site = '@mgccoaching'
+  # creator = '@mgccoaching'
 
 # Schema.org / JSON-LD
 # ------------------------------------------------------------------------------
 [schema]
-  type = 'Organization'
-  name = 'Nom de Votre Organisation'
+  type = 'ProfessionalService'
+  name = 'MGC Coaching - Marie-Gaëtane Comte'
   logo = '/img/logo.webp'
 
 # Site Features
 # ------------------------------------------------------------------------------
 [features]
-  darkMode = false
+  darkMode = true
   analytics = false
   comments = false
 
@@ -58,13 +58,13 @@ keywords = [
 # Contact Information
 # ------------------------------------------------------------------------------
 [contact]
-  email = 'contact@example.org'
-  phone = ''
-  address = ''
+  email = 'contact@mgc-coaching.fr'
+  phone = '+33 6 00 00 00 00'
+  address = 'Amiens, France'
 
 # Copyright
 # ------------------------------------------------------------------------------
-copyright = '© {year} Nom de Votre Site. Tous droits réservés.'
+copyright = '© {year} MGC Coaching. Tous droits réservés.'
 
 # Robots & Indexing
 # ------------------------------------------------------------------------------
@@ -74,9 +74,7 @@ copyright = '© {year} Nom de Votre Site. Tous droits réservés.'
   noarchive = false
   nosnippet = false
 
-
 # Pages Features
 # ------------------------------------------------------------------------------
 [pages]
-  podcasts = false  # true pour activer, false pour désactiver
-
+  podcasts = false
