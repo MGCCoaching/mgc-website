@@ -77,4 +77,4 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
 # Pages Features
 # ------------------------------------------------------------------------------
 [pages]
-  podcasts = false
+  podcasts = true

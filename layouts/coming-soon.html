@@ -1,0 +1,117 @@
+{{ define "main" }}
+
+{{/* 1. full_viewport (min-h-screen) : N'applique min-h-screen QUE SI full_viewport N'EST PAS explicitement 'false'. Par défaut, la page est bien en pleine hauteur. */}}
+{{ $isFullViewport := ne (default true .Params.full_viewport) false }}
+<section class="bg-primary flex items-center relative overflow-hidden {{ if $isFullViewport }}min-h-screen{{ end }}">
+  
+  {{/* Background decoratif */}}
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-accent-primary opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent-secondary opacity-10 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+  </div>
+
+  <div class="container mx-auto px-4 py-20 relative z-10">
+    <div class="max-w-2xl mx-auto text-center">
+      
+      {{/* 2. Icon animé / LOGO (Conditionnel) : N'affiche le logo que si show_logo N'EST PAS explicitement 'false' (par défaut, il s'affiche). */}}
+      {{ if ne .Params.show_logo false }}
+      <div class="relative w-32 h-32 mx-auto mb-8 animate-on-scroll-fade-up">
+        <div class="absolute inset-0 bg-accent-primary rounded-full opacity-20 animate-ping"></div>
+        <div class="absolute inset-4 bg-accent-secondary rounded-full opacity-30 animate-ping" style="animation-delay: 0.5s;"></div>
+        <div class="relative bg-gradient-to-br from-accent-primary to-accent-secondary rounded-full w-32 h-32 flex items-center justify-center shadow-xl">
+          <span class="material-symbols-outlined text-white icon-2xl">construction</span>
+        </div>
+      </div>
+      {{ end }}
+      
+      {{/* Titre */}}
+      <h1 class="text-4xl md:text-5xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up animate-stagger-1">
+        {{ .Title | default "Bientôt disponible" }}
+      </h1>
+      
+      {{/* Sous-titre */}}
+      <p class="text-text-secondary text-xl mb-8 animate-on-scroll-fade-up animate-stagger-2">
+        {{ with .Params.subtitle }}
+          {{ . }}
+        {{ else }}
+          Cette page est en cours de construction. Revenez bientôt pour découvrir son contenu !
+        {{ end }}
+      </p>
+
+      {{/* Contenu personnalisé si présent */}}
+      {{ with .Content }}
+        <div class="text-text-secondary mb-8 animate-on-scroll-fade-up animate-stagger-3">
+          {{ . }}
+        </div>
+      {{ end }}
+
+      {{/* Barre de progression optionnelle */}}
+      {{ with .Params.progress }}
+        <div class="max-w-md mx-auto mb-8 animate-on-scroll-fade-up animate-stagger-3">
+          <div class="flex justify-between text-sm text-text-tertiary mb-2">
+            <span>Progression</span>
+            <span>{{ . }}%</span>
+          </div>
+          <div class="h-3 bg-secondary rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full transition-all duration-1000" style="width: {{ . }}%;"></div>
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Date de lancement optionnelle */}}
+      {{ with .Params.launch_date }}
+        <div class="inline-flex items-center gap-3 bg-secondary px-6 py-3 rounded-full mb-8 animate-on-scroll-fade-up animate-stagger-4">
+          <span class="material-symbols-outlined text-accent-primary">event</span>
+          <span class="text-text-primary font-medium">Lancement prévu : {{ . }}</span>
+        </div>
+      {{ end }}
+      
+      {{/* 3. Boutons d'action : N'affiche les boutons que si hide_action_buttons N'EST PAS explicitement 'true' (par défaut, ils s'affichent). */}}
+      {{ if not (eq .Params.hide_action_buttons true) }} 
+      <div class="flex flex-col sm:flex-row gap-4 justify-center animate-on-scroll-fade-up animate-stagger-5">
+        <a href="/" class="btn btn-primary">
+          <span class="material-symbols-outlined">home</span>
+          Retour à l'accueil
+        </a>
+        <a href="/contact" class="btn btn-secondary">
+          <span class="material-symbols-outlined">mail</span>
+          Me contacter
+        </a>
+      </div>
+      {{ end }}
+
+      {{/* Section notification optionnelle */}}
+      {{ if .Params.show_notification }}
+        <div class="mt-12 p-6 bg-secondary rounded-2xl shadow-themed animate-on-scroll-fade-up animate-stagger-5">
+          <h3 class="text-text-primary font-semibold mb-3 flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-accent-primary">notifications_active</span>
+            Soyez informé du lancement
+          </h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Laissez-moi votre email et je vous préviendrai dès que cette page sera disponible.
+          </p>
+          <form name="coming-soon-notify" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input type="hidden" name="form-name" value="coming-soon-notify">
+            <input type="hidden" name="page" value="{{ .Title }}">
+            <p class="hidden">
+              <label>Ne pas remplir : <input name="bot-field"></label>
+            </p>
+            <input 
+              type="email" 
+              name="email" 
+              required
+              placeholder="votre@email.com"
+              class="flex-1 px-4 py-3 rounded-xl bg-primary border-2 border-border-primary text-text-primary placeholder-tertiary focus:border-accent-primary focus:outline-none transition-colors"
+            >
+            <button type="submit" class="btn btn-primary shrink-0">
+              <span class="material-symbols-outlined">send</span>
+              M'avertir
+            </button>
+          </form>
+        </div>
+      {{ end }}
+
+    </div>
+  </div>
+</section>
+{{ end }}
