@@ -1,8 +1,8 @@
-<section class="about relative overflow-x-clip bg-primary p-3">
+<section class="about relative overflow-x-clip bg-primary ">
   {{/* Background decoratif */}}
 <div class="absolute top-0 right-0 w-1/2 h-full bg-accent opacity-30 -skew-x-12 translate-x-1/4 hidden lg:block"></div>
 
-<div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+<div class="container mx-auto px-4 py-6 md:py-14 relative z-10">
 
   <div class="container mx-auto px-4">
     <div class="flex justify-center items-center">
@@ -10,10 +10,10 @@
         {{ with .Params.image }}
           <div class="">
             <div class=" place-items-center pb-5 animate-on-scroll-fade-up">
-              <img src="{{ . }}" class="rounded-lg shadow-lg -rotate-10 ">
+              <img src="{{ . }}" class="rounded-lg shadow-lg ">
           </div>
         {{ end }}
-        <h2 class="text-center text-text-primary animate-on-scroll-fade-up">
+        <h2 class="text-center text-text-primary animate-on-scroll-fade-up p-2">
           {{ .Title }}
         </h2>
       </div>
