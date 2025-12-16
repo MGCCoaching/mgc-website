@@ -272,12 +272,6 @@
   .z-40 {
     z-index: 40;
   }
-  .z-90 {
-    z-index: 90;
-  }
-  .z-900 {
-    z-index: 900;
-  }
   .order-1 {
     order: 1;
   }
@@ -380,17 +374,11 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
-  .h-20 {
-    height: calc(var(--spacing) * 20);
-  }
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
   .h-32 {
     height: calc(var(--spacing) * 32);
-  }
-  .h-50 {
-    height: calc(var(--spacing) * 50);
   }
   .h-96 {
     height: calc(var(--spacing) * 96);
@@ -430,9 +418,6 @@
   }
   .w-16 {
     width: calc(var(--spacing) * 16);
-  }
-  .w-20 {
-    width: calc(var(--spacing) * 20);
   }
   .w-24 {
     width: calc(var(--spacing) * 24);
@@ -690,12 +675,6 @@
   }
   .bg-center {
     background-position: center;
-  }
-  .mask-cover {
-    mask-size: cover;
-  }
-  .mask-clip-fill {
-    mask-clip: fill-box;
   }
   .object-cover {
     object-fit: cover;
@@ -1170,16 +1149,6 @@
   .md\:grid-cols-5 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-  .md\:flex-row {
-    @media (width >= 48rem) {
-      flex-direction: row;
-    }
-  }
-  .md\:justify-items-start {
-    @media (width >= 48rem) {
-      justify-items: start;
     }
   }
   .md\:gap-12 {
