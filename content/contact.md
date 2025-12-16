@@ -5,6 +5,7 @@ title: 'Prenez Contact'
 # layout: 'contact'
 layout: 'coming-soon'
 hide_action_buttons: true 
+progress: 79
 ---
 
 

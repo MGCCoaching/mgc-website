@@ -6,7 +6,6 @@ progress: 95
 launch_date: "fin Décembre 2026"
 show_notification: false
 hide_action_buttons: true 
-full_viewport: true 
-show_logo: true
+
 ---
 
