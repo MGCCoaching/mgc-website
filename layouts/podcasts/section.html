@@ -1,0 +1,61 @@
+{{ define "main" }}
+    <section class="bg-secondary md:px-30 py-6">
+        <h1 class=" text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h1>
+        <div class="text-primary p-3 prose max-w-none mx-auto">{{ .Content }}</div>
+    </section>
+    
+    <section class="bg-primary p-6 sm:p-12">    
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {{/* Chemin de l'image de secours (dans static/img) */}}
+            {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+
+            {{ range .Pages.ByDate.Reverse }}
+            
+            {{/* 💡 MODIFICATION EFFECTUÉE : Récupère la première image de type "image" trouvée dans le bundle. */}}
+            {{ $image := (index (.Resources.ByType "image") 0) }}
+            
+            {{/* Extraction des paramètres */}}
+            {{ $subtitle := .Params.subtitle | default "Épisode" }}
+            {{ $duration := .Params.duration | default "Non spécifiée" }}
+
+            <a href="{{ .Permalink }}" class="block shadow-lg hover:shadow-2xl transition duration-500 bg-white dark:bg-gray-800 overflow-hidden">
+                
+                {{/* 2. Affichage de l'image (Bundle ou Fallback) */}}
+                {{ if $image }}
+                    <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode {{ .Title }}" class="w-full h-48 object-cover">
+                {{ else }}
+                    {{/* Utilisation de $fallbackImagePath avec relURL */}}
+                    <img src="{{ $fallbackImagePath | relURL }}" alt="Image de couverture par défaut du podcast" class="w-full h-48 object-cover">
+                {{ end }}
+
+                <div class="p-6">
+                    <p class=" text-tertiary uppercase mb-1">{{ $subtitle }}</p>
+
+                    <h3 class="text-secondary font-bold mb-2">{{ .Title }}</h3>
+                    
+                    {{/* 3. Tronquer le contenu (par exemple à 100 caractères) */}}
+                    <p class= "text-primary mb-3 ">
+                        {{ .Content | plainify | truncate 100 }}...
+                    </p>
+                    <p class="text-primary">
+                        debug
+                    </p>
+                    <div class="flex justify-between items-center text-xs text-text-primary border-t border-gray-100 pt-3 mt-4">
+                        <span class="flex items-center">
+                            <p class="pr-1">Durée: </p>
+                            {{ $duration }}
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </span>
+                        <span class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M3 15h2m4 0h.01M21 15h-2m-4 0h.01M3 11h18a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1v-7a1 1 0 011-1z"></path></svg>
+                            {{ .Date.Format "02 Jan 2006" }}
+                        </span>
+                    </div>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </section>
+
+{{ end }}
