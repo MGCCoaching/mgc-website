@@ -37,10 +37,5 @@ Ressentir le trac avant une interview télévisée ou une prise de parole en lig
 
 Nous avons la chance d'accueillir **Dr. Clara Dubois**, spécialiste de la gestion de l'anxiété de performance. Elle partage ses connaissances sur le lien entre physiologie et communication.
 
-### Transcription
-
-*(Note : Si vous proposez une transcription intégrale, vous pouvez ajouter une ligne ici pour y lier, améliorant l'accessibilité et le SEO.)*
-
-Lisez la transcription complète de l'épisode ici : [Lien vers la transcription]
 
 ### Pro

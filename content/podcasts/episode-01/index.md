@@ -15,7 +15,7 @@ duration: "22:45"
 hosts:
   - Votre Nom
 guests:
-  - Nom de l'Invité (si applicable)
+  - Jane Smith
 audio_url: "https://votre-cdn.com/podcast/episode-07-message-cle.mp3"
 image: "/images/episodes/ep07-thumbnail.jpg"
 ---
@@ -42,10 +42,4 @@ Dans cet épisode crucial de notre podcast de Media Training, nous nous attaquon
 
 > "Si vous essayez de dire trois choses, vous n'en direz aucune. Restez à une seule idée forte."
 
-### Prochain Épisode
 
-La semaine prochaine, nous aborderons : "Gérer les Questions Pièges : L'art du pontage et du pivotement sans perdre son sang-froid."
-
----
-
-*Est-ce que vous souhaitez que je vous montre comment intégrer directement ce type de contenu à votre boucle de listing d'épisodes en utilisant des classes **Tailwind CSS** dans votre template Hugo ?*
