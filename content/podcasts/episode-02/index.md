@@ -12,12 +12,10 @@ tags:
   - non-verbal
 episode_number: 8
 duration: "28:10"
-hosts:
-  - Votre Nom
 guests:
   - Dr. Clara Dubois (Psychologue et Coach en Communication)
 audio_url: "https://votre-cdn.com/podcast/episode-08-stress-camera.mp3"
-image: "/images/episodes/ep08-camera-focus.jpg"
+
 ---
 
 ### Introduction
