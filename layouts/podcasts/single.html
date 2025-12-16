@@ -11,6 +11,22 @@
             {{/* MODIFICATION 1 : Retirer 'h-full' de l'aside */}}
             <aside class="lg:w-1/3 mb-8 lg:mb-0">
                 <div class="sticky top-12">
+                    <div class="md:hidden">
+                        <header class="mb-6  ">
+                            <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
+                            <h3 class=" font-extrabold text-secondary mt-1">{{ .Title }}</h3>
+                        </header>
+                        {{/*  <hr class=" text-accent-primary my-8">  */}}
+                        
+                        {{ with .Params.guests }}
+                        <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
+                            {{ range . }}
+                            <h4 class=" font-bold ">Invité(e):</h4>
+                            <h4 >{{ . }}</h4>
+                            {{ end }}
+                        </div>
+                        {{ end }}    
+                    </div>
                     
                     {{/* Image Principale */}}
                     <figure class="shadow-2xl rounded-lg overflow-hidden mb-8">
@@ -22,15 +38,15 @@
                     </figure>
 
                     {{ if $audioUrl }}
-                        <audio controls class="w-full mb-6 bg-secondary border-5 border-accent-primary rounded-full shadow-md">
+                        <audio controls class="w-full  bg-secondary border-5 border-accent-primary rounded-full shadow-md">
                             <source src="{{ $audioUrl }}" type="audio/mpeg">
                             Votre navigateur ne supporte pas l'élément audio.
                         </audio>
                     {{ else }}
-                        <p class="text-red-500 text-sm italic mb-6">Fichier audio indisponible.</p>
+                        <p class="text-red-500 text-sm italic ">Fichier audio indisponible.</p>
                     {{ end }}
                     
-                    <div class=" p-4  text-sm text-primary">
+                    <div class=" p-2  text-sm text-primary">
                         <p><strong>Durée :</strong> {{ .Params.duration | default "N/A" }}</p>
                         <p><strong>Publié :</strong> {{ .Date.Format "02 Janvier 2006" }}</p>
                     </div>
@@ -40,21 +56,23 @@
 
             {{/* Le conteneur du contenu principal */}}
             <div class="lg:w-2/3"> 
-                <header class="mb-6  ">
-                    <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
-                    <h3 class=" font-extrabold text-secondary mt-1">{{ .Title }}</h3>
-                </header>
-                
-                <hr class=" text-accent-primary my-8">
-                
-                {{ with .Params.guests }}
-                    <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-accent-primary bg-accent-secondary text-primary">
+                <div class="hidden md:inline">
+                    <header class="mb-6  ">
+                        <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
+                        <h3 class=" font-extrabold text-secondary mt-1">{{ .Title }}</h3>
+                    </header>
+                    {{/*  <hr class=" text-accent-primary my-8">  */}}
+                    
+                    {{ with .Params.guests }}
+                    <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
                         {{ range . }}
-                            <h4 class=" font-bold ">Invité(e):</h4>
-                            <h4 >{{ . }}</h4>
+                        <h4 class=" font-bold ">Invité(e):</h4>
+                        <h4 >{{ . }}</h4>
                         {{ end }}
                     </div>
-                {{ end }}
+                    {{ end }}
+                </div>
+                
 
                 <section class=" max-w-none text-primary">
                     {{ .Content }}
