@@ -1,8 +1,8 @@
 ---
 title: "Devant la Caméra : Transformer le Stress en Impact et Assurance"
 subtitle: "Épisode 08 | Performance et Gestion du Stress"
-date: 2025-12-23T18:31:00+01:00
-draft: true
+date: 2025-12-04T18:31:00+01:00
+draft: false
 categories:
   - Performance
 tags:
