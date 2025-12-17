@@ -1,0 +1,80 @@
+{{ define "main" }}
+
+{{/* Schema.org PodcastSeries */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastSeries",
+  "name": "{{ .Title }}",
+  "description": "{{ .Content | plainify | truncate 160 }}",
+  "url": "{{ .Permalink }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.author }}"
+  },
+  "image": "{{ "/img/logo.webp" | absURL }}"
+}
+</script>
+
+    <section class="bg-primary md:px-30 py-6">
+        <h1 class=" text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h1>
+        <div class="text-primary p-3 prose max-w-none mx-auto">{{ .Content }}</div>
+    </section>
+    
+    <section class="bg-primary p-6 sm:p-12 bg-secondary">    
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {{/* Chemin de l'image de secours (dans static/img) */}}
+            {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+
+            {{ range .Pages.ByDate.Reverse }}
+            
+            {{/* 💡 Récupère la première image trouvée dans le bundle (méthode flexible) */}}
+            {{ $image := (index (.Resources.ByType "image") 0) }}
+            
+            {{/* Extraction des paramètres */}}
+            {{ $subtitle := .Params.subtitle | default "Épisode" }}
+            {{ $duration := .Params.duration | default "Non spécifiée" }}
+
+            {{/* 1. Conteneur de la carte : Flexbox vertical (flex-col) prenant toute la hauteur (h-full) */}}
+            <a href="{{ .Permalink }}" class="flex flex-col h-full bg-primary shadow-lg hover:shadow-2xl transition duration-500 hover:scale-102 border-2 border-accent hover:border-2 hover:border-accent-hover overflow-hidden">
+                
+                {{/* 2. Affichage de l'image (Bundle ou Fallback) */}}
+                {{ if $image }}
+                    <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode {{ .Title }}" class="w-full h-48 object-cover">
+                {{ else }}
+                    {{/* Utilisation de $fallbackImagePath avec relURL */}}
+                    <img src="{{ $fallbackImagePath | relURL }}" alt="Image de couverture par défaut du podcast" class="w-full h-48 object-cover">
+                {{ end }}
+
+                {{/* 3. Corps de la carte : Flexbox vertical permettant l'extension (flex-grow) */}}
+                <div class="p-6 flex flex-col flex-grow">
+                    <p class=" text-tertiary uppercase mb-1">{{ $subtitle }}</p>
+
+                    <h3 class="text-secondary font-bold mb-2">{{ .Title }}</h3>
+                    
+                    {{/* 4. Contenu tronqué : plainify assure que c'est du texte brut pour éviter les conflits CSS */}}
+                    <p class="text-primary mb-3 text-sm">
+                        {{ .Content | plainify | truncate 100 }}...
+                    </p>
+                    
+                    {{/* 5. MÉTADONNÉES : mt-auto pousse le bloc vers le bas du conteneur flex-grow */}}
+                    <div class="mt-auto flex justify-between items-center text-xs text-text-primary border-t border-accent-primary pt-3 mt-4">
+                        <span class="flex items-center">
+                            {{/* 💡 REMPLACEMENT DE L'ICÔNE DURÉE (Timer) */}}
+                            <span class="material-symbols-outlined mr-1">timer</span>
+                            <p>{{ $duration }}</p>
+                        </span>
+                        <span class="flex items-center">
+                            {{/* 💡 REMPLACEMENT DE L'ICÔNE DATE (Calendar) */}}
+                            <span class="material-symbols-outlined mr-1">calendar_today</span>
+                            <p>{{ .Date.Format "02 Jan 2006" }}</p>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </section>
+
+{{ end }}

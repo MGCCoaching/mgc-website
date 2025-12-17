@@ -1,6 +1,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ .Title }}{{ if not .IsHome }} | {{ .Site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 
 {{/* --- 1. Balises Méta SEO classiques --- */}}
 {{- $description := .Description | default .Site.Params.description -}}
@@ -48,7 +48,7 @@
 <meta name="twitter:image" content="{{ . | absURL }}">
 {{ end }}
 
-{{/* --- 6. Schema.org (JSON-LD) --- */}}
+{{/* --- 6. Schema.org (JSON-LD) - ProfessionalService --- */}}
 {{ with .Site.Params.schema }}
 <script type="application/ld+json">
 {
@@ -70,17 +70,53 @@
 </script>
 {{ end }}
 
-{{/* --- 7. Favicon --- */}}
-<link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-<link rel="icon" type="image/webp" sizes="32x32" href="/img/logo.webp">
-<link rel="apple-touch-icon" sizes="180x180" href="/img/logo.webp">
+{{/* --- 7. Schema.org (JSON-LD) - BreadcrumbList --- */}}
+{{ if not .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "{{ .Site.BaseURL }}"
+    }
+    {{- if .Parent }}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ .Parent.Title }}",
+      "item": "{{ .Parent.Permalink }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ .Title }}"
+    }
+    {{- else }}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ .Title }}"
+    }
+    {{- end }}
+  ]
+}
+</script>
+{{ end }}
 
-{{/* --- 8. Preconnect & Polices (ordre optimisé pour performance) --- */}}
+{{/* --- 8. Favicon --- */}}
+<link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/logo.png">
+
+{{/* --- 9. Preconnect & Polices (ordre optimisé pour performance) --- */}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
 
-{{/* --- 9. CSS --- */}}
+{{/* --- 10. CSS --- */}}
 {{ with (templates.Defer (dict "key" "global")) }}
   {{ partial "css.html" . }}
 {{ end }}

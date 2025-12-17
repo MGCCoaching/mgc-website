@@ -91,14 +91,8 @@ uglyURLs = false
 # Languages
 # ==============================================================================
 [languages]
-  [languages.en]
-    languageCode = 'en-US'
-    languageName = 'English'
-    weight = 1
-    title = 'Marie-Gaëtane Comte'
-
   [languages.fr]
     languageCode = 'fr-FR'
     languageName = 'Français'
-    weight = 2
+    weight = 1
     title = 'Marie-Gaëtane Comte'

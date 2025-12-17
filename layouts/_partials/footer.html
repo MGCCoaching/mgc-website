@@ -47,19 +47,19 @@
             <li>
               <a href="mailto:contact@mgc-coaching.fr" class="text-text-secondary hover:text-accent-primary transition-colors flex items-center gap-2">
                 <span class="material-symbols-outlined icon-sm">mail</span>
-                contact@mgc-coaching.fr
+                <p> {{ .Site.Params.Contact.Email }} </p>
               </a>
             </li>
             <li>
               <a href="tel:+33600000000" class="text-text-secondary hover:text-accent-primary transition-colors flex items-center gap-2">
                 <span class="material-symbols-outlined icon-sm">phone</span>
-                +33 6 00 00 00 00
+                <p> {{ .Site.Params.Contact.Phone }} </p>
               </a>
             </li>
             <li>
               <span class="text-text-secondary flex items-center gap-2">
                 <span class="material-symbols-outlined icon-sm">location_on</span>
-                Amiens, France
+                <p> {{ .Site.Params.Contact.Address }} </p>
               </span>
             </li>
             {{/* Réseaux sociaux */}}
