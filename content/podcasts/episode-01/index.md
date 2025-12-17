@@ -2,7 +2,7 @@
 title: "Maîtriser le Message Clé : Comment s'assurer que l'on retient VRAIMENT l'essentiel"
 subtitle: "Épisode 07 | Structuration du Discours"
 date: 2025-12-16T18:31:00+01:00
-draft: false
+draft: true
 categories:
   - Stratégie
 tags:
