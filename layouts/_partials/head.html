@@ -2,6 +2,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 
+<script>
+  (function(){
+    const savedTheme = localStorage.getItem('theme');
+    const htmlElement = document.documentElement;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      htmlElement.classList.add('dark');
+    }
+  })();
+</script>
+
 {{/* --- 1. Balises Méta SEO classiques --- */}}
 {{- $description := .Description | default .Site.Params.description -}}
 <meta name="description" content="{{ $description }}">
