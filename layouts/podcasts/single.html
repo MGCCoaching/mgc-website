@@ -1,9 +1,38 @@
 {{ define "main" }}
 
-    {{/*  {{ $audioUrl := .Params.audio_url }}  */}}
-    {{ $audioUrl := (index (.Resources.ByType "audio") 0) }}
-    {{ $image := (index (.Resources.ByType "image") 0) }}
+{{/* Variables */}}
+{{ $audioUrl := (index (.Resources.ByType "audio") 0) }}
+{{ $image := (index (.Resources.ByType "image") 0) }}
 
+{{/* Schema.org PodcastEpisode */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": "{{ .Title }}",
+  "description": "{{ .Content | plainify | truncate 160 }}",
+  "url": "{{ .Permalink }}",
+  "datePublished": "{{ .Date.Format "2006-01-02" }}",
+  {{- with .Params.duration }}
+  {{- $parts := split . ":" }}
+  "duration": "PT{{ index $parts 0 }}M{{ index $parts 1 }}S",
+  {{- end }}
+  {{- with $image }}
+  "image": "{{ .Permalink }}",
+  {{- end }}
+  {{- with $audioUrl }}
+  "associatedMedia": {
+    "@type": "MediaObject",
+    "contentUrl": "{{ .Permalink }}"
+  },
+  {{- end }}
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Podcasts",
+    "url": "{{ "/podcasts/" | absURL }}"
+  }
+}
+</script>
 
     <div class=" mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-secondary">
 

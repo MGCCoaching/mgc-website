@@ -1,4 +1,21 @@
 {{ define "main" }}
+
+{{/* Schema.org PodcastSeries */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastSeries",
+  "name": "{{ .Title }}",
+  "description": "{{ .Content | plainify | truncate 160 }}",
+  "url": "{{ .Permalink }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.author }}"
+  },
+  "image": "{{ "/img/logo.webp" | absURL }}"
+}
+</script>
+
     <section class="bg-primary md:px-30 py-6">
         <h1 class=" text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h1>
         <div class="text-primary p-3 prose max-w-none mx-auto">{{ .Content }}</div>
