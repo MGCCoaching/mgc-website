@@ -11,7 +11,7 @@
       {{ .Content }}
     </div>
     {{ with .Params.button_text }}
-      <a href="{{ $.Params.button_url }}" class="inline-block bg-accent-primary hover:bg-accent-hover text-white px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale animate-stagger-5">
+      <a href="{{ $.Params.button_url }}" class="inline-block btn-primary text-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale">
         {{ . }}
       </a>
     {{ end }}

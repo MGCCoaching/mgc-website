@@ -34,6 +34,10 @@
   .icon-secondary {
     @apply text-text-secondary;
   }
+
+  .icon-tertiary{
+    @apply text-text-tertiary
+  }
   
   .icon-inverse {
     @apply text-text-inverse;

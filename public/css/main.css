@@ -1489,6 +1489,9 @@ p {
 .icon-secondary {
   color: var(--color-text-secondary);
 }
+.icon-tertiary {
+  color: var(--color-text-tertiary);
+}
 .icon-inverse {
   color: var(--color-text-inverse);
 }
@@ -1601,9 +1604,12 @@ p {
   --tw-duration: 150ms;
   transition-duration: 150ms;
   color: var(--color-text-primary);
+  font-size: var(--text-2xl);
+  line-height: var(--tw-leading, var(--text-2xl--line-height));
 }
 .btn-menu:hover {
   text-decoration-line: underline;
+  color: var(--color-accent-hover);
 }
 .btn-primary {
   background-color: var(--color-accent-primary);
@@ -1789,8 +1795,8 @@ body {
   --color-text-inverse: #ffffff;
   --color-border-primary: #374151;
   --color-border-secondary: #4b5563;
-  --color-border-accent: #f59e0b;
-  --color-accent-primary: #442d7e;
+  --color-border-accent: #c6810b;
+  --color-accent-primary: #624c99;
   --color-accent-secondary: #3f357d;
   --color-accent-hover: #537b9c;
   --color-success: #34d399;
