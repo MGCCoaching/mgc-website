@@ -1,7 +1,9 @@
 {{ define "main" }}
 
-    {{ $audioUrl := .Params.audio_url }}
+    {{/*  {{ $audioUrl := .Params.audio_url }}  */}}
+    {{ $audioUrl := (index (.Resources.ByType "audio") 0) }}
     {{ $image := (index (.Resources.ByType "image") 0) }}
+
 
     <div class=" mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-secondary">
 
@@ -38,8 +40,8 @@
                     </figure>
 
                     {{ if $audioUrl }}
-                        <audio controls class="w-full  bg-secondary border-5 border-accent-primary rounded-full shadow-md">
-                            <source src="{{ $audioUrl }}" type="audio/mpeg">
+                        <audio controls controlsList="nodownload" class="w-full  bg-secondary border-5 border-accent-primary rounded-full shadow-md">
+                            <source src="{{ $audioUrl.Permalink }}" type="audio/wav">
                             Votre navigateur ne supporte pas l'élément audio.
                         </audio>
                     {{ else }}

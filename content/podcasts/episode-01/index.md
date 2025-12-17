@@ -17,7 +17,6 @@ hosts:
 guests:
   - Jane Smith
 audio_url: "https://votre-cdn.com/podcast/episode-07-message-cle.mp3"
-image: "/images/episodes/ep07-thumbnail.jpg"
 ---
 
 ### Introduction
