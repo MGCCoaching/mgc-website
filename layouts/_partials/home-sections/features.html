@@ -8,23 +8,47 @@
     </h5>
     
     {{ with .Params.features }}
-      <div class="grid md:grid-cols-3 gap-8">
-        {{ range . }}
-          <div class="bg-primary p-6 rounded-lg shadow-themed">
+    <div class="grid md:grid-cols-3 gap-8">
+      {{ range . }}
+        <div class="bg-primary p-6 rounded-lg shadow-themed flex flex-col">
+          
+          <div class="flex flex-col pt-2 flex-grow">
             {{ with .icon }}
               <div class="text-3xl mb-4">
                 <span class="material-symbols-outlined icon-accent">{{ . }}</span>
               </div>
             {{ end }}
-            <h3 class=" font-semibold text-text-primary mb-2">
+            
+            <h3 class="font-semibold text-text-primary mb-2">
               {{ .title }}
             </h3>
-            <p class="text-text-secondary">
+            
+            <p class="text-text-primary">
               {{ .description }}
             </p>
+    
+            {{ with .list }}
+              <ul class="text-text-primary py-2">
+                {{ range . }}
+                  <li class="list-icon">{{ . }}</li>
+                {{ end }}
+              </ul>
+            {{ end }}
+    
+            {{ with .description02 }}
+              <p class="text-text-primary">
+                {{ . }}
+              </p>
+            {{ end }}
           </div>
-        {{ end }}
-      </div>
+    
+          <div class="mt-6"> <a href="{{ .button_url }}" class="inline-block btn-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale w-full text-center">
+              En savoir plus
+            </a>
+          </div>
+        </div>
+      {{ end }}
+    </div>
     {{ end }}
   </div>
 </section>

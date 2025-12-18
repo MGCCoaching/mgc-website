@@ -16,7 +16,30 @@
   h5 { @apply text-xl md:text-xl lg:text-2xl }
   
   p { font-size: 1rem }
+
+  .list-icon {
+    list-style: none; /* Remove default bullets */
+    padding-left: 5px;
+  }
   
+  .list-icon::before {
+    content: '\e5e1'; /* The unicode for 'chevron_right' */
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Positioning and Styling */
+    margin-right: 0px;
+    vertical-align: middle;
+    @apply text-accent-primary /* You can change the color easily! */
+  }
+
   /* =============================================================================
      Icons - Material Symbols
      ============================================================================= */
