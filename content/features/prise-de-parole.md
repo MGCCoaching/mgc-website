@@ -51,73 +51,14 @@ testimonial:
   name: "Sophie Lemaire"
   role: "Docteure en Sciences Politiques"
 ---
+Mon but est de vous aider à ne plus voir la prise de parole comme une épreuve, mais comme une opportunité. Avec moi, vous allez apprendre à vous exprimer clairement, sans stress, sans vous cacher.  Je vous accompagne à oser prendre la parole, avec confiance et authenticité. Votre voix compte. Et il est temps qu’on l’entende.
 
-## L'art de convaincre à l'oral
+Je propose un accompagnement personnalisé réparti selon vos disponibilités, pour vous aider à :
 
-Que ce soit pour une **réunion stratégique**, une **conférence**, une **soutenance** ou un **pitch**, la prise de parole en public est un exercice qui se prépare. Ce n'est pas seulement **ce que vous dites** qui compte, mais **comment vous le dites**.
+- structurer un discours clair et convaincant
+- capter l’attention dès les premières secondes
+- gagner en assurance, sans jouer un rôle
+- maîtriser votre voix, votre posture et votre rythme
+- répondre avec calme et précision, même sous pression
 
-### Le paradoxe de l'orateur
-
-On croit souvent que les grands orateurs ont un don naturel. C'est un mythe. Les meilleurs speakers sont avant tout des **travailleurs acharnés** qui ont compris une vérité simple : l'aisance à l'oral se construit par la **préparation**, la **structure** et la **répétition**.
-
-### Ce qui fait la différence
-
-**Une idée mal portée s'efface.**  
-Un contenu brillant peut être complètement invisible si la forme ne suit pas. J'ai vu des experts reconnus perdre leur audience en 2 minutes faute de structure claire.
-
-**Un message flou n'est pas retenu.**  
-Votre public ne retiendra que 3 choses maximum. Lesquelles voulez-vous qu'il retienne ? Si vous ne le savez pas, lui non plus.
-
-**Une voix hésitante affaiblit même le meilleur contenu.**  
-Le non-verbal représente plus de 50% de l'impact de votre message. Posture, regard, voix : tout compte.
-
-### Ma méthode en 4 piliers
-
-#### 1. Le fond : structurer pour convaincre
-- Identifier votre **message central**
-- Construire une **ouverture percutante**
-- Développer **3 arguments maximum**
-- Préparer une **conclusion mémorable**
-
-#### 2. La forme : incarner son message
-- Travail sur la **voix** (rythme, volume, silences)
-- Maîtrise de la **gestuelle** et de l'espace
-- Développement du **contact visuel**
-- Gestion des **supports visuels**
-
-#### 3. Le mental : dompter le trac
-- Techniques de **respiration**
-- Exercices de **visualisation positive**
-- Rituels de **préparation** avant l'intervention
-- Transformation du stress en **énergie motrice**
-
-#### 4. La pratique : répéter pour ancrer
-- **Mises en situation** filmées
-- **Feedback** constructif et détaillé
-- **Itérations** jusqu'à l'aisance naturelle
-
-### Les contextes d'intervention
-
-| Situation | Enjeux spécifiques |
-|-----------|-------------------|
-| **Réunion stratégique** | Synthèse, persuasion, gestion du temps |
-| **Conférence / Keynote** | Captation d'attention, storytelling, impact émotionnel |
-| **Pitch investisseurs** | Clarté, crédibilité, call-to-action |
-| **Soutenance / Oral d'examen** | Rigueur, pédagogie, gestion du stress |
-| **Discours officiel** | Solennité, émotion maîtrisée, mémorabilité |
-| **Webinaire / Visio** | Énergie à distance, interaction virtuelle |
-
-### Formules d'accompagnement
-
-**🎯 Préparation ciblée** — *Pour une échéance précise*  
-3 séances de 2h pour préparer une intervention spécifique.
-
-**📈 Programme transformation** — *Pour un changement durable*  
-6 séances sur 2 mois pour développer une aisance pérenne.
-
-**🔄 Coaching continu** — *Pour les speakers réguliers*  
-Accompagnement sur l'année avec préparation de chaque intervention majeure.
-
----
-
-*Il n'y a pas d'orateurs nés, il n'y a que des travailleurs acharnés.*
+Que vous deviez convaincre en réunion, embarquer un public sur scène ou réussir un oral devant un jury, l’objectif est le même : être compris, crédible et mémorable.

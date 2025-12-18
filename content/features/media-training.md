@@ -55,3 +55,18 @@ Répondre aux questions des journalistes peut sembler être un exercice insurmon
 
 Avec mon expérience d’ancienne journaliste, je vais vous expliquer ce qu’attendent les journalistes, quelles sont leurs contraintes et comment ils travaillent.
 
+Répondre aux questions des journalistes peut sembler être un exercice insurmontable. Certains préfèrent ne pas communiquer du tout plutôt que de dire “des bêtises”. Je pense que c’est une erreur. Et ça laisse la place à des interprétations. A partir du moment où on sait exactement quel message on veut faire passer et comment le faire passer, on change la donne. Tout se travaille, tout s’anticipe à la manière d’un sportif de haut niveau. C’est dans votre intérêt de vous former, de vous préparer, pour que vous n’ayez plus à vous dire “je n’ai pas été bon”. Le but c’est qu’on se souvienne de vous, de ce que vous avez dit. Ce travail vous servira dans votre quotidien, va vous faire gagner du temps et de l’assurance. 
+
+Avec mon expérience d’ancienne journaliste, je vais vous expliquer ce qu’attendent les journalistes, quelles sont leurs contraintes et comment ils travaillent. 
+
+Pour qui? Pour toute personne qui souhaite répondre aux journalistes.
+
+Pourquoi? Parce qu’une interview bien préparée fait toute la différence, et qu’investir en soi est la première étape pour opérer un véritable changement.  
+
+Comment? En répétant dans les conditions du direct. Laissez-vous guider j’ai 20 ans de métier. 
+
+Où? Chez vous, dans votre entreprise, dans des bureaux que je louerai ou en viso.
+
+Quand? Sur mesure en fonction de vos besoins. 
+
+Combien? Sur devis
