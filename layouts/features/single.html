@@ -9,53 +9,40 @@
 
 {{/* Hero Section */}}
 <section class="relative bg-secondary overflow-hidden">
-  {{/* Background decoratif */}}
-  <div class="absolute top-0 right-0 w-1/2 h-full bg-accent opacity-20 -skew-x-12 translate-x-1/4 hidden lg:block"></div>
-  <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent-primary opacity-10 rounded-full -translate-x-1/2 translate-y-1/2 blur-3xl"></div>
-  
-  <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
+  <div class="container mx-auto px-4 py-12 md:py-24 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       
-      {{/* Contenu texte */}}
-      <div class="order-2 lg:order-1">
-
-
-
-
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 animate-on-scroll-fade-up animate-stagger-2">
+      {{/* Contenu texte - Gauche */}}
+      <div class="order-2 lg:order-1 text-center lg:text-left">
+        <h2 class="font-bold text-text-primary mb-4 md:mb-6 animate-on-scroll-fade-up animate-stagger-2">
           {{ .Title }}
-        </h1>
+        </h2>
 
         {{ with .Params.subtitle }}
-        <p class="text-xl md:text-2xl text-text-secondary mb-8 leading-relaxed animate-on-scroll-fade-up animate-stagger-3">
+        <h3 class="text-text-secondary text-lg md:text-xl mb-6 md:mb-8 animate-on-scroll-fade-up animate-stagger-3">
           {{ . }}
-        </p>
+        </h3>
         {{ end }}
 
         {{/* CTA Buttons */}}
-        <div class="flex flex-col sm:flex-row gap-4 animate-on-scroll-fade-up animate-stagger-4">
-          <a href="/contact" class="btn btn-primary btn-lg">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-on-scroll-fade-up animate-stagger-4">
+          <a href="/contact" class="btn btn-primary">
             Me Contacter
           </a>
         </div>
       </div>
 
-      {{/* Image ou illustration */}}
-      <div class="order-1 lg:order-2 animate-on-scroll-fade-left -z-10">
+      {{/* Image - Droite */}}
+      <div class="order-1 lg:order-2 animate-on-scroll-fade-left">
+        {{ $image := .Params.image }}
+        {{ $icon := .Params.icon | default "star" }}
+        
         {{ if $image }}
-        <div class="relative">
+        <div class="relative max-w-xs sm:max-w-sm md:max-w-md mx-auto ">
           <div class="absolute inset-0 bg-gradient-to-br from-accent-primary to-accent-secondary rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
           <img src="{{ $image }}" alt="{{ .Title }}" class="relative rounded-2xl shadow-2xl w-full h-auto object-cover">
         </div>
-        {{ else }}
-        {{/* Illustration abstraite si pas d'image */}}
-        <div class="relative aspect-square max-w-md mx-auto">
-          <div class="absolute inset-0 bg-gradient-to-br from-accent-primary to-accent-secondary rounded-full opacity-20 animate-ping" style="animation-duration: 3s;"></div>
-          <div class="absolute inset-8 bg-gradient-to-br from-accent-secondary to-accent-primary rounded-full opacity-30"></div>
-          <div class="absolute inset-16 bg-primary rounded-full flex items-center justify-center shadow-2xl">
-            <span class="material-symbols-outlined icon-4xl text-accent-primary">{{ $icon }}</span>
-          </div>
-        </div>
+
         {{ end }}
       </div>
 
@@ -64,7 +51,7 @@
 </section>
 
 {{/* Section Contenu Principal */}}
-<section class="bg-primary py-16 md:py-24">
+<section class="bg-primary py-10 md:py-24">
   <div class="container mx-auto px-4">
     <div class="max-w-4xl mx-auto">
       
@@ -216,9 +203,7 @@
       {{ range where (where site.RegularPages "Section" "features") "Permalink" "ne" $currentPage.Permalink }}
       <a href="{{ .Permalink }}" class="group bg-secondary p-6 rounded-xl shadow-themed hover:shadow-themed-lg transition-all animate-on-scroll-fade-up">
         <div class="flex items-center gap-4 mb-4">
-          <div class="bg-accent-primary p-3 rounded-lg group-hover:bg-accent-primary transition-colors">
-            <span class="material-symbols-outlined text-accent-primary group-hover:text-white transition-colors">{{ .Params.icon | default "star" }}</span>
-          </div>
+          <span class="material-symbols-outlined  transition-colors">{{ .Params.icon | default "star" }}</span>
           <h4 class="font-semibold text-text-primary group-hover:text-accent-primary transition-colors">{{ .Title }}</h4>
         </div>
         <p class="text-text-secondary text-sm line-clamp-2">{{ .Params.subtitle }}</p>
