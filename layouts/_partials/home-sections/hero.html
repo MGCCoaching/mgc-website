@@ -4,14 +4,14 @@
   
   <!-- Content with proper z-index -->
   <div class="container mx-auto px-4 text-center relative z-10">
-    <h1 class="font-bold text-white drop-shadow-lg mb-6 animate-on-scroll-fade-up">
+    <h1 class=" text-text-inverse drop-shadow-lg mb-6 animate-on-scroll-fade-up">
       {{ .Title }}
     </h1>
-    <div class="text-xl text-white drop-shadow-lg mb-8 max-w-2xl mx-auto animate-on-scroll-fade-up animate-stagger-4">
+    <div class="text-xl text-text-inverse drop-shadow-lg mb-8 max-w-2xl mx-auto animate-on-scroll-fade-up animate-stagger-4">
       {{ .Content }}
     </div>
     {{ with .Params.button_text }}
-      <a href="{{ $.Params.button_url }}" class="inline-block btn-primary text-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale">
+      <a href="{{ $.Params.button_url }}" class="inline-block btn-primary  px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale">
         {{ . }}
       </a>
     {{ end }}
