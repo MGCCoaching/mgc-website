@@ -3,18 +3,18 @@
     <h2 class="font-bold text-text-primary text-center mb-4">
       {{ .Title }}
     </h2>
-    <h5 class="text-text-secondary text-center mb-12">
-      {{ .Content }}
+    <h5 class="text-text-secondary text-center text-2xl mb-12">
+      {{ .Content | plainify }}
     </h5>
     
     {{ with .Params.features }}
     <div class="grid md:grid-cols-3 gap-8">
       {{ range . }}
-        <div class="bg-primary p-6 rounded-lg shadow-themed flex flex-col">
+        <div class="bg-primary p-4 border-accent-primary border rounded-lg shadow-themed flex flex-col">
           
-          <div class="flex flex-col pt-2 flex-grow">
+          <div class="flex flex-col  flex-grow">
             {{ with .icon }}
-              <div class="text-3xl mb-4">
+              <div class="text-3xl ">
                 <span class="material-symbols-outlined icon-accent">{{ . }}</span>
               </div>
             {{ end }}
@@ -23,7 +23,7 @@
               {{ .title }}
             </h3>
             
-            <p class="text-text-primary">
+            <p class="text-text-primary prose max-w-none">
               {{ .description }}
             </p>
     
@@ -42,7 +42,7 @@
             {{ end }}
           </div>
     
-          <div class="mt-6"> <a href="{{ .button_url | relURL }}" class="inline-block btn-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale w-full text-center">
+          <div class="mt-2"> <a href="{{ .button_url | relURL }}" class="inline-block btn-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale w-full text-center">
               En savoir plus
             </a>
           </div>

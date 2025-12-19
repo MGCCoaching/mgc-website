@@ -1,15 +1,16 @@
 {{/* layouts/_partials/home-sections/latest-podcast.html */}}
-<section class="latest-podcast bg-secondary py-16 md:py-20">
+<section class="latest-podcast bg-secondary py-10 md:py-20">
     <div class="container mx-auto ">
       
       {{/* Header */}}
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up">
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-text-primary mb-2 animate-on-scroll-fade-up">
           {{ .Title }}
         </h2>
-        <div class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">
-          {{ .Content }}
-        </div>
+
+        <h5 class="text-text-secondary text-center animate-on-scroll-fade-up animate-stagger-1">
+            {{ .Content | plainify }}
+          </h5>
       </div>
   
       {{/* Grille des podcasts */}}

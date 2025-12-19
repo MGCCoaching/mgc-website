@@ -1,44 +1,27 @@
 {{/* Section FAQ rapide */}}
 <section class="bg-primary py-16 md:py-20">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-6">
-        <h2 class="text-3xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up">Questions fréquentes</h2>
-        <p class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">Avant de me contacter, peut-être trouverez-vous votre réponse ici</p>
-      </div>
-  
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {{/* FAQ 1 */}}
-        <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-1">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">help</span>
-            <h4 class="font-semibold text-text-primary">Comment se déroule une séance ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Chaque séance est personnalisée selon vos objectifs : exercices pratiques, mises en situation, et feedback constructif.
-          </p>
-        </div>
-  
-        {{/* FAQ 2 */}}
-        <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-2">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">payments</span>
-            <h4 class="font-semibold text-text-primary">Quels sont vos tarifs ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Les tarifs varient selon la prestation. Contactez-moi pour un devis personnalisé adapté à vos besoins.
-          </p>
-        </div>
-  
-        {{/* FAQ 3 */}}
-        <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-3">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">videocam</span>
-            <h4 class="font-semibold text-text-primary">Proposez-vous des séances à distance ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Oui ! Je propose des accompagnements en présentiel à Amiens et en visioconférence partout en France.
-          </p>
-        </div>
-      </div>
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-6">
+      <h2 class="font-bold text-text-primary mb-4 animate-on-scroll-fade-up">{{ .Title }}</h2>
+      {{ with .Params.subtitle }}
+        <h5 class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">{{ . | plainify }}</h5>
+      {{ end }}
     </div>
-  </section>
+
+    {{ with .Params.faqs }}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {{ range $index, $faq := . }}
+        <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-{{ add $index 1 }}">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
+            <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
+          </div>
+          <p class="text-text-secondary text-sm">
+            {{ $faq.answer }}
+          </p>
+        </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</section>
