@@ -14,8 +14,8 @@
           
           <div class="flex flex-col flex-grow">
             {{ with .icon }}
-              <div class="text-3xl text-center">
-                <span class="material-symbols-outlined icon-accent">{{ . }}</span>
+              <div class="text-center">
+                <span class="material-symbols-outlined icon-accent icon-lg">{{ . }}</span>
               </div>
             {{ end }}
             
@@ -23,9 +23,9 @@
               {{ .title }}
             </h3>
             
-            <p class="text-text-primary prose max-w-none text-center">
+            <div class="text-text-primary max-w-2xl mx-auto text-justify space-y-4">
               {{ .description | markdownify }}
-            </p>
+            </div>
           </div>
     
           <div class="mt-4 text-center">

@@ -13,7 +13,7 @@ tags:
 episode_number: 1
 duration: "24:35"
 guests:
-  - Jean-Marc Dupont (Expert en Communication Corporate)
+  - Jessie Dupont (Expert en Communication Corporate)
 audio_url: ""
 ---
 
