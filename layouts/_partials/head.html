@@ -30,17 +30,35 @@
 <meta name="robots" content="{{ if .Site.Params.robots.index }}index{{ else }}noindex{{ end }}, {{ if .Site.Params.robots.follow }}follow{{ else }}nofollow{{ end }}{{ if .Site.Params.robots.noarchive }}, noarchive{{ end }}{{ if .Site.Params.robots.nosnippet }}, nosnippet{{ end }}">
 
 {{/* --- 4. Balises Open Graph (OG) pour le partage social --- */}}
+{{/* Déterminer l'image OG : priorité à l'image du bundle, sinon fallback sur l'image globale */}}
+{{- $ogImage := "" -}}
+{{- $ogImageWidth := .Site.Params.opengraph.imageWidth | default 1200 -}}
+{{- $ogImageHeight := .Site.Params.opengraph.imageHeight | default 630 -}}
+{{- $ogImageAlt := .Title | default .Site.Title -}}
+
+{{/* 1. Vérifier si la page a une image dans son bundle (pour podcasts, articles, etc.) */}}
+{{- $pageImage := (index (.Resources.ByType "image") 0) -}}
+{{- if $pageImage -}}
+  {{- $ogImage = $pageImage.Permalink -}}
+{{/* 2. Vérifier si une image est définie dans le front matter */}}
+{{- else if .Params.image -}}
+  {{- $ogImage = .Params.image | absURL -}}
+{{/* 3. Fallback sur l'image Open Graph globale du site */}}
+{{- else if .Site.Params.opengraph.image -}}
+  {{- $ogImage = .Site.Params.opengraph.image | absURL -}}
+{{- end -}}
+
 <meta property="og:title" content="{{ .Title }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:locale" content="{{ .Site.Language.Lang }}">
-{{ with .Site.Params.opengraph.image }}
-<meta property="og:image" content="{{ . | absURL }}">
-<meta property="og:image:width" content="{{ $.Site.Params.opengraph.imageWidth | default 1200 }}">
-<meta property="og:image:height" content="{{ $.Site.Params.opengraph.imageHeight | default 630 }}">
-<meta property="og:image:alt" content="{{ $.Site.Title }}">
+{{ if $ogImage }}
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:image:width" content="{{ $ogImageWidth }}">
+<meta property="og:image:height" content="{{ $ogImageHeight }}">
+<meta property="og:image:alt" content="{{ $ogImageAlt }}">
 {{ end }}
 
 {{/* --- 5. Twitter Cards --- */}}
@@ -55,8 +73,8 @@
 {{ end }}
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ $description }}">
-{{ with .Site.Params.opengraph.image }}
-<meta name="twitter:image" content="{{ . | absURL }}">
+{{ if $ogImage }}
+<meta name="twitter:image" content="{{ $ogImage }}">
 {{ end }}
 
 {{/* --- 6. Schema.org (JSON-LD) - ProfessionalService --- */}}
