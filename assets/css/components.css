@@ -23,10 +23,12 @@
     @apply rounded-lg bg-transparent;
     @apply transition-colors duration-150;
     @apply text-text-primary;
+    @apply text-2xl
   }
   
   .btn-menu:hover {
     @apply underline;
+    @apply text-accent-hover
   }
   
   .btn-primary {

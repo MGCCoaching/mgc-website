@@ -5,6 +5,7 @@
 # ------------------------------------------------------------------------------
 description = 'Révélez votre voix unique grâce au coaching média. Je vous aide à construire une marque personnelle forte et crédible en ligne. Parlez avec impact et authenticité pour fidéliser votre audience sur tous les canaux médiatiques.'
 author = 'Marie-Gaëtane Comte'
+author_subtitle = "Média training & prise de parole"
 keywords = [
   "coaching média", 
   "media training", 
