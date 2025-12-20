@@ -30,16 +30,16 @@
 <meta name="robots" content="{{ if .Site.Params.robots.index }}index{{ else }}noindex{{ end }}, {{ if .Site.Params.robots.follow }}follow{{ else }}nofollow{{ end }}{{ if .Site.Params.robots.noarchive }}, noarchive{{ end }}{{ if .Site.Params.robots.nosnippet }}, nosnippet{{ end }}">
 
 {{/* --- 4. Balises Open Graph (OG) pour le partage social --- */}}
-{{/* Déterminer l'image OG : priorité à l'image du bundle, sinon fallback sur l'image globale */}}
+{{/* Déterminer l'image OG : priorité à cover.*, sinon fallback sur l'image globale */}}
 {{- $ogImage := "" -}}
 {{- $ogImageWidth := .Site.Params.opengraph.imageWidth | default 1200 -}}
 {{- $ogImageHeight := .Site.Params.opengraph.imageHeight | default 630 -}}
 {{- $ogImageAlt := .Title | default .Site.Title -}}
 
-{{/* 1. Vérifier si la page a une image dans son bundle (pour podcasts, articles, etc.) */}}
-{{- $pageImage := (index (.Resources.ByType "image") 0) -}}
-{{- if $pageImage -}}
-  {{- $ogImage = $pageImage.Permalink -}}
+{{/* 1. Chercher une image cover.* dans le bundle (cover.jpg, cover.png, cover.webp, etc.) */}}
+{{- $coverImage := .Resources.GetMatch "cover.*" -}}
+{{- if $coverImage -}}
+  {{- $ogImage = $coverImage.Permalink -}}
 {{/* 2. Vérifier si une image est définie dans le front matter */}}
 {{- else if .Params.image -}}
   {{- $ogImage = .Params.image | absURL -}}
