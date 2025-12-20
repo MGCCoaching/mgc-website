@@ -1456,6 +1456,9 @@
   .mb-12 {
     margin-bottom: calc(var(--spacing) * 12);
   }
+  .ml-5 {
+    margin-left: calc(var(--spacing) * 5);
+  }
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;
@@ -1760,6 +1763,9 @@
   }
   .resize-none {
     resize: none;
+  }
+  .list-disc {
+    list-style-type: disc;
   }
   .appearance-none {
     appearance: none;
@@ -3300,6 +3306,27 @@
     @media (width >= 64rem) {
       font-size: var(--text-7xl);
       line-height: var(--tw-leading, var(--text-7xl--line-height));
+    }
+  }
+  .prose-li\:text-text-secondary {
+    & :is(:where(li):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+      color: var(--color-text-secondary);
+    }
+  }
+  .prose-li\:marker\:text-accent-primary {
+    & :is(:where(li):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+      & *::marker {
+        color: var(--color-accent-primary);
+      }
+      &::marker {
+        color: var(--color-accent-primary);
+      }
+      & *::-webkit-details-marker {
+        color: var(--color-accent-primary);
+      }
+      &::-webkit-details-marker {
+        color: var(--color-accent-primary);
+      }
     }
   }
 }
