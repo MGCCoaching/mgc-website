@@ -1,6 +1,7 @@
 ---
 title: "Maîtriser le Message Clé"
 subtitle: "Stratégie de Communication"
+description: "Courte description de l'épisode pour le partage sur les réseaux sociaux (150-160 caractères recommandés)."
 date: 2025-12-10T18:31:00+01:00
 draft: false
 categories:

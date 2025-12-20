@@ -14,7 +14,8 @@
 </script>
 
 {{/* --- 1. Balises Méta SEO classiques --- */}}
-{{- $description := .Description | default .Site.Params.description -}}
+{{/* Priorité : .Params.description (front matter) > .Description (Hugo auto) > Site.Params.description */}}
+{{- $description := .Params.description | default .Description | default .Site.Params.description -}}
 <meta name="description" content="{{ $description }}">
 {{ with .Site.Params.author }}
 <meta name="author" content="{{ . }}">
