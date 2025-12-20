@@ -12,24 +12,24 @@
       {{ range . }}
         <div class="bg-primary p-4 border-accent-primary border rounded-lg shadow-themed flex flex-col">
           
-          <div class="flex flex-col  flex-grow">
+          <div class="flex flex-col flex-grow">
             {{ with .icon }}
-              <div class="text-3xl ">
+              <div class="text-3xl text-center">
                 <span class="material-symbols-outlined icon-accent">{{ . }}</span>
               </div>
             {{ end }}
             
-            <h3 class="font-semibold text-text-primary mb-2">
+            <h3 class="font-semibold text-text-primary mb-2 text-center">
               {{ .title }}
             </h3>
             
-            <p class="text-text-primary prose max-w-none">
-              {{/*  {{ .description }}  */}}
+            <p class="text-text-primary prose max-w-none text-center">
               {{ .description | markdownify }}
             </p>
           </div>
     
-          <div class="mt-2"> <a href="{{ .button_url | relURL }}" class="inline-block btn-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale w-full text-center">
+          <div class="mt-4 text-center">
+            <a href="{{ .button_url | relURL }}" class="inline-block btn-primary bg-accent-primary hover:bg-accent-hover text-text-inverse px-8 py-3 rounded-lg font-semibold transition-colors">
               En savoir plus
             </a>
           </div>
