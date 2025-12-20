@@ -50,7 +50,7 @@
                     {{/*  <hr class=" text-accent-primary my-8">  */}}
                     
                     {{ with .Params.guests }}
-                    <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
+                    <div class="flex flex-col items-start  gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
                         {{ range . }}
                         <h4 class=" font-bold ">Invité(e):</h4>
                         <h4 >{{ . }}</h4>
@@ -95,7 +95,7 @@
                 {{/*  <hr class=" text-accent-primary my-8">  */}}
                 
                 {{ with .Params.guests }}
-                <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
+                <div class="flex items-start gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
                     {{ range . }}
                     <h4 class=" font-bold ">Invité(e):</h4>
                     <h4 >{{ . }}</h4>
