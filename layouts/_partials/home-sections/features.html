@@ -24,22 +24,9 @@
             </h3>
             
             <p class="text-text-primary prose max-w-none">
-              {{ .description }}
+              {{/*  {{ .description }}  */}}
+              {{ .description | markdownify }}
             </p>
-    
-            {{ with .list }}
-              <ul class="text-text-primary py-2">
-                {{ range . }}
-                  <li class="list-icon">{{ . }}</li>
-                {{ end }}
-              </ul>
-            {{ end }}
-    
-            {{ with .description02 }}
-              <p class="text-text-primary">
-                {{ . }}
-              </p>
-            {{ end }}
           </div>
     
           <div class="mt-2"> <a href="{{ .button_url | relURL }}" class="inline-block btn-primary px-8 py-3 rounded-lg font-semibold transition-colors shadow-xl animate-on-scroll-scale w-full text-center">

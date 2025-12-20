@@ -51,85 +51,21 @@ testimonial:
   name: "Caroline Martin"
   role: "Directrice Communication, Groupe Industriel"
 ---
+### Pourquoi faire appel à une ancienne journaliste pour vos événements ?
 
-## Une animation qui fait la différence
+- **La rigueur journalistique** au service de votre message
+- **La maîtrise du direct** et des imprévus
+- **S'approprier rapidement** des sujets complexes
+- **Donner la parole** et faire émerger l'intelligence collective
+- **Une présence professionnelle**, dynamique et rassurante
 
-Un événement réussi, c'est bien plus qu'une succession d'interventions. C'est une **expérience fluide** où chaque moment s'enchaîne naturellement, où le public reste **engagé** du début à la fin, et où vos messages clés sont **amplifiés** plutôt que noyés.
-
-### Mon approche
-
-Après **15 ans** à présenter des émissions en direct, à interviewer des personnalités sous pression et à gérer les imprévus du live, j'ai développé une expertise unique dans l'art de **créer du lien** entre une scène et son public.
-
-**Ce que j'apporte à vos événements :**
-
-- Une **énergie communicative** qui dynamise l'assemblée
-- Une **écoute active** pour rebondir sur l'essentiel
-- Une **maîtrise du direct** pour gérer les aléas avec sérénité
-- Une **préparation minutieuse** pour valoriser chaque intervenant
-
-### Types d'événements
-
-#### 🎤 Conférences & Keynotes
-Animation de journées complètes, introduction des speakers, synthèse des interventions et animation des sessions de questions.
-
-#### 💬 Tables rondes & Débats
-Modération de discussions avec plusieurs intervenants, gestion du temps de parole, relances pertinentes et synthèse des points de convergence/divergence.
-
-#### 🏢 Séminaires d'entreprise
-Animation de conventions, kick-offs, team buildings : créer une dynamique collective et porter les messages de la direction.
-
-#### 🎉 Soirées de gala & Remises de prix
-Maîtrise de cérémonie avec le ton juste : solennité quand il faut, légèreté quand c'est approprié.
-
-#### 🖥️ Événements hybrides & Digitaux
-Animation de webinaires, lives LinkedIn, événements en streaming avec gestion simultanée du public présentiel et distant.
-
-### Ce qui me distingue
-
-| Compétence | Bénéfice pour vous |
-|------------|-------------------|
-| **Expérience TV/Radio** | Maîtrise du direct et des imprévus |
-| **Background journalistique** | Questions pertinentes, écoute active |
-| **Préparation approfondie** | Connaissance fine de vos enjeux |
-| **Adaptabilité** | Ajustement en temps réel selon l'ambiance |
-| **Bienveillance** | Mise en confiance des intervenants |
-
-### Ma préparation
-
-Je ne me contente pas d'arriver le jour J avec un conducteur. Ma préparation inclut :
-
-1. **Immersion dans votre univers**  
-   Compréhension de votre secteur, votre culture d'entreprise, vos enjeux actuels.
-
-2. **Échange avec les intervenants**  
-   Brief individuel avec chaque speaker pour comprendre leur message et préparer des questions sur-mesure.
-
-3. **Rédaction du fil rouge**  
-   Création d'un conducteur détaillé avec transitions, accroches et points de repère temporels.
-
-4. **Coordination technique**  
-   Synchronisation avec vos équipes son, lumière, vidéo pour une exécution fluide.
-
-### Quelques références
-
-Au fil des années, j'ai eu le plaisir d'animer des événements pour des organisations variées :
-
-- Conventions d'entreprise (500+ personnes)
-- Conférences sectorielles
-- Remises de prix et cérémonies officielles
-- Tables rondes institutionnelles
-- Webinaires et événements digitaux
+---
 
 ### Tarification
 
 Les tarifs varient selon :
 - La durée de l'événement
 - Le niveau de préparation requis
-- Le lieu (déplacements éventuels)
+- Le lieu
 - Les besoins spécifiques
 
-**Contactez-moi pour un devis personnalisé.**
-
----
-
-*Votre événement mérite plus qu'un présentateur. Il mérite quelqu'un qui le fait vivre.*

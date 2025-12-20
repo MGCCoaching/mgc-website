@@ -70,40 +70,44 @@
             </div>
             {{/* Mobile view card */}}
             <div class="md:hidden px-4">
-                <a href="{{ .Permalink }}" class="relative block h-32 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
+                <a href="{{ .Permalink }}" class="relative block h-52 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
                 
-                {{/* Image de fond */}}
-                {{ if $image }}
-                    <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover">
-                {{ else }}
-                    <img src="{{ $fallbackImagePath | relURL }}" alt="Podcast" class="absolute inset-0 w-full h-full object-cover">
-                {{ end }}
-            
-                {{/* Overlay sombre */}}
-                <div class="absolute inset-0 bg-black/30"></div>
-            
-                {{/* Contenu */}}
-                <div class="relative h-full flex flex-col justify-between p-3">
-                    
-                    {{/* Numéro d'épisode en haut */}}
-                    <div>
-                    <span class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
-                        Épisode {{ .Params.episode_number | default "?" }}
-                    </span>
+                    {{/* Image de fond */}}
+                    {{ if $image }}
+                        <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover">
+                    {{ else }}
+                        <img src="{{ $fallbackImagePath | relURL }}" alt="Podcast" class="absolute inset-0 w-full h-full object-cover">
+                    {{ end }}
+                
+                    {{/* Overlay sombre */}}
+                    <div class="absolute inset-0 bg-black/30"></div>
+                
+                    {{/* Contenu */}}
+                    <div class="relative h-full flex flex-col justify-between p-3">
+                        
+                        {{/* Numéro d'épisode en haut */}}
+                        <div>
+                        <span class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
+                            Épisode {{ .Params.episode_number | default "?" }}
+                        </span>
+                        </div>
+                
+                        {{/* Titre et durée en bas */}}
+                        <div>
+                        <h4 class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                            {{ .Title }}
+                        </h4>
+                        <p class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                            {{ .Params.Subtitle }}
+                        </p>
+
+                        <div class="flex items-center gap-1 text-text-inverse text-xs">
+                            <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
+                            <span>{{ $duration }}</span>
+                        </div>
+                        </div>
+                
                     </div>
-            
-                    {{/* Titre et durée en bas */}}
-                    <div>
-                    <h4 class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
-                        {{ .Title }}
-                    </h4>
-                    <div class="flex items-center gap-1 text-text-inverse text-xs">
-                        <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
-                        <span>{{ $duration }}</span>
-                    </div>
-                    </div>
-            
-                </div>
                 </a>
             </div>
         {{ end }}

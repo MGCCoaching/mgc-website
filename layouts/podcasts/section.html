@@ -16,9 +16,12 @@
 }
 </script>
 
-    <section class="bg-primary md:px-30 py-6">
+    <section class="bg-primary md:px-30 mt-8 py-6">
+        <div class="block w-fit mx-auto bg-accent-primary text-white text-sm font-medium px-3 py-1 rounded-full mb-4 animate-on-scroll-fade-up">
+            Podcasts
+        </div>
         <h2 class=" text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h2>
-        <div class="text-primary p-3  prose prose-lg max-w-none mx-auto">{{ .Content }}</div>
+        <div class="text-primary p-3  prose prose-lg max-w-none mx-auto animate-on-scroll-fade-up animate-stagger-2">{{ .Content }}</div>
     </section>
     
     <section class="bg-primary p-6 sm:p-12 bg-secondary">    

@@ -9,16 +9,16 @@
     </div>
 
     {{ with .Params.faqs }}
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div class="grid sm:grid-cols-2  gap-6 max-w-5xl mx-auto">
       {{ range $index, $faq := . }}
         <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-{{ add $index 1 }}">
           <div class="flex items-center gap-3 mb-3">
             <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
             <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
           </div>
-          <p class="text-text-secondary text-sm">
-            {{ $faq.answer }}
-          </p>
+          <div class="text-text-secondary prose prose-sm">
+            {{ $faq.answer | markdownify }}
+          </div>
         </div>
       {{ end }}
     </div>
