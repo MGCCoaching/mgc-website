@@ -99,4 +99,3 @@ C'est dans votre intérêt de vous former, de vous préparer, pour que vous n'ay
   </tbody>
 </table>
 
-Suite du contenu en Markdown...
