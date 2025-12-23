@@ -54,41 +54,45 @@
         
         {{/* Version MOBILE : 1 FAQ par slide */}}
         <div class="faq-mobile-wrapper sm:hidden">
-          {{ range $index, $faq := . }}
-            <div class="faq-slide-mobile transition-opacity duration-500 ease-in-out{{ if ne $index 0 }} absolute inset-0 opacity-0 pointer-events-none{{ end }}" data-slide="{{ $index }}">
-              <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
-                  <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
-                </div>
-                <div class="text-text-secondary text-sm prose prose-sm">
-                  {{ $faq.answer | markdownify }}
+          <div class="faq-track-mobile flex transition-transform duration-500 ease-out">
+            {{ range $index, $faq := . }}
+              <div class="faq-slide-mobile w-full flex-shrink-0 px-1" data-slide="{{ $index }}">
+                <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
+                  <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
+                    <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
+                  </div>
+                  <div class="text-text-secondary text-sm prose prose-sm">
+                    {{ $faq.answer | markdownify }}
+                  </div>
                 </div>
               </div>
-            </div>
-          {{ end }}
+            {{ end }}
+          </div>
         </div>
 
         {{/* Version DESKTOP : 2 FAQ par slide */}}
         <div class="faq-desktop-wrapper hidden sm:block">
-          {{ range $slideIndex := seq 0 (sub $totalSlidesDesktop 1) }}
-            {{ $start := mul $slideIndex 2 }}
-            {{ $faqsInSlide := first 2 (after $start $faqs) }}
-            
-            <div class="faq-slide-desktop grid sm:grid-cols-2 gap-6 transition-opacity duration-500 ease-in-out{{ if ne $slideIndex 0 }} absolute inset-0 opacity-0 pointer-events-none{{ end }}" data-slide="{{ $slideIndex }}">
-              {{ range $faqsInSlide }}
-                <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
-                  <div class="flex items-center gap-3 mb-3">
-                    <span class="material-symbols-outlined text-accent-primary">{{ .icon | default "help" }}</span>
-                    <h4 class="font-semibold text-text-primary">{{ .question }}</h4>
+          <div class="faq-track-desktop flex transition-transform duration-500 ease-out">
+            {{ range $slideIndex := seq 0 (sub $totalSlidesDesktop 1) }}
+              {{ $start := mul $slideIndex 2 }}
+              {{ $faqsInSlide := first 2 (after $start $faqs) }}
+              
+              <div class="faq-slide-desktop w-full flex-shrink-0 grid sm:grid-cols-2 gap-6 p-2" data-slide="{{ $slideIndex }}">
+                {{ range $faqsInSlide }}
+                  <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="material-symbols-outlined text-accent-primary">{{ .icon | default "help" }}</span>
+                      <h4 class="font-semibold text-text-primary">{{ .question }}</h4>
+                    </div>
+                    <div class="text-text-secondary text-sm prose prose-sm">
+                      {{ .answer | markdownify }}
+                    </div>
                   </div>
-                  <div class="text-text-secondary text-sm prose prose-sm">
-                    {{ .answer | markdownify }}
-                  </div>
-                </div>
-              {{ end }}
-            </div>
-          {{ end }}
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
         </div>
 
       </div>

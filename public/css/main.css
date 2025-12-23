@@ -1418,6 +1418,9 @@
   .flex-1 {
     flex: 1;
   }
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
   .shrink-0 {
     flex-shrink: 0;
   }
@@ -1751,6 +1754,9 @@
   }
   .p-8 {
     padding: calc(var(--spacing) * 8);
+  }
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);

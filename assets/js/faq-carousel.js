@@ -1,5 +1,5 @@
 /**
- * FAQ Carousel - Gestion du carrousel responsive
+ * FAQ Carousel - Gestion du carrousel responsive avec transition slide
  * Mobile: 1 FAQ par slide / Desktop: 2 FAQ par slide
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentSlideMobile = 0;
   let currentSlideDesktop = 0;
   
+  const trackMobile = document.querySelector('.faq-track-mobile');
+  const trackDesktop = document.querySelector('.faq-track-desktop');
   const slidesMobile = document.querySelectorAll('.faq-slide-mobile');
   const slidesDesktop = document.querySelectorAll('.faq-slide-desktop');
   const dotsMobile = document.querySelectorAll('.faq-dots-mobile .faq-dot');
@@ -23,16 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
     return window.innerWidth < 640;
   }
   
-  function updateSlides(slides, currentSlide) {
-    slides.forEach((slide, index) => {
-      if (index === currentSlide) {
-        slide.classList.remove('opacity-0', 'pointer-events-none', 'absolute', 'inset-0');
-        slide.classList.add('opacity-100');
-      } else {
-        slide.classList.add('opacity-0', 'pointer-events-none', 'absolute', 'inset-0');
-        slide.classList.remove('opacity-100');
-      }
-    });
+  function updateTrack(track, currentSlide) {
+    if (track) {
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
   }
   
   function updateDots(dots, currentSlide) {
@@ -54,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function updateCarousel() {
     if (isMobile()) {
-      updateSlides(slidesMobile, currentSlideMobile);
+      updateTrack(trackMobile, currentSlideMobile);
       updateDots(dotsMobile, currentSlideMobile);
       updateButtons(prevBtnMobile, nextBtnMobile, currentSlideMobile, slidesMobile.length);
     } else {
-      updateSlides(slidesDesktop, currentSlideDesktop);
+      updateTrack(trackDesktop, currentSlideDesktop);
       updateDots(dotsDesktop, currentSlideDesktop);
       updateButtons(prevBtnDesktop, nextBtnDesktop, currentSlideDesktop, slidesDesktop.length);
     }
