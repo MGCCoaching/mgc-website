@@ -22,8 +22,9 @@ keywords = [
 # Open Graph / Social Media
 # ------------------------------------------------------------------------------
 [social]
-  linkedin = 'https://linkedin.com/in/marie-gaetane-comte'
-  instagram = 'https://instagram.com/'
+  linkedin = 'https://www.linkedin.com/in/marie-ga%C3%ABtane-comte-523b60383?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app'
+
+  instagram = 'https://instagram.com/marie_gaetane_comte'
 
 [opengraph]
   image = '/img/logo.webp'
@@ -59,9 +60,9 @@ keywords = [
 # Contact Information
 # ------------------------------------------------------------------------------
 [contact]
-  email = 'contact@-------.fr'
-  phone = '+33 6 00 00 00 00'
-  address = 'Amiens, France'
+  email = 'mariegaetanecomte@gmail.com'
+  phone = '+33 6 16 45 74 78'
+  address = 'Amiens et ses alentours, France'
 
 # Copyright
 # ------------------------------------------------------------------------------

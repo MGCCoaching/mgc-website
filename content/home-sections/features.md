@@ -16,7 +16,7 @@ features:
     description: |
      Réunion, prise de parole sur scène, soutenance ou oral d’examen… Dans ces moments clés, ce n’est pas seulement ce que vous dites qui compte, mais la manière dont vous le dites. Une idée mal portée s’efface. Un message flou n’est pas retenu. Une voix hésitante n’est pas entendue. 
      
-     Il n’y a pas d’orateurs nés, il n’y a que des travailleurs acharnés."
+     Il n’y a pas d’orateurs nés, il n’y a que des travailleurs acharnés.
   - title: "Animation d'événements"
     icon: "crowdsource"
     button_url: "/features/animation-evenements"

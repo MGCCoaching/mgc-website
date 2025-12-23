@@ -5,4 +5,3 @@ section: "latest-podcasts"
 mobile: 1
 desktop: 3
 ---
-Decouvrez les derniers podcasts

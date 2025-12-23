@@ -63,11 +63,11 @@ C'est dans votre intérêt de vous former, de vous préparer, pour que vous n'ay
 
 ### En pratique
 
-| | |
-|---|---|
+|  |  |
+|----|---|
 | **Pour qui ?** | Toute personne qui souhaite répondre aux journalistes |
 | **Pourquoi ?** | Parce qu'une interview bien préparée fait toute la différence, et qu'investir en soi est la première étape pour opérer un véritable changement |
-| **Comment ?** | En répétant dans les conditions du direct — laissez-vous guider, j'ai 20 ans de métier |
+| **Comment ?** | En répétant dans les conditions du direct : laissez-vous guider, j'ai 20 ans de métier |
 | **Où ?** | Chez vous, dans votre entreprise, dans des bureaux que je louerai ou en visio |
-| **Quand ?** | Sur mesure en fonction de vos besoins |
+| **Quand ?** | Sur mesure en fonction de vos disponilités |
 | **Combien ?** | Sur devis |

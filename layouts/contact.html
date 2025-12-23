@@ -155,7 +155,7 @@
             <span class="material-symbols-outlined text-white">schedule</span>
           </div>
           <div>
-            <p class="text-text-primary font-semibold">Réponse sous 24-48h</p>
+            <p class="text-text-primary font-semibold">Réponse sous 24h</p>
             <p class="text-text-secondary text-sm">Du lundi au vendredi</p>
           </div>
         </div>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Email</p>
-                  <p class="text-text-primary font-medium truncate group-hover:text-accent-primary transition-colors">contact@mgc-coaching.fr</p>
+                  <p class="text-text-primary font-medium truncate group-hover:text-accent-primary transition-colors">{{ .Site.Params.Contact.Email }}</p>
                 </div>
                 <span class="material-symbols-outlined text-text-tertiary group-hover:text-accent-primary group-hover:translate-x-1 transition-all">chevron_right</span>
               </div>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Téléphone</p>
-                  <p class="text-text-primary font-medium group-hover:text-accent-primary transition-colors">+33 6 00 00 00 00</p>
+                  <p class="text-text-primary font-medium group-hover:text-accent-primary transition-colors"> {{ .Site.Params.Contact.Phone }}</p>
                 </div>
                 <span class="material-symbols-outlined text-text-tertiary group-hover:text-success group-hover:translate-x-1 transition-all">chevron_right</span>
               </div>
@@ -242,7 +242,7 @@
                     </div>
                   </div>
                   <div>
-                    <p class="text-text-primary font-bold ">Réponse sous 24-48h</p>
+                    <p class="text-text-primary font-bold ">Réponse sous 24h</p>
                     <p class="text-text-secondary text-sm">Du lundi au vendredi</p>
                   </div>
                 </div>

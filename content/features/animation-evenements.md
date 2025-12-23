@@ -1,6 +1,6 @@
 ---
 title: "Animation d'événements"
-subtitle: "Donnez vie à vos événements avec une animation professionnelle et engageante"
+subtitle: "Donnez vie à vos événements avec une animation professionnelle et pétillante"
 icon: "crowdsource"
 category: "Animation"
 image: "/img/animation-evenements.png"
