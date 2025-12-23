@@ -44,7 +44,11 @@ L'utilisation du site implique l'acceptation pleine et entière des conditions g
 
 Le contenu du site est protégé par la législation en vigueur sur la propriété intellectuelle. Le contenu du site appartient à la propriété pleine et entière du propriétaire du site identifié ci-dessus.
 
-### 4. Données personnelles
+### 4. Crédits visuels
+
+Certaines illustrations de ce site sont générées par intelligence artificielle. Ces images ne représentent pas de personnes réelles et sont utilisées conformément aux licences commerciales des outils concernés.
+
+### 5. Données personnelles
 
 Une donnée personnelle, au sens du Règlement Général sur la Protection des Données (RGPD) du 27 avril 2016 (UE 2016/679), est toute information se rapportant à une personne physique identifiée ou identifiable, directement ou indirectement.
 
@@ -52,7 +56,7 @@ Les informations recueillies sur le site sont enregistrées dans un fichier info
 
 Conformément à la loi « Informatique et Libertés » n° 78-17 du 6 janvier 1978, l'utilisateur peut exercer ses droits d'accès, de retrait, d'effacement et de rectification des données le concernant en s'adressant à : mariegaetanecomte@gmail.com
 
-### 5. Cookies
+### 6. Cookies
 
 Un cookie, au sens de la réglementation RGPD précitée, est un petit fichier de données envoyé par un site web et stocké sur le terminal de l'utilisateur (ordinateur, smartphone, tablette) lors de sa navigation. Les cookies peuvent contenir diverses informations.
 
@@ -60,11 +64,11 @@ L'utilisation de cookies nécessite le consentement éclairé de l'utilisateur, 
 
 Le présent site utilise des cookies pour améliorer l'expérience utilisateur. Vous pouvez choisir de désactiver les cookies non nécessaires en modifiant les paramètres de votre navigateur.
 
-### 6. Liens hypertextes
+### 7. Liens hypertextes
 
 Le site peut contenir des liens hypertextes, notamment vers d'autres sites. Le propriétaire ne peut être tenu pour responsable du contenu de ces sites, et l'accès à ces sites se fait sous la responsabilité exclusive de l'utilisateur.
 
-### 7. Droit applicable et litiges
+### 8. Droit applicable et litiges
 
 Les présentes mentions légales sont régies par le droit français en vigueur. Tout litige en relation avec l'utilisation du site est soumis au droit français et devra être examiné exclusivement à la lumière de la réglementation française applicable.
 
