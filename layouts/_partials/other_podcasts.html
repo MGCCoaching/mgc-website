@@ -49,24 +49,26 @@
                 
                 {{/* Numéro d'épisode en haut */}}
                 <div>
-                <span class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
+                <p class="inline-block bg-accent-primary text-secondary  font-medium px-2 py-1 rounded-full">
                     Épisode {{ .Params.episode_number | default "?" }}
-                </span>
+                </p>
                 </div>
         
                 {{/* Titre et durée en bas */}}
                 <div>
-                <h4 class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
-                    {{ .Title }}
-                </h4>
-                <p class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
-                    {{ .Params.Subtitle }}
-                </p>
+                  <h4 class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                      {{ .Title }}
+                  </h4>
+                  <p class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                      {{ .Params.Subtitle }}
+                  </p>
 
-                <div class="flex items-center gap-1 text-text-inverse text-xs">
+                  <div class="flex items-center gap-1 text-text-inverse text-xs">
                     <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
-                    <span>{{ $duration }}</span>
-                </div>
+                    <p>{{ $duration }}</p>
+                    <span class="material-symbols-outlined ml-4 mr-1 text-base">calendar_today</span>
+                    <p>{{ .Date.Format "02/01/06" }}</p>
+                  </div>
                 </div>
         
             </div>

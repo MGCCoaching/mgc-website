@@ -79,3 +79,6 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
 # ------------------------------------------------------------------------------
 [pages]
   podcasts = true
+
+[cookies]
+  enabled = false   # true = bandeau actif, false = désactivé

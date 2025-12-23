@@ -36,7 +36,7 @@
   weight = 30
 
 [[footer]]
-  name = 'Mentions légale'
-  pageRef = '/legale'
+  name = 'Mentions légales'
+  pageRef = '/legal'
   weight = 40
 

@@ -10,7 +10,7 @@ tags:
   - message
   - pitch
   - structuration
-episode_number: 1
+episode_number: 01
 duration: "24:35"
 guests:
   - Jessie Dupont (Expert en Communication Corporate)

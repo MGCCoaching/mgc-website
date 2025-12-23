@@ -6,12 +6,16 @@
       
       {{/* Bloc Image : occupe 5 colonnes sur 12 */}}
       {{ with .Params.image }}
-      <div class="lg:col-span-5 relative mb-12 lg:mb-0 animate-on-scroll-fade-up">
+      <div class="lg:col-span-5 relative mx-auto lg:mx-0 mb-12 lg:mb-0 animate-on-scroll-fade-up">
         <div class="relative z-20">
-          <img src="{{ . }}" class="rounded-sm w-full h-[500px] object-cover shadow-2xl  transition-all duration-700">
+          <img 
+            src="{{ . }}" 
+            alt="{{ $.Title }}"
+            class="rounded-sm w-auto max-w-64 sm:max-w-72 md:max-w-80 lg:max-w-none lg:w-full h-48 sm:h-56 md:h-72 lg:h-[500px] object-cover shadow-2xl transition-all duration-700"
+          >
         </div>
         {{/* Carré de couleur décoratif qui dépasse */}}
-        <div class="absolute -top-6 -left-6 w-32 h-32 bg-accent-primary -z-10"></div>
+        <div class="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 w-20 sm:w-24 md:w-28 lg:w-32 h-20 sm:h-24 md:h-28 lg:h-32 bg-accent-primary -z-10"></div>
       </div>
       {{ end }}
 
