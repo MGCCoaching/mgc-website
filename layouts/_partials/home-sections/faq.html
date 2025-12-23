@@ -1,27 +1,8 @@
 {{/* Section FAQ rapide */}}
-<section class="bg-primary py-10 md:py-20">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-6">
-      <h2 class="font-bold text-text-primary mb-4 animate-on-scroll-fade-up">{{ .Title }}</h2>
-      {{ with .Params.subtitle }}
-        <h5 class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">{{ . | plainify }}</h5>
-      {{ end }}
-    </div>
 
-    {{ with .Params.faqs }}
-    <div class="grid sm:grid-cols-2  gap-6 max-w-5xl mx-auto">
-      {{ range $index, $faq := . }}
-        <div class="bg-secondary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-{{ add $index 1 }}">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
-            <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
-          </div>
-          <div class="text-text-secondary prose prose-sm">
-            {{ $faq.answer | markdownify }}
-          </div>
-        </div>
-      {{ end }}
-    </div>
-    {{ end }}
-  </div>
-</section>
+
+
+
+{{/* Inverser les fonds */}}
+{{ partial "faq.html" (dict "context" . "bg" "bg-primary" "cardBg" "bg-secondary") }}
+

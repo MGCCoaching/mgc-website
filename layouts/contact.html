@@ -259,5 +259,5 @@
 </section>
 
 {{/* Section FAQ rapide */}}
-  {{ partial "faq.html" . }}
+{{ partial "faq.html" (dict "context" . "bg" "bg-secondary") }}
 {{ end }}

@@ -17,4 +17,11 @@
       <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
     {{ end }}
   {{ end }}
+
+{{/*  Carrousel script  */}}
+  {{ $faqCarousel := resources.Get "js/faq-carousel.js" }}
+  {{ if hugo.IsProduction }}
+    {{ $faqCarousel = $faqCarousel | minify | fingerprint }}
+  {{ end }}
+  <script src="{{ $faqCarousel.RelPermalink }}" defer></script>
 {{ end }}

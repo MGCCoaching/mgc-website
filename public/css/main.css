@@ -237,6 +237,9 @@
   }
 }
 @layer utilities {
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .visible {
     visibility: visible;
   }
@@ -1223,9 +1226,6 @@
   .ml-4 {
     margin-left: calc(var(--spacing) * 4);
   }
-  .ml-5 {
-    margin-left: calc(var(--spacing) * 5);
-  }
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;
@@ -1256,6 +1256,9 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .h-2\.5 {
+    height: calc(var(--spacing) * 2.5);
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
@@ -1267,6 +1270,9 @@
   }
   .h-6 {
     height: calc(var(--spacing) * 6);
+  }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
   }
   .h-10 {
     height: calc(var(--spacing) * 10);
@@ -1316,6 +1322,12 @@
   .w-0\.5 {
     width: calc(var(--spacing) * 0.5);
   }
+  .w-2\.5 {
+    width: calc(var(--spacing) * 2.5);
+  }
+  .w-3 {
+    width: calc(var(--spacing) * 3);
+  }
   .w-4 {
     width: calc(var(--spacing) * 4);
   }
@@ -1324,6 +1336,9 @@
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
+  }
+  .w-9 {
+    width: calc(var(--spacing) * 9);
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
@@ -1443,6 +1458,12 @@
     --tw-scale-z: 105%;
     scale: var(--tw-scale-x) var(--tw-scale-y);
   }
+  .scale-125 {
+    --tw-scale-x: 125%;
+    --tw-scale-y: 125%;
+    --tw-scale-z: 125%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
   .rotate-3 {
     rotate: 3deg;
   }
@@ -1455,11 +1476,11 @@
   .cursor-pointer {
     cursor: pointer;
   }
+  .resize {
+    resize: both;
+  }
   .resize-none {
     resize: none;
-  }
-  .list-disc {
-    list-style-type: disc;
   }
   .appearance-none {
     appearance: none;
@@ -1622,6 +1643,12 @@
   .border-border-primary {
     border-color: var(--color-border-primary);
   }
+  .border-text-tertiary\/30 {
+    border-color: color-mix(in srgb, #7a9496 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-text-tertiary) 30%, transparent);
+    }
+  }
   .border-white {
     border-color: var(--color-white);
   }
@@ -1663,6 +1690,12 @@
   }
   .bg-success {
     background-color: var(--color-success);
+  }
+  .bg-text-tertiary\/40 {
+    background-color: color-mix(in srgb, #7a9496 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-text-tertiary) 40%, transparent);
+    }
   }
   .bg-warning {
     background-color: var(--color-warning);
@@ -1922,6 +1955,9 @@
   .opacity-30 {
     opacity: 30%;
   }
+  .opacity-100 {
+    opacity: 100%;
+  }
   .shadow-xl\/20 {
     --tw-shadow-alpha: 20%;
     --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, oklab(from rgb(0 0 0 / 0.1) l a b / 20%)), 0 8px 10px -6px var(--tw-shadow-color, oklab(from rgb(0 0 0 / 0.1) l a b / 20%));
@@ -2160,6 +2196,16 @@
       }
     }
   }
+  .hover\:scale-110 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 110%;
+        --tw-scale-y: 110%;
+        --tw-scale-z: 110%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
   .hover\:border-2 {
     &:hover {
       @media (hover: hover) {
@@ -2172,6 +2218,27 @@
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-accent-hover);
+      }
+    }
+  }
+  .hover\:border-accent-primary {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-accent-primary);
+      }
+    }
+  }
+  .hover\:border-accent-secondary {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-accent-secondary);
+      }
+    }
+  }
+  .hover\:border-info {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-info);
       }
     }
   }
@@ -2285,6 +2352,28 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .disabled\:cursor-not-allowed {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  .disabled\:opacity-30 {
+    &:disabled {
+      opacity: 30%;
+    }
+  }
+  .disabled\:hover\:scale-100 {
+    &:disabled {
+      &:hover {
+        @media (hover: hover) {
+          --tw-scale-x: 100%;
+          --tw-scale-y: 100%;
+          --tw-scale-z: 100%;
+          scale: var(--tw-scale-x) var(--tw-scale-y);
+        }
+      }
     }
   }
   .sm\:-top-6 {
