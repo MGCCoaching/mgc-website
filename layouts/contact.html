@@ -110,10 +110,10 @@
                   style="background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23475569%22%3E%3Cpath d=%22M7 10l5 5 5-5H7z%22/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.5rem;"
                 >
                   <option value="">Choisissez...</option>
-                  <option value="media-training">📺 Média Training</option>
-                  <option value="prise-parole">🎤 Prise de parole en public</option>
-                  <option value="animation">🎯 Animation d'événement</option>
-                  <option value="autre">💬 Autre demande</option>
+                  <option value="media-training">Média Training</option>
+                  <option value="prise-parole">Prise de parole en public</option>
+                  <option value="animation">Animation d'événement</option>
+                  <option value="autre">Autre demande</option>
                 </select>
               </div>
             </div>
@@ -228,7 +228,7 @@
 
         
         {{/* Badge réponse - style moderne */}}
-        <div class="flex justify-around items-center">
+        <div class="flex flex-col justify-around items-center">
           <div class="hidden md:block animate-on-scroll-fade-right animate-stagger-3">
             <div class="relative bg-gradient-to-r from-accent-primary to-accent-secondary rounded-2xl p-1">
               <div class="bg-primary rounded-xl p-5">
@@ -242,14 +242,16 @@
                     </div>
                   </div>
                   <div>
-                    <p class="text-text-primary font-bold text-lg">Réponse sous 24-48h</p>
+                    <p class="text-text-primary font-bold ">Réponse sous 24-48h</p>
                     <p class="text-text-secondary text-sm">Du lundi au vendredi</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {{ partial "social.html" . }}
+            <div class="p-2">
+              {{ partial "social.html" . }}
+            </div>
         </div>
       </div>
     </div>

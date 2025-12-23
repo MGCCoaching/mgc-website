@@ -51,9 +51,9 @@
                         
                         {{/* 5. MÉTADONNÉES : mt-auto pousse le bloc vers le bas du conteneur flex-grow */}}
                         <div class="mt-auto flex flex-wrap justify-between items-center gap-2 text-xs text-text-primary border-t border-accent-primary pt-3">
-                            <span class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
+                            <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
                                 Ép. {{ .Params.episode_number | default "?" }}
-                            </span>
+                            </p>
                             <span class="flex items-center whitespace-nowrap">
                                 <span class="material-symbols-outlined mr-1 text-base">timer</span>
                                 <p>{{ $duration }}</p>
