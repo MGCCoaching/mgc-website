@@ -59,15 +59,44 @@ C'est dans votre intérêt de vous former, de vous préparer, pour que vous n'ay
 
 **Avec mon expérience d'ancienne journaliste, je vais vous expliquer ce qu'attendent les journalistes, quelles sont leurs contraintes et comment ils travaillent.**
 
----
 
-### En pratique
 
-|  |  |
-|----|---|
-| **Pour qui ?** | Toute personne qui souhaite répondre aux journalistes |
-| **Pourquoi ?** | Parce qu'une interview bien préparée fait toute la différence, et qu'investir en soi est la première étape pour opérer un véritable changement |
-| **Comment ?** | En répétant dans les conditions du direct : laissez-vous guider, j'ai 20 ans de métier |
-| **Où ?** | Chez vous, dans votre entreprise, dans des bureaux que je louerai ou en visio |
-| **Quand ?** | Sur mesure en fonction de vos disponilités |
-| **Combien ?** | Sur devis |
+
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2"><h3 class="text-center" style="margin: 1rem; padding= 0">En pratique</h3></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pour qui&nbsp;?</strong></td>
+      <td>Toute personne qui souhaite répondre aux journalistes</td>
+    </tr>
+    <tr>
+      <td><strong>Pourquoi&nbsp;?</strong></td>
+      <td>Parce qu'une interview bien préparée fait toute la différence...</td>
+    </tr>
+    <tr>
+      <td><strong>Comment&nbsp;?</strong></td>
+      <td>En répétant dans les conditions du direct...</td>
+    </tr>
+    <tr>
+      <td><strong>Où&nbsp;?</strong></td>
+      <td>Chez vous, dans votre entreprise...</td>
+    </tr>
+    <tr>
+      <td><strong>Quand&nbsp;?</strong></td>
+      <td>Sur mesure en fonction de vos disponibilités</td>
+    </tr>
+    <tr>
+      <td><strong>Combien&nbsp;?</strong></td>
+      <td>Sur devis</td>
+    </tr>
+  </tbody>
+</table>
+
+Suite du contenu en Markdown...

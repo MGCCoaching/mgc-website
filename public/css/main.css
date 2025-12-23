@@ -2228,20 +2228,6 @@
       }
     }
   }
-  .hover\:border-accent-secondary {
-    &:hover {
-      @media (hover: hover) {
-        border-color: var(--color-accent-secondary);
-      }
-    }
-  }
-  .hover\:border-info {
-    &:hover {
-      @media (hover: hover) {
-        border-color: var(--color-info);
-      }
-    }
-  }
   .hover\:bg-\[\#0077B5\] {
     &:hover {
       @media (hover: hover) {

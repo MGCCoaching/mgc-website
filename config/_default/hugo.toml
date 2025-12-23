@@ -82,7 +82,7 @@ uglyURLs = false
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = false
+      unsafe = true
   [markup.highlight]
     style = 'monokai'
     lineNos = false
