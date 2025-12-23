@@ -237,9 +237,6 @@
   }
 }
 @layer utilities {
-  .pointer-events-none {
-    pointer-events: none;
-  }
   .visible {
     visibility: visible;
   }
@@ -1960,9 +1957,6 @@
   }
   .opacity-30 {
     opacity: 30%;
-  }
-  .opacity-100 {
-    opacity: 100%;
   }
   .shadow-xl\/20 {
     --tw-shadow-alpha: 20%;
