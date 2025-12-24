@@ -7,7 +7,10 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
+    --color-red-50: oklch(97.1% 0.013 17.38);
+    --color-red-200: oklch(88.5% 0.062 18.334);
     --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-red-600: oklch(57.7% 0.245 27.325);
     --color-purple-500: oklch(62.7% 0.265 303.9);
     --color-black: #000;
     --color-white: #fff;
@@ -278,6 +281,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-3 {
+    top: calc(var(--spacing) * 3);
+  }
   .top-12 {
     top: calc(var(--spacing) * 12);
   }
@@ -295,6 +301,9 @@
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
+  }
+  .left-3 {
+    left: calc(var(--spacing) * 3);
   }
   .left-6 {
     left: calc(var(--spacing) * 6);
@@ -340,6 +349,9 @@
     @media (width >= 96rem) {
       max-width: 96rem;
     }
+  }
+  .-mx-2 {
+    margin-inline: calc(var(--spacing) * -2);
   }
   .mx-auto {
     margin-inline: auto;
@@ -1599,6 +1611,10 @@
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
+  .rounded-r-lg {
+    border-top-right-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -1643,6 +1659,9 @@
   .border-border-primary {
     border-color: var(--color-border-primary);
   }
+  .border-red-200 {
+    border-color: var(--color-red-200);
+  }
   .border-text-tertiary\/30 {
     border-color: color-mix(in srgb, #7a9496 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1652,8 +1671,20 @@
   .border-white {
     border-color: var(--color-white);
   }
+  .bg-\[\#1DB954\] {
+    background-color: #1DB954;
+  }
   .bg-\[\#0077B5\] {
     background-color: #0077B5;
+  }
+  .bg-\[\#9933FF\] {
+    background-color: #9933FF;
+  }
+  .bg-\[\#FF0000\] {
+    background-color: #FF0000;
+  }
+  .bg-\[\#FF0092\] {
+    background-color: #FF0092;
   }
   .bg-accent-primary {
     background-color: var(--color-accent-primary);
@@ -1687,6 +1718,9 @@
   }
   .bg-border-primary {
     background-color: var(--color-border-primary);
+  }
+  .bg-red-50 {
+    background-color: var(--color-red-50);
   }
   .bg-success {
     background-color: var(--color-success);
@@ -1770,8 +1804,14 @@
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
   }
+  .py-0\.5 {
+    padding-block: calc(var(--spacing) * 0.5);
+  }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
+  }
+  .py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
@@ -1829,6 +1869,9 @@
   }
   .text-left {
     text-align: left;
+  }
+  .font-mono {
+    font-family: var(--font-mono);
   }
   .text-2xl {
     font-size: var(--text-2xl);
@@ -1921,6 +1964,9 @@
   }
   .text-red-500 {
     color: var(--color-red-500);
+  }
+  .text-red-600 {
+    color: var(--color-red-600);
   }
   .text-success {
     color: var(--color-success);
@@ -2307,6 +2353,13 @@
     &:hover {
       @media (hover: hover) {
         text-decoration-line: underline;
+      }
+    }
+  }
+  .hover\:opacity-90 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 90%;
       }
     }
   }

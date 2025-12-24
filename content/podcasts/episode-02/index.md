@@ -1,27 +1,125 @@
 ---
-title: "Devant la Caméra"
-subtitle: "Performance et Gestion du Stress"
-date: 2025-12-14T18:31:00+01:00
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                    ÉPISODE DE PODCAST                            ║
+# ║                      MGC Coaching                                ║
+# ╚══════════════════════════════════════════════════════════════════╝
+#
+# INSTRUCTION : Créer un dossier content/podcasts/episode-XX/
+#               avec ce fichier renommé index.md
+#               + une image de couverture (optionnel)
+
 draft: false
+date: 2025-02-20T10:00:00+01:00
+
+# ══════════════════════════════════════════════════════════════════
+# INFORMATIONS DE BASE
+# ══════════════════════════════════════════════════════════════════
+
+title: "Sample Podcast"
+subtitle: "Podcast Sample MGC Coaching"
+
+# Description courte (150-160 caractères) pour SEO et réseaux sociaux
+description: "Here is a short description that suposed to describe the episode"
+
+# Description longue pour Apple Podcasts / Spotify
+summary: |
+  Écrivez ici une description plus complète de l'épisode.
+  Vous pouvez utiliser plusieurs lignes.
+
+# ══════════════════════════════════════════════════════════════════
+# NUMÉROTATION
+# ══════════════════════════════════════════════════════════════════
+
+season: 1                    # Numéro de saison
+episode_number: 2            # Numéro d'épisode
+episode_type: "full"         # "full", "trailer", "bonus"
+
+# ══════════════════════════════════════════════════════════════════
+# FICHIER AUDIO
+# ══════════════════════════════════════════════════════════════════
+
+# Option 1 : URL externe (CloudFront) - RECOMMANDÉ pour production
+audio_url: "/podcast-S01/ep_02.wav"                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
+
+# Option 2 : Fichier local dans le Page Bundle
+# → Placer le fichier .mp3 dans le même dossier que index.md
+# → Laisser audio_url vide, Hugo le détectera automatiquement
+
+# Format audio
+audio_format: "audio/wav"   # audio/mpeg (MP3) ou audio/wav
+
+# Durée (les deux formats sont requis)
+duration: "04:55"            # Format MM:SS ou HH:MM:SS
+duration_seconds: 295          # En secondes : (min × 60) + sec
+
+# Taille du fichier en octets (OBLIGATOIRE pour Apple Podcasts)
+# Commande : ls -l fichier.mp3 | awk '{print $5}'
+file_size_bytes: 78201188
+
+# ══════════════════════════════════════════════════════════════════
+# CATÉGORISATION
+# ══════════════════════════════════════════════════════════════════
+
 categories:
-  - Performance
+  - Podcast
+
 tags:
-  - stress
-  - caméra
-  - confiance
-episode_number: 2
-duration: "28:10"
+  - communication
+  - prise de parole
+
+# ══════════════════════════════════════════════════════════════════
+# INVITÉ(E)S
+# ══════════════════════════════════════════════════════════════════
+
 guests:
-  - Dr. Clara Dubois (Psychologue et Coach en Communication)
-audio_url: ""
+  - "Nom de l'invité(e) (Fonction)"
+# Format compatible avec ton layout actuel
+
+# ══════════════════════════════════════════════════════════════════
+# CHAPITRES / TIMESTAMPS (pour le player)
+# ══════════════════════════════════════════════════════════════════
+
+chapters:
+  - time: "00:00"
+    title: "Introduction"
+  - time: "04:15"
+    title: "Sujet principal"
+#  - time: "20:00"
+#    title: "Conclusion"
+
+# ══════════════════════════════════════════════════════════════════
+# OPTIONS RSS
+# ══════════════════════════════════════════════════════════════════
+
+explicit: false              # Contenu adulte ?
+block: false                 # Exclure du flux RSS ?
+
+# ══════════════════════════════════════════════════════════════════
+# LIENS PLATEFORMES (remplir après publication)
+# ══════════════════════════════════════════════════════════════════
+
+platforms:
+  spotify: ""
+  apple_podcasts: ""
+  deezer: ""
+  youtube: ""
+
 ---
 
 ### Introduction
 
-Ressentir le trac avant une interview télévisée est normal. Mais comment canaliser cette énergie pour qu'elle devienne une source d'impact ? Dans cet épisode, nous décortiquons les mécanismes du stress face à la caméra.
+Résumé accrocheur de l'épisode qui apparaîtra dans les cartes d'aperçu. Décrivez brièvement le sujet abordé et pourquoi il est pertinent pour votre audience.
 
 ### Points Clés Abordés
 
-* **La respiration 4-7-8 :** Technique d'ancrage rapide pour diminuer le stress.
-* **L'effet miroir :** Comment regarder la caméra sans être intimidé.
-* **Le langage corporel :** Utiliser votre posture pour projeter l'autorité.
+* **Premier point :** Description du premier sujet important.
+* **Deuxième point :** Description du deuxième sujet important.
+* **Troisième point :** Description du troisième sujet important.
+
+### L'Invité(e) du Jour
+
+Présentation de l'invité(e), son parcours et son expertise.
+
+### Pour Aller Plus Loin
+
+Ressources, liens et références mentionnés dans l'épisode.
