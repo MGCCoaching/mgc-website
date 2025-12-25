@@ -1,0 +1,318 @@
+{{/*
+  Podcast Player - MGC Coaching
+  =============================
+  Player audio custom avec chapitres, raccourcis clavier, drag & drop
+  
+  Usage: {{ partial "components/podcast-player.html" . }}
+  
+  Requiert:
+  - assets/js/podcast-player.js (inclure via js.html ou dans ce partial)
+  - Front matter avec: audio_url, duration, duration_seconds, chapters (optionnel)
+*/}}
+
+{{/* ══════════════════════════════════════════════════════════════════════════
+     VARIABLES
+     ══════════════════════════════════════════════════════════════════════════ */}}
+
+{{/* Audio : soit Page Bundle, soit URL externe */}}
+{{ $audioResource := index (.Resources.ByType "audio") 0 }}
+{{ $audioUrl := "" }}
+{{ $audioFormat := "audio/mpeg" }}
+{{ if .Params.audio_url }}
+  {{ $audioUrl = .Params.audio_url }}
+  {{ $audioFormat = .Params.audio_format | default "audio/mpeg" }}
+{{ else if $audioResource }}
+  {{ $audioUrl = $audioResource.Permalink }}
+  {{ $audioFormat = $audioResource.MediaType.Type }}
+{{ end }}
+
+{{/* Image pour MediaSession */}}
+{{ $imageResource := index (.Resources.ByType "image") 0 }}
+{{ $artwork := "" }}
+{{ if $imageResource }}
+  {{ $artwork = $imageResource.Permalink }}
+{{ else if .Params.cover_image }}
+  {{ $artwork = .Params.cover_image | absURL }}
+{{ end }}
+
+{{/* Paramètres */}}
+{{ $duration := .Params.duration | default "00:00" }}
+{{ $durationSeconds := .Params.duration_seconds | default 0 }}
+{{ $chapters := .Params.chapters | default slice }}
+{{ $title := .Title }}
+{{ $artist := site.Params.podcast.author | default site.Params.author | default "MGC Coaching" }}
+
+{{/* ══════════════════════════════════════════════════════════════════════════
+     PLAYER HTML
+     ══════════════════════════════════════════════════════════════════════════ */}}
+
+{{ if $audioUrl }}
+<div 
+  data-podcast-player
+  data-title="{{ $title }}"
+  data-artist="{{ $artist }}"
+  data-artwork="{{ $artwork }}"
+  class="w-full bg-accent backdrop-blur-xl rounded-2xl border border-secondary shadow-themed-lg overflow-hidden"
+>
+  {{/* Audio caché */}}
+  <audio 
+    data-audio
+    src="{{ $audioUrl }}" 
+    type="{{ $audioFormat }}"
+    preload="metadata"
+    class="hidden"
+  ></audio>
+
+  {{/* Main Player */}}
+  <div class="p-4 sm:p-6">
+    
+    {{/* ════════════════════════════════════════════════════════════════════
+         BARRE DE PROGRESSION
+         ════════════════════════════════════════════════════════════════════ */}}
+    <div class="mb-6">
+      {{/* Progress Bar Container */}}
+      <div 
+        data-progress-bar
+        class="relative h-3 sm:h-2 bg-primary rounded-full cursor-pointer group touch-none"
+      >
+        {{/* Marqueurs de chapitres */}}
+        {{ if $chapters }}
+          {{ $totalSeconds := $durationSeconds }}
+          {{ range $idx, $chapter := $chapters }}
+            {{ if $chapter.title }}
+              {{/* Convertir time "MM:SS" ou "HH:MM:SS" en secondes */}}
+              {{ $parts := split $chapter.time ":" }}
+              {{ $chapterSeconds := 0 }}
+              {{ if eq (len $parts) 2 }}
+                {{ $chapterSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) }}
+              {{ else if eq (len $parts) 3 }}
+                {{ $chapterSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) }}
+              {{ end }}
+              {{ $percent := 0.0 }}
+              {{ if gt $totalSeconds 0 }}
+                {{ $percent = mul (div (float $chapterSeconds) (float $totalSeconds)) 100 }}
+              {{ end }}
+              <div
+                data-chapter-marker
+                data-start-time="{{ $chapterSeconds }}"
+                class="absolute top-1/2 -translate-y-1/2 w-1.5 sm:w-1 h-5 sm:h-4 bg-white/50 rounded-full z-10 hover:bg-white hover:scale-110 transition-all cursor-pointer"
+                style="left: {{ $percent }}%"
+                title="{{ $chapter.title }}"
+              ></div>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        
+        {{/* Progress Fill */}}
+        <div 
+          data-progress-fill
+          class="absolute inset-y-0 left-0 bg-accent-primary rounded-full transition-all duration-75"
+          style="width: 0%"
+        ></div>
+        
+        {{/* Ligne de preview au survol */}}
+        <div 
+          data-preview-line
+          class="absolute top-0 bottom-0 w-0.5 bg-accent-primary/60 pointer-events-none z-10 hidden"
+          style="left: 0%"
+        ></div>
+        
+        {{/* Handle/Curseur */}}
+        <div 
+          data-progress-handle
+          class="absolute top-1/2 -translate-y-1/2 w-5 h-5 sm:w-4 sm:h-4 bg-accent-primary rounded-full shadow-themed z-20 
+                 scale-100 sm:scale-0 sm:group-hover:scale-100 transition-transform duration-150"
+          style="left: -10px"
+        ></div>
+      </div>
+      
+      {{/* Affichage temps */}}
+      <div class="flex justify-between items-center mt-2 text-xs sm:text-sm font-mono text-tertiary">
+        <span data-current-time class="transition-colors duration-150">0:00</span>
+        
+        {{/* Temps au survol - Badge central */}}
+        <span 
+          data-hover-time
+          class="hidden px-2 py-0.5 bg-accent-primary text-inverse rounded text-xs font-bold"
+        >0:00</span>
+        
+        <span data-duration>{{ $duration }}</span>
+      </div>
+    </div>
+
+    {{/* ════════════════════════════════════════════════════════════════════
+         CONTRÔLES
+         ════════════════════════════════════════════════════════════════════ */}}
+    <div class="flex items-center justify-center gap-2 sm:gap-4">
+      
+      {{/* Skip Back -15s */}}
+      <button 
+        data-skip-back
+        class="flex flex-col items-center justify-center w-16 h-16 sm:w-14 sm:h-14 rounded-full 
+               text-primary hover:bg-secondary active:bg-tertiary transition-all"
+        aria-label="Reculer de 15 secondes"
+      >
+        <svg 
+          class="w-7 h-7 sm:w-6 sm:h-6 transition-transform duration-200" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        >
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+        </svg>
+        <span class="text-xs font-bold mt-0.5">15s</span>
+      </button>
+
+      {{/* Play/Pause */}}
+      <button 
+        data-play-btn
+        class="w-20 h-20 sm:w-16 sm:h-16 bg-accent-primary hover:bg-accent-hover active:opacity-90
+               rounded-full flex items-center justify-center shadow-themed-lg 
+               hover:shadow-xl transition-all hover:scale-105 active:scale-95"
+        aria-label="Lecture / Pause"
+      >
+        {{/* Play Icon */}}
+        <svg data-play-icon class="w-9 h-9 sm:w-7 sm:h-7 text-inverse ml-1" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        {{/* Pause Icon */}}
+        <svg data-pause-icon class="hidden w-9 h-9 sm:w-7 sm:h-7 text-inverse" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+
+      {{/* Skip Forward +30s */}}
+      <button 
+        data-skip-forward
+        class="flex flex-col items-center justify-center w-16 h-16 sm:w-14 sm:h-14 rounded-full 
+               text-primary hover:bg-secondary active:bg-tertiary transition-all"
+        aria-label="Avancer de 30 secondes"
+      >
+        <svg 
+          class="w-7 h-7 sm:w-6 sm:h-6 transition-transform duration-200"
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        >
+          <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+          <path d="M21 3v5h-5" />
+        </svg>
+        <span class="text-xs font-bold mt-0.5">30s</span>
+      </button>
+
+    </div>
+  </div>
+
+  {{/* ════════════════════════════════════════════════════════════════════
+       SECTION CHAPITRES
+       ════════════════════════════════════════════════════════════════════ */}}
+  {{ if $chapters }}
+    {{/* Vérifier qu'il y a au moins un chapitre avec un titre */}}
+    {{ $hasValidChapters := false }}
+    {{ range $chapters }}
+      {{ if .title }}{{ $hasValidChapters = true }}{{ end }}
+    {{ end }}
+    
+    {{ if $hasValidChapters }}
+    <div class="border-t border-primary">
+      {{/* Toggle */}}
+      <button
+        data-chapters-toggle
+        class="w-full px-4 sm:px-6 py-3 flex items-center justify-between text-sm text-tertiary hover:bg-secondary transition-colors"
+      >
+        <div class="flex items-center gap-2 min-w-0">
+          <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+          </svg>
+          <span class="font-medium flex-shrink-0">Chapitres</span>
+          <span 
+            data-current-chapter
+            class="text-xs px-2 py-0.5 rounded-full truncate bg-secondary"
+          >{{ (index $chapters 0).title }}</span>
+        </div>
+        <svg 
+          data-chapters-arrow
+          class="w-4 h-4 flex-shrink-0 transition-transform duration-200" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {{/* Liste des chapitres */}}
+      <div data-chapters-list class="hidden px-3 sm:px-4 pb-4 space-y-1 max-h-64 overflow-y-auto">
+        {{ $totalSeconds := $durationSeconds }}
+        {{ range $idx, $chapter := $chapters }}
+          {{ if $chapter.title }}
+            {{/* Calculer le temps de début */}}
+            {{ $parts := split $chapter.time ":" }}
+            {{ $startSeconds := 0 }}
+            {{ if eq (len $parts) 2 }}
+              {{ $startSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) }}
+            {{ else if eq (len $parts) 3 }}
+              {{ $startSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) }}
+            {{ end }}
+            
+            {{/* Calculer le temps de fin (début du chapitre suivant ou durée totale) */}}
+            {{ $endSeconds := $totalSeconds }}
+            {{ $nextIdx := add $idx 1 }}
+            {{ if lt $nextIdx (len $chapters) }}
+              {{ $nextChapter := index $chapters $nextIdx }}
+              {{ $nextParts := split $nextChapter.time ":" }}
+              {{ if eq (len $nextParts) 2 }}
+                {{ $endSeconds = add (mul (int (index $nextParts 0)) 60) (int (index $nextParts 1)) }}
+              {{ else if eq (len $nextParts) 3 }}
+                {{ $endSeconds = add (add (mul (int (index $nextParts 0)) 3600) (mul (int (index $nextParts 1)) 60)) (int (index $nextParts 2)) }}
+              {{ end }}
+            {{ end }}
+            
+            <button
+              data-chapter
+              data-start-time="{{ $startSeconds }}"
+              data-end-time="{{ $endSeconds }}"
+              data-chapter-title="{{ $chapter.title }}"
+              class="w-full flex items-center gap-2 sm:gap-3 px-3 py-3 sm:py-2.5 rounded-lg text-left 
+                     text-primary hover:bg-secondary transition-all"
+            >
+              <span class="font-mono text-xs px-2 py-1 rounded flex-shrink-0 bg-secondary">
+                {{ $chapter.time }}
+              </span>
+              <span class="flex-1 text-sm truncate">
+                {{ $chapter.title }}
+              </span>
+              <span 
+                data-chapter-indicator
+                class="hidden w-2 h-2 bg-accent-primary rounded-full animate-pulse flex-shrink-0"
+              ></span>
+            </button>
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  {{ end }}
+
+</div>
+
+{{/* Message si pas d'audio */}}
+{{ else }}
+<div class="w-full bg-error/10 border border-error/30 rounded-xl p-4">
+  <p class="text-error text-sm flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+    </svg>
+    Fichier audio non disponible
+  </p>
+</div>
+{{ end }}
+
+

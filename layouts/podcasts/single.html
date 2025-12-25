@@ -98,7 +98,7 @@
      CONTENU DE LA PAGE
      ══════════════════════════════════════════════════════════════════ */}}
 
-<div class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-secondary">
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-primary">
 
     <article class="lg:flex lg:space-x-12 lg:items-start">
         
@@ -154,7 +154,7 @@
                 {{/* Player Audio */}}
                 {{ if $audioUrl }}
                     {{/* Player natif (sera remplacé par le custom plus tard) */}}
-                    <div class="mb-4">
+                    {{/*  <div class="mb-4">
                         <audio controls 
                                controlsList="nodownload" 
                                class="w-full rounded-lg shadow-md"
@@ -163,9 +163,10 @@
                             Votre navigateur ne supporte pas l'élément audio.
                         </audio>
                     </div>
-                    
+                      */}}
                     {{/* TODO: Intégrer le player custom ici */}}
-                    {{/* {{ partial "components/podcast-player.html" . }} */}}
+                    {{/*  {{ partial "components/podcast-player.html" . }}  */}}
+                    {{ partial "components/podcast-player.html" . }}
                     
                 {{ else }}
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
@@ -177,7 +178,7 @@
                 {{ end }}
                 
                 {{/* Métadonnées */}}
-                <div class="p-4 bg-primary rounded-lg text-sm text-primary space-y-2">
+                <div class="p-4 my-5 bg-primary rounded-lg text-sm text-primary space-y-2">
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">timer</span>
                         <span><strong>Durée :</strong> {{ $duration }}</span>
@@ -199,37 +200,6 @@
                     {{ end }}
                 </div>
 
-                {{/* Chapitres (si présents) */}}
-                {{ if $chapters }}
-                {{ $hasValidChapters := false }}
-                {{ range $chapters }}
-                  {{ if .title }}{{ $hasValidChapters = true }}{{ end }}
-                {{ end }}
-                {{ if $hasValidChapters }}
-                <div class="mt-6 p-4 bg-primary rounded-lg">
-                    <h4 class="font-bold text-primary mb-3 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-accent-primary">list</span>
-                        Chapitres
-                    </h4>
-                    <ul class="space-y-2 text-sm">
-                        {{ range $chapters }}
-                        {{ if .title }}
-                        <li class="flex items-start gap-3 group cursor-pointer hover:bg-secondary rounded-lg p-2 -mx-2 transition-colors"
-                            data-chapter-time="{{ .time }}">
-                            <span class="font-mono text-accent-primary bg-secondary px-2 py-0.5 rounded text-xs">
-                                {{ .time }}
-                            </span>
-                            <span class="text-primary group-hover:text-accent-primary transition-colors">
-                                {{ .title }}
-                            </span>
-                        </li>
-                        {{ end }}
-                        {{ end }}
-                    </ul>
-                </div>
-                {{ end }}
-                {{ end }}
-
                 {{/* Liens plateformes (si renseignés) */}}
                 {{ with .Params.platforms }}
                 {{ if or .spotify .apple_podcasts .deezer .youtube }}
@@ -241,26 +211,29 @@
                     <div class="flex flex-wrap gap-2">
                         {{ with .spotify }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
-                           class="inline-flex items-center gap-1 px-3 py-1.5 bg-[#1DB954] text-white text-xs font-medium rounded-full hover:opacity-90 transition-opacity">
-                            Spotify
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#1DB954] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-spotify icon-lg"></i>
                         </a>
                         {{ end }}
+                        
                         {{ with .apple_podcasts }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
-                           class="inline-flex items-center gap-1 px-3 py-1.5 bg-[#9933FF] text-white text-xs font-medium rounded-full hover:opacity-90 transition-opacity">
-                            Apple Podcasts
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#9933FF] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-solid fa-podcast icon-lg"></i>
                         </a>
                         {{ end }}
+                        
                         {{ with .deezer }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
-                           class="inline-flex items-center gap-1 px-3 py-1.5 bg-[#FF0092] text-white text-xs font-medium rounded-full hover:opacity-90 transition-opacity">
-                            Deezer
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0092] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-deezer icon-lg"></i>
                         </a>
                         {{ end }}
+                        
                         {{ with .youtube }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
-                           class="inline-flex items-center gap-1 px-3 py-1.5 bg-[#FF0000] text-white text-xs font-medium rounded-full hover:opacity-90 transition-opacity">
-                            YouTube
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0000] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-youtube icon-lg"></i>
                         </a>
                         {{ end }}
                     </div>
@@ -280,15 +253,15 @@
             <div class="hidden md:block">
                 <header class="mb-6">
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                        {{/*  <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
                             S{{ $season }}E{{ $episodeNum }}
-                        </span>
+                        </span>  */}}
                         {{ if eq $episodeType "trailer" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
                         {{ else if eq $episodeType "bonus" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                         {{ end }}
-                        <span class="text-sm text-tertiary">• {{ $duration }}</span>
+                        {{/*  <span class="text-sm text-tertiary">• {{ $duration }}</span>  */}}
                     </div>
                     <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
                     <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ .Title }}</h1>

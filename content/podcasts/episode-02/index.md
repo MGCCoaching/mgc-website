@@ -82,10 +82,10 @@ guests:
 chapters:
   - time: "00:00"
     title: "Introduction"
+  - time: "2:00"
+    title: "Main topic"
   - time: "04:15"
-    title: "Sujet principal"
-#  - time: "20:00"
-#    title: "Conclusion"
+    title: "Conclusion"
 
 # ══════════════════════════════════════════════════════════════════
 # OPTIONS RSS
@@ -99,10 +99,10 @@ block: false                 # Exclure du flux RSS ?
 # ══════════════════════════════════════════════════════════════════
 
 platforms:
-  spotify: ""
-  apple_podcasts: ""
-  deezer: ""
-  youtube: ""
+  spotify: "spotify//"
+  apple_podcasts: "appleMusic//"
+  deezer: "deezer//"
+  youtube: "youtube//"
 
 ---
 
