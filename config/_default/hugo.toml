@@ -96,3 +96,11 @@ uglyURLs = false
     languageName = 'Français'
     weight = 1
     title = 'Marie-Gaëtane Comte'
+
+[params.podcast]
+  title = "Les Voix des Phénix"
+  host = "Marie-Gaëtane Comte"
+  hostAvatar = "/img/mgc-avatar.jpg"
+
+[params.colors]
+  accent = "#D4A574"      # Pour le player

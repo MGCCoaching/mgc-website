@@ -17,11 +17,24 @@
       <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
     {{ end }}
   {{ end }}
+{{ end }}
 
-{{/*  Carrousel script  */}}
-  {{ $faqCarousel := resources.Get "js/faq-carousel.js" }}
-  {{ if hugo.IsProduction }}
-    {{ $faqCarousel = $faqCarousel | minify | fingerprint }}
+{{/* Carrousel script */}}
+{{ $faqCarousel := resources.Get "js/faq-carousel.js" }}
+{{ if hugo.IsProduction }}
+  {{ $faqCarousel = $faqCarousel | minify | fingerprint }}
+{{ end }}
+<script src="{{ $faqCarousel.RelPermalink }}" defer></script>
+
+{{/* Podcast Player Script - Seulement sur les pages podcast */}}
+{{ if eq .Section "podcasts" }}
+  {{ with resources.Get "js/podcast-player.js" }}
+    {{ if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}" defer></script>
+    {{ else }}
+      {{ with . | minify | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{ end }}
+    {{ end }}
   {{ end }}
-  <script src="{{ $faqCarousel.RelPermalink }}" defer></script>
 {{ end }}
