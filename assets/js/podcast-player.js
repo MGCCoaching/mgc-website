@@ -22,7 +22,16 @@
     const playIcon = player.querySelector('[data-play-icon]');
     const pauseIcon = player.querySelector('[data-pause-icon]');
     const skipBackBtn = player.querySelector('[data-skip-back]');
+    const skipBackIcon = player.querySelector('[data-skip-back-icon]');
     const skipForwardBtn = player.querySelector('[data-skip-forward]');
+    const skipForwardIcon = player.querySelector('[data-skip-forward-icon]');
+    const prevChapterBtn = player.querySelector('[data-prev-chapter]');
+    const nextChapterBtn = player.querySelector('[data-next-chapter]');
+    const speedBtn = player.querySelector('[data-speed-btn]');
+    const speedLabel = player.querySelector('[data-speed-label]');
+    const speedMenu = player.querySelector('[data-speed-menu]');
+    const speedOptions = player.querySelectorAll('[data-speed-option]');
+    const speedContainer = player.querySelector('[data-speed-container]');
     const progressBar = player.querySelector('[data-progress-bar]');
     const progressFill = player.querySelector('[data-progress-fill]');
     const progressHandle = player.querySelector('[data-progress-handle]');
@@ -41,6 +50,8 @@
     // État
     let isDragging = false;
     let duration = audio.duration || 0;
+    let currentChapterIndex = 0;
+    let currentSpeed = 1;
 
     // ═══════════════════════════════════════════════════════════════════
     // UTILITAIRES
@@ -65,8 +76,22 @@
       progressHandle.style.left = `calc(${percentStr} - 10px)`;
     }
 
+    function getCurrentChapterIndex() {
+      const currentTime = audio.currentTime;
+      let index = 0;
+      chapterItems.forEach((item, idx) => {
+        const startTime = parseFloat(item.dataset.startTime) || 0;
+        if (currentTime >= startTime) {
+          index = idx;
+        }
+      });
+      return index;
+    }
+
     function updateCurrentChapter() {
       const currentTime = audio.currentTime;
+      currentChapterIndex = getCurrentChapterIndex();
+      
       chapterItems.forEach((item, idx) => {
         const startTime = parseFloat(item.dataset.startTime) || 0;
         const endTime = parseFloat(item.dataset.endTime) || duration;
@@ -110,11 +135,11 @@
 
     function updatePlayButton() {
       if (audio.paused) {
-        playIcon.classList.remove('hidden');
-        pauseIcon.classList.add('hidden');
+        playIcon.style.display = '';
+        pauseIcon.style.display = 'none';
       } else {
-        playIcon.classList.add('hidden');
-        pauseIcon.classList.remove('hidden');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = '';
       }
     }
 
@@ -123,32 +148,135 @@
     audio.addEventListener('pause', updatePlayButton);
 
     // ═══════════════════════════════════════════════════════════════════
-    // SKIP -15s / +30s
+    // SKIP -10s / +30s
     // ═══════════════════════════════════════════════════════════════════
 
     function skip(seconds) {
       audio.currentTime = Math.max(0, Math.min(duration, audio.currentTime + seconds));
     }
 
-    function animateSkipButton(btn, direction) {
-      const icon = btn.querySelector('svg');
+    function animateSkipButton(btn, icon, direction) {
       btn.classList.add('scale-95');
-      icon.classList.add(direction === 'back' ? '-rotate-45' : 'rotate-45');
+      if (icon) {
+        icon.classList.add(direction === 'back' ? '-rotate-45' : 'rotate-45');
+      }
       
       setTimeout(() => {
         btn.classList.remove('scale-95');
-        icon.classList.remove('-rotate-45', 'rotate-45');
+        if (icon) {
+          icon.classList.remove('-rotate-45', 'rotate-45');
+        }
       }, 200);
     }
 
     skipBackBtn.addEventListener('click', () => {
-      skip(-15);
-      animateSkipButton(skipBackBtn, 'back');
+      skip(-10);
+      animateSkipButton(skipBackBtn, skipBackIcon, 'back');
     });
 
     skipForwardBtn.addEventListener('click', () => {
       skip(30);
-      animateSkipButton(skipForwardBtn, 'forward');
+      animateSkipButton(skipForwardBtn, skipForwardIcon, 'forward');
+    });
+
+    // ═══════════════════════════════════════════════════════════════════
+    // CHAPITRES PRÉCÉDENT / SUIVANT
+    // ═══════════════════════════════════════════════════════════════════
+
+    function goToChapter(index) {
+      if (index < 0 || index >= chapterItems.length) return;
+      const chapter = chapterItems[index];
+      const startTime = parseFloat(chapter.dataset.startTime) || 0;
+      audio.currentTime = startTime;
+      currentChapterIndex = index;
+    }
+
+    function goToPrevChapter() {
+      // Si on est au début du chapitre (< 3s), aller au précédent
+      // Sinon, revenir au début du chapitre actuel
+      const currentIdx = getCurrentChapterIndex();
+      const currentChapter = chapterItems[currentIdx];
+      const chapterStart = parseFloat(currentChapter?.dataset.startTime) || 0;
+      
+      if (audio.currentTime - chapterStart < 3 && currentIdx > 0) {
+        goToChapter(currentIdx - 1);
+      } else {
+        goToChapter(currentIdx);
+      }
+    }
+
+    function goToNextChapter() {
+      const currentIdx = getCurrentChapterIndex();
+      if (currentIdx < chapterItems.length - 1) {
+        goToChapter(currentIdx + 1);
+      }
+    }
+
+    if (prevChapterBtn) {
+      prevChapterBtn.addEventListener('click', goToPrevChapter);
+    }
+
+    if (nextChapterBtn) {
+      nextChapterBtn.addEventListener('click', goToNextChapter);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // VITESSE DE LECTURE (Menu déroulant)
+    // ═══════════════════════════════════════════════════════════════════
+
+    function setSpeed(speed) {
+      currentSpeed = parseFloat(speed);
+      audio.playbackRate = currentSpeed;
+      if (speedLabel) {
+        speedLabel.textContent = currentSpeed === 1 ? '1x' : `${currentSpeed}x`;
+      }
+      // Mettre à jour les styles des options
+      speedOptions.forEach(opt => {
+        const optSpeed = parseFloat(opt.dataset.speedOption);
+        if (optSpeed === currentSpeed) {
+          opt.classList.add('text-accent-primary', 'font-bold');
+          opt.classList.remove('text-primary');
+        } else {
+          opt.classList.remove('text-accent-primary', 'font-bold');
+          opt.classList.add('text-primary');
+        }
+      });
+    }
+
+    function toggleSpeedMenu() {
+      if (speedMenu) {
+        speedMenu.classList.toggle('hidden');
+      }
+    }
+
+    function closeSpeedMenu() {
+      if (speedMenu) {
+        speedMenu.classList.add('hidden');
+      }
+    }
+
+    if (speedBtn) {
+      speedBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSpeedMenu();
+      });
+    }
+
+    // Clic sur une option de vitesse
+    speedOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const speed = option.dataset.speedOption;
+        setSpeed(speed);
+        closeSpeedMenu();
+      });
+    });
+
+    // Fermer le menu si clic en dehors
+    document.addEventListener('click', (e) => {
+      if (speedContainer && !speedContainer.contains(e.target)) {
+        closeSpeedMenu();
+      }
     });
 
     // ═══════════════════════════════════════════════════════════════════
@@ -251,7 +379,6 @@
     }, { passive: false });
     document.addEventListener('touchend', (e) => {
       if (isDragging) {
-        // Pour touch, on utilise la dernière position connue
         const percent = parseFloat(progressFill.style.width) / 100 || 0;
         audio.currentTime = percent * duration;
         isDragging = false;
@@ -268,18 +395,16 @@
     // Toggle liste des chapitres
     if (chaptersToggle) {
       chaptersToggle.addEventListener('click', () => {
-        const isHidden = chaptersList.classList.contains('hidden');
         chaptersList.classList.toggle('hidden');
         chaptersArrow.classList.toggle('rotate-180');
       });
     }
 
     // Clic sur un chapitre
-    chapterItems.forEach(item => {
+    chapterItems.forEach((item, idx) => {
       item.addEventListener('click', () => {
         const startTime = parseFloat(item.dataset.startTime) || 0;
         audio.currentTime = startTime;
-        // Ne pas fermer le menu
       });
     });
 
@@ -308,13 +433,13 @@
           break;
         case 'ArrowLeft':
           e.preventDefault();
-          skip(-15);
-          animateSkipButton(skipBackBtn, 'back');
+          skip(-10);
+          animateSkipButton(skipBackBtn, skipBackIcon, 'back');
           break;
         case 'ArrowRight':
           e.preventDefault();
           skip(30);
-          animateSkipButton(skipForwardBtn, 'forward');
+          animateSkipButton(skipForwardBtn, skipForwardIcon, 'forward');
           break;
       }
     });
@@ -337,10 +462,10 @@
 
       navigator.mediaSession.setActionHandler('play', () => audio.play());
       navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-      navigator.mediaSession.setActionHandler('seekbackward', () => skip(-15));
+      navigator.mediaSession.setActionHandler('seekbackward', () => skip(-10));
       navigator.mediaSession.setActionHandler('seekforward', () => skip(30));
-      navigator.mediaSession.setActionHandler('previoustrack', () => skip(-15));
-      navigator.mediaSession.setActionHandler('nexttrack', () => skip(30));
+      navigator.mediaSession.setActionHandler('previoustrack', goToPrevChapter);
+      navigator.mediaSession.setActionHandler('nexttrack', goToNextChapter);
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -349,6 +474,7 @@
 
     updatePlayButton();
     updateCurrentChapter();
+    setSpeed(1);
   }
 
 })();

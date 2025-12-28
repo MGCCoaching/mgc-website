@@ -84,6 +84,8 @@ chapters:
     title: "Introduction"
   - time: "2:00"
     title: "Main topic"
+  - time: "2:30"
+    title: "Steph"
   - time: "04:15"
     title: "Conclusion"
 
@@ -102,7 +104,7 @@ platforms:
   spotify: "spotify//"
   apple_podcasts: "appleMusic//"
   deezer: "deezer//"
-  youtube: "youtube//"
+  youtube: ""
 
 ---
 
