@@ -36,22 +36,46 @@ uglyURLs = false
   posts = '/:year/:month/:slug/'
   pages = '/:slug/'
 
-# Output Formats
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# OUTPUT FORMATS - CRITICAL FOR RSS
+# ==============================================================================
+
+# Define media types
+[mediaTypes]
+  [mediaTypes."application/rss+xml"]
+    suffixes = ["xml"]
+
+# Define output formats
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "index"
+    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    notAlternative = false
+  
+  # Custom podcast RSS (alternative approach)
+  [outputFormats.PodcastRSS]
+    mediaType = "application/rss+xml"
+    baseName = "index"
+    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    path = ""
+
+# Outputs per section type
 [outputs]
   home = ['HTML', 'RSS']
   section = ['HTML', 'RSS']
   page = ['HTML']
 
-# Minification
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# MINIFICATION - Disable XML minification to avoid issues
+# ==============================================================================
 [minify]
   disableCSS = false
   disableHTML = false
   disableJS = false
   disableJSON = false
   disableSVG = false
-  disableXML = false
+  disableXML = true       # ← Disable XML minification for RSS
   minifyOutput = true
 
 # Module Mounts
@@ -97,10 +121,24 @@ uglyURLs = false
     weight = 1
     title = 'Marie-Gaëtane Comte'
 
+# ==============================================================================
+# PODCAST CONFIGURATION
+# ==============================================================================
 [params.podcast]
   title = "Les Voix des Phénix"
+  description = "Chaque personne a une histoire à raconter. Je donne la parole à ceux qui ont décidé d'écouter leur voix et de la faire entendre."
+  author = "Marie-Gaëtane Comte"
   host = "Marie-Gaëtane Comte"
   hostAvatar = "/img/mgc-avatar.jpg"
+  email = "contact@mgc-coaching.fr"
+  owner_name = "Marie-Gaëtane Comte"
+  owner_email = "contact@mgc-coaching.fr"
+  language = "fr"
+  explicit = false
+  category = "Business"
+  subcategory = "Careers"
+  image = "/img/podcast-cover.jpg"
+  # funding_url = ""  # Optional: Soutenir le podcast
 
 [params.colors]
   accent = "#D4A574"      # Pour le player
