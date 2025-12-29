@@ -5,11 +5,7 @@
   
   Ce fichier génère : /podcasts/index.xml
   
-  Supporte :
-  - Page Bundles (audio dans le dossier de l'épisode)
-  - URLs externes (CloudFront)
-  
-  Configuration requise dans hugo.toml - voir config/podcast-config.toml
+  IMPORTANT: Requires isPlainText = true in outputFormats.RSS config
 
 */ -}}
 {{- $podcast := .Site.Params.podcast -}}
@@ -23,9 +19,6 @@
      xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    {{/* ══════════════════════════════════════════════════════════════
-         INFORMATIONS DU PODCAST (globales)
-         ══════════════════════════════════════════════════════════════ */}}
     <title>{{ $podcast.title | default .Site.Title }}</title>
     <link>{{ .Site.BaseURL }}podcasts/</link>
     <description>{{ $podcast.description | default .Site.Params.description }}</description>
@@ -34,22 +27,17 @@
     <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
     <generator>Hugo {{ hugo.Version }}</generator>
     
-    {{/* Atom self-link (requis pour validation) */}}
-    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml"/>
+    <atom:link href="{{ .Site.BaseURL }}podcasts/index.xml" rel="self" type="application/rss+xml"/>
 
-    {{/* ══════════════════════════════════════════════════════════════
-         MÉTADONNÉES ITUNES / APPLE PODCASTS
-         ══════════════════════════════════════════════════════════════ */}}
     <itunes:type>episodic</itunes:type>
     <itunes:author>{{ $podcast.author | default .Site.Title }}</itunes:author>
     <itunes:summary>{{ $podcast.description | default .Site.Params.description }}</itunes:summary>
     <itunes:explicit>{{ if $podcast.explicit }}true{{ else }}false{{ end }}</itunes:explicit>
     
-    {{/* Image du podcast (minimum 1400x1400, max 3000x3000, carrée) */}}
     {{- $podcastImage := $podcast.image | default "/img/podcast-cover.jpg" -}}
     {{- if not (hasPrefix $podcastImage "http") -}}
       {{- $podcastImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $podcastImage) -}}
-    {{- end -}}
+    {{- end }}
     <itunes:image href="{{ $podcastImage }}"/>
     <image>
       <url>{{ $podcastImage }}</url>
@@ -57,39 +45,38 @@
       <link>{{ .Site.BaseURL }}podcasts/</link>
     </image>
 
-    {{/* Catégorie (voir liste Apple : https://podcasters.apple.com/support/1691-apple-podcasts-categories) */}}
     <itunes:category text="{{ $podcast.category | default "Business" }}">
       {{- with $podcast.subcategory }}
       <itunes:category text="{{ . }}"/>
       {{- end }}
     </itunes:category>
 
-    {{/* Propriétaire (pour contact Apple) */}}
     <itunes:owner>
       <itunes:name>{{ $podcast.owner_name | default $podcast.author | default .Site.Title }}</itunes:name>
       <itunes:email>{{ $podcast.owner_email | default $podcast.email | default "contact@example.com" }}</itunes:email>
     </itunes:owner>
 
-    {{/* Podcast Index namespace (nouveau standard) */}}
     <podcast:locked>no</podcast:locked>
     {{- with $podcast.funding_url }}
     <podcast:funding url="{{ . }}">Soutenir le podcast</podcast:funding>
     {{- end }}
 
-    {{/* ══════════════════════════════════════════════════════════════
-         ÉPISODES
-         ══════════════════════════════════════════════════════════════ */}}
     {{- range $pages.ByDate.Reverse }}
-    {{/* Récupérer l'audio - soit URL externe, soit Page Bundle */}}
+    {{- /* Récupérer l'audio - soit URL externe, soit Page Bundle */ -}}
     {{- $audioResource := index (.Resources.ByType "audio") 0 -}}
     {{- $audioUrl := .Params.audio_url -}}
     {{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
     {{- if and (not $audioUrl) $audioResource -}}
       {{- $audioUrl = $audioResource.Permalink -}}
       {{- $audioFormat = $audioResource.MediaType.Type -}}
+    {{- else if $audioUrl -}}
+      {{- /* Convertir URL relative en absolue */ -}}
+      {{- if not (hasPrefix $audioUrl "http") -}}
+        {{- $audioUrl = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $audioUrl) -}}
+      {{- end -}}
     {{- end -}}
     
-    {{/* Image de l'épisode - soit cover_image, soit image du bundle */}}
+    {{- /* Image de l'épisode */ -}}
     {{- $episodeImageResource := index (.Resources.ByType "image") 0 -}}
     {{- $episodeImage := .Params.cover_image -}}
     {{- if and (not $episodeImage) $episodeImageResource -}}
@@ -102,24 +89,20 @@
     
     {{- if $audioUrl }}
     <item>
-      {{/* Titre et lien */}}
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <guid isPermaLink="true">{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
 
-      {{/* Description - utilise summary, puis description, puis contenu */}}
-      {{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) -}}
+      {{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) }}
       <description>{{ $desc | plainify | htmlUnescape }}</description>
       <content:encoded><![CDATA[{{ $desc | markdownify }}]]></content:encoded>
 
-      {{/* Fichier audio (CRUCIAL - c'est ce que les apps téléchargent) */}}
       <enclosure 
         url="{{ $audioUrl }}" 
         length="{{ .Params.file_size_bytes | default 0 }}" 
         type="{{ $audioFormat }}"/>
 
-      {{/* Métadonnées iTunes de l'épisode */}}
       <itunes:title>{{ .Title }}</itunes:title>
       <itunes:summary>{{ .Params.description | default ($desc | truncate 200) | plainify | htmlUnescape }}</itunes:summary>
       <itunes:duration>{{ .Params.duration_seconds | default .Params.duration | default "0" }}</itunes:duration>
@@ -133,12 +116,10 @@
       <itunes:episode>{{ . }}</itunes:episode>
       {{- end }}
 
-      {{/* Image spécifique à l'épisode */}}
       {{- with $episodeImage }}
       <itunes:image href="{{ . }}"/>
       {{- end }}
 
-      {{/* Chapitres (Podcast Index namespace) */}}
       {{- with .Params.chapters }}
       {{- if gt (len .) 0 }}
       <podcast:chapters>
@@ -151,7 +132,6 @@
       {{- end }}
       {{- end }}
 
-      {{/* Transcription si disponible */}}
       {{- with .Params.transcript }}
       {{- if .available }}
       {{- with .url }}
