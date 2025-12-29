@@ -39,14 +39,14 @@ episode_type: "full"         # "full", "trailer", "bonus"
 # ══════════════════════════════════════════════════════════════════
 
 # Option 1 : URL externe (CloudFront) - RECOMMANDÉ pour production
-audio_url: "/podcast-S01/ep_01.wav"                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
+audio_url: "/podcast-S01/ep_01.mp3"                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
 
 # Option 2 : Fichier local dans le Page Bundle
 # → Placer le fichier .mp3 dans le même dossier que index.md
 # → Laisser audio_url vide, Hugo le détectera automatiquement
 
 # Format audio
-audio_format: "audio/wav"   # audio/mpeg (MP3) ou audio/wav
+audio_format: "audio/mpeg"   # audio/mpeg (MP3) ou audio/wav
 
 # Durée (les deux formats sont requis)
 duration: "04:55"            # Format MM:SS ou HH:MM:SS

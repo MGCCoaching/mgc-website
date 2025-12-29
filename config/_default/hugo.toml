@@ -26,9 +26,9 @@ uglyURLs = false
 
 # Taxonomies
 # ------------------------------------------------------------------------------
-[taxonomies]
-  tag = 'tags'
-  category = 'categories'
+# [taxonomies]
+#   tag = 'tags'
+#   category = 'categories'
 
 # Permalinks
 # ------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ uglyURLs = false
   explicit = false
   category = "Business"
   subcategory = "Careers"
-  image = "/img/podcast-cover.jpg"
+  image = "/img/podcast-cover-s01.jpg"
   # funding_url = ""  # Optional: Soutenir le podcast
 
 [params.colors]
