@@ -9,7 +9,9 @@
 #               + une image de couverture (optionnel)
 
 draft: false
-date: 2025-02-20T10:00:00+01:00
+date: 2024-02-20T10:00:00+01:00
+
+is_episode: true # use for decap to filter episode to Podacast collection 
 
 # ══════════════════════════════════════════════════════════════════
 # INFORMATIONS DE BASE

@@ -1,0 +1,375 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# DECAP CMS - Configuration pour MGC Coaching
+# ══════════════════════════════════════════════════════════════════════════════
+# Documentation: https://decapcms.org/docs/
+
+# ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: mod  # Branche de production
+
+publish_mode: editorial_workflow
+
+# Dossier pour les uploads média
+media_folder: "static/img/uploads"
+public_folder: "/img/uploads"
+
+# Langue de l'interface
+locale: "fr"
+
+# Slug settings
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# COLLECTIONS
+# ══════════════════════════════════════════════════════════════════════════════
+
+collections:
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # PODCASTS (Épisodes uniquement)
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "podcasts"
+    label: "🎙️ Épisodes de Podcast"
+    label_singular: "Épisode"
+    folder: "content/podcasts"
+    create: true
+    slug: "{{slug}}"
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    filter:
+      field: is_episode
+      value: true
+    summary: "S{{season}}E{{episode_number}} - {{title}}"
+    sortable_fields: ["date", "episode_number", "title"]
+    view_groups:
+      - label: "Saison"
+        field: season
+      - label: "Année"
+        field: date
+        pattern: \d{4}
+    fields:
+      # ══════════════════════════════════════════════════════════════════
+      # INFORMATIONS DE BASE
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Type de contenu"
+        name: "is_episode"
+        widget: "hidden"
+        default: true
+
+      - label: "Titre de l'épisode"
+        name: "title"
+        widget: "string"
+        required: true
+      
+      - label: "Sous-titre"
+        name: "subtitle"
+        widget: "string"
+        default: "Podcast MGC Coaching"
+      
+      - label: "Date de publication"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "DD/MM/YYYY"
+        time_format: false
+      
+      - label: "Brouillon"
+        name: "draft"
+        widget: "boolean"
+        default: true
+        hint: "Décochez pour publier l'épisode"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # NUMÉROTATION
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Saison"
+        name: "season"
+        widget: "number"
+        default: 1
+        value_type: "int"
+        min: 1
+      
+      - label: "Numéro d'épisode"
+        name: "episode_number"
+        widget: "number"
+        default: 1
+        value_type: "int"
+        min: 1
+      
+      - label: "Type d'épisode"
+        name: "episode_type"
+        widget: "select"
+        options:
+          - { label: "Épisode complet", value: "full" }
+          - { label: "Bande-annonce", value: "trailer" }
+          - { label: "Bonus", value: "bonus" }
+        default: "full"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # MÉDIAS (Image + Audio)
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Image de couverture"
+        name: "cover"
+        widget: "image"
+        required: false
+        hint: "Image carrée recommandée (1400x1400 minimum)"
+      
+      - label: "Fichier audio (local)"
+        name: "audio_file"
+        widget: "file"
+        required: false
+        hint: "Téléverser le MP3 ici (stocké avec l'épisode)"
+      
+      - label: "URL audio externe (CDN)"
+        name: "audio_url"
+        widget: "string"
+        required: false
+        hint: "Prioritaire sur le fichier local. Ex: https://cdn.../episode.mp3"
+      
+      - label: "Format audio"
+        name: "audio_format"
+        widget: "select"
+        options:
+          - { label: "MP3", value: "audio/mpeg" }
+          - { label: "M4A/AAC", value: "audio/mp4" }
+          - { label: "WAV", value: "audio/wav" }
+        default: "audio/mpeg"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # DESCRIPTION
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Description courte (SEO)"
+        name: "description"
+        widget: "string"
+        required: false
+        hint: "150-160 caractères pour le SEO et réseaux sociaux"
+      
+      - label: "Résumé détaillé"
+        name: "summary"
+        widget: "text"
+        required: false
+        hint: "Description plus complète pour Apple Podcasts / Spotify"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # DURÉE ET TAILLE
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Durée (MM:SS)"
+        name: "duration"
+        widget: "string"
+        default: "00:00"
+        hint: "Format MM:SS ou HH:MM:SS"
+      
+      - label: "Durée en secondes"
+        name: "duration_seconds"
+        widget: "number"
+        default: 0
+        value_type: "int"
+        hint: "Calculé: (minutes × 60) + secondes ou https://www.inchcalculator.com/time-to-seconds-calculator/ "
+      
+      - label: "Taille du fichier (octets)"
+        name: "file_size_bytes"
+        widget: "number"
+        default: 0
+        value_type: "int"
+        required: false
+        hint: "Obligatoire pour Apple Podcasts. Commande: ls -l fichier.mp3"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # CATÉGORISATION
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Catégories"
+        name: "categories"
+        widget: "list"
+        default: ["Podcast"]
+      
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        default: ["communication", "prise de parole"]
+      
+      # ══════════════════════════════════════════════════════════════════
+      # INVITÉS
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Invité(e)s"
+        name: "guests"
+        widget: "list"
+        required: false
+        hint: "Format: Nom (Fonction)"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # CHAPITRES
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Chapitres"
+        name: "chapters"
+        widget: "list"
+        required: false
+        collapsed: true
+        fields:
+          - label: "Temps"
+            name: "time"
+            widget: "string"
+            hint: "Format MM:SS"
+          - label: "Titre du chapitre"
+            name: "title"
+            widget: "string"
+      
+      # ══════════════════════════════════════════════════════════════════
+      # OPTIONS RSS
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Contenu explicite"
+        name: "explicit"
+        widget: "boolean"
+        default: false
+      
+      - label: "Exclure du flux RSS"
+        name: "block"
+        widget: "boolean"
+        default: false
+      
+      # ══════════════════════════════════════════════════════════════════
+      # LIENS PLATEFORMES
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Liens plateformes"
+        name: "platforms"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Spotify", name: "spotify", widget: "string", required: false }
+          - { label: "Apple Podcasts", name: "apple_podcasts", widget: "string", required: false }
+          - { label: "Deezer", name: "deezer", widget: "string", required: false }
+          - { label: "YouTube", name: "youtube", widget: "string", required: false }
+      
+      # ══════════════════════════════════════════════════════════════════
+      # CONTENU
+      # ══════════════════════════════════════════════════════════════════
+      - label: "Contenu de l'épisode"
+        name: "body"
+        widget: "markdown"
+        hint: "Notes de l'épisode, points clés, ressources..."
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # SECTIONS PAGE D'ACCUEIL
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "home_sections"
+    label: "🏠 Sections Page d'accueil"
+    label_singular: "Section"
+    folder: "content/home-sections"
+    create: false
+    slug: "{{slug}}"
+    sortable_fields: ["weight", "title"]
+    fields:
+      - label: "Titre"
+        name: "title"
+        widget: "string"
+      
+      - label: "Type de section"
+        name: "section"
+        widget: "select"
+        options:
+          - { label: "Hero (bannière)", value: "hero" }
+          - { label: "À propos", value: "about" }
+          - { label: "Services/Features", value: "features" }
+          - { label: "Appel à l'action", value: "cta" }
+          - { label: "FAQ", value: "faq" }
+          - { label: "Derniers podcasts", value: "latest-podcasts" }
+      
+      - label: "Ordre d'affichage"
+        name: "weight"
+        widget: "number"
+        default: 10
+        hint: "Plus petit = affiché en premier"
+      
+      - label: "Texte du bouton"
+        name: "button_text"
+        widget: "string"
+        required: false
+      
+      - label: "Lien du bouton"
+        name: "button_url"
+        widget: "string"
+        required: false
+      
+      - label: "Image"
+        name: "image"
+        widget: "image"
+        required: false
+        allow_multiple: false
+      
+      - label: "Contenu"
+        name: "body"
+        widget: "markdown"
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # PAGES
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "pages"
+    label: "📄 Pages"
+    files:
+      - label: "Podcasts"
+        name: "podcasts"
+        file: "content/podcasts/_index.md"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Description (SEO)", name: "description", widget: "text", required: false }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+      
+      - label: "Contact"
+        name: "contact"
+        file: "content/contact.md"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "contact" }
+          - { label: "Contenu", name: "body", widget: "markdown", required: false }
+      
+      - label: "Mentions légales"
+        name: "legal"
+        file: "content/legal.md"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "legal" }
+          - { label: "Dernière mise à jour", name: "lastUpdate", widget: "date", required: false }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # PARAMÈTRES DU SITE
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "settings"
+    label: "⚙️ Paramètres"
+    files:
+      - label: "Informations générales"
+        name: "params"
+        file: "config/_default/params.fr.toml"
+        fields:
+          - label: "Description du site"
+            name: "description"
+            widget: "text"
+          
+          - label: "Auteur"
+            name: "author"
+            widget: "string"
+          
+          - label: "Sous-titre auteur"
+            name: "author_subtitle"
+            widget: "string"
+          
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Téléphone", name: "phone", widget: "string" }
+              - { label: "Adresse", name: "address", widget: "string" }
+          
+          - label: "Réseaux sociaux"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+              - { label: "Instagram", name: "instagram", widget: "string", required: false }
