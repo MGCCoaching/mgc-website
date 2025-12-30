@@ -1719,6 +1719,9 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
   }
+  .border-accent-hover {
+    border-color: var(--color-accent-hover);
+  }
   .border-accent-primary {
     border-color: var(--color-accent-primary);
   }
@@ -2057,6 +2060,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-accent-primary) 30%, transparent);
     }
+  }
+  .text-accent-secondary {
+    color: var(--color-accent-secondary);
   }
   .text-error {
     color: var(--color-error);
@@ -3356,6 +3362,9 @@ p {
 }
 .icon-accent {
   color: var(--color-accent-primary);
+}
+.icon-accent-hover {
+  color: var(--color-accent-hover);
 }
 .icon-secondary {
   color: var(--color-text-secondary);
