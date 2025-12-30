@@ -60,6 +60,9 @@
   .icon-accent {
     @apply text-accent-primary;
   }
+  .icon-accent-hover {
+    @apply text-accent-hover;
+  }
   
   .icon-secondary {
     @apply text-text-secondary;
