@@ -11,6 +11,8 @@
 draft: true
 date: {{ .Date }}
 
+is_episode: true # use for decap to filter episode to Podacast collection 
+
 # ══════════════════════════════════════════════════════════════════
 # INFORMATIONS DE BASE
 # ══════════════════════════════════════════════════════════════════
