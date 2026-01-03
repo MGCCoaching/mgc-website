@@ -1,0 +1,152 @@
+/* =============================================================================
+   Scroll Animations
+   =============================================================================
+   Classes: animate-on-scroll-{type}
+   Add .animate-visible via JavaScript when element enters viewport
+   
+   Types:
+   - fade-up    → Apparition depuis le bas
+   - fade-left  → Apparition depuis la gauche
+   - fade-right → Apparition depuis la droite
+   - scale      → Zoom in
+   - rotate     → Rotation + zoom
+   
+   Stagger: animate-stagger-{1-5} pour décaler les animations
+   ============================================================================= */
+
+/* =============================================================================
+   Base - Hide elements initially
+   ============================================================================= */
+
+[class*="animate-on-scroll"] {
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+
+/* =============================================================================
+   Fade Up - From bottom
+   ============================================================================= */
+
+.animate-on-scroll-fade-up {
+  transform: translateY(30px);
+}
+
+.animate-on-scroll-fade-up.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================================================================
+   Fade Left - From left
+   ============================================================================= */
+
+.animate-on-scroll-fade-left {
+  transform: translateX(-30px);
+}
+
+.animate-on-scroll-fade-left.animate-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =============================================================================
+   Fade Right - From right
+   ============================================================================= */
+
+.animate-on-scroll-fade-right {
+  transform: translateX(30px);
+}
+
+.animate-on-scroll-fade-right.animate-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =============================================================================
+   Scale - Zoom in
+   ============================================================================= */
+
+.animate-on-scroll-scale {
+  transform: scale(0.9);
+}
+
+.animate-on-scroll-scale.animate-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =============================================================================
+   Rotate - Rotation + zoom
+   ============================================================================= */
+
+.animate-on-scroll-rotate {
+  transform: rotate(-10deg) scale(0.9);
+}
+
+.animate-on-scroll-rotate.animate-visible {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* =============================================================================
+   Stagger Delays - For sequential animations
+   ============================================================================= */
+
+.animate-stagger-1 {
+  transition-delay: 0.1s;
+}
+
+.animate-stagger-2 {
+  transition-delay: 0.2s;
+}
+
+.animate-stagger-3 {
+  transition-delay: 0.3s;
+}
+
+.animate-stagger-4 {
+  transition-delay: 0.4s;
+}
+
+.animate-stagger-5 {
+  transition-delay: 0.5s;
+}
+
+/* =============================================================================
+   Photo Stack Animation
+   =============================================================================
+   Usage: Parent needs .animate-on-scroll-*, children have .photo-stack-layer-{1-3}
+   ============================================================================= */
+
+.photo-stack-layer-1 {
+  opacity: 0;
+  transform: translate(1.5rem, 1.5rem) rotate(6deg) scale(0.9);
+  transition: all 0.6s ease;
+}
+
+.photo-stack-layer-2 {
+  opacity: 0;
+  transform: translate(0.75rem, 0.75rem) rotate(-3deg) scale(0.9);
+  transition: all 0.6s ease 0.2s;
+}
+
+.photo-stack-layer-3 {
+  opacity: 0;
+  transform: rotate(2deg) scale(0.9);
+  transition: all 0.6s ease 0.4s;
+}
+
+.animate-visible .photo-stack-layer-1 {
+  opacity: 0.7;
+  transform: translate(1.5rem, 1.5rem) rotate(6deg) scale(1);
+}
+
+.animate-visible .photo-stack-layer-2 {
+  opacity: 0.85;
+  transform: translate(0.75rem, 0.75rem) rotate(-3deg) scale(1);
+}
+
+.animate-visible .photo-stack-layer-3 {
+  opacity: 1;
+  transform: rotate(2deg) scale(1);
+}

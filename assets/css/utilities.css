@@ -1,0 +1,225 @@
+/* =============================================================================
+   Custom Utility Classes
+   =============================================================================
+   Semantic color utilities that use CSS variables for theme switching
+   ============================================================================= */
+
+/* =============================================================================
+   Background Colors
+   ============================================================================= */
+
+.bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-bg-tertiary);
+}
+
+.bg-accent {
+  background-color: var(--color-bg-accent);
+}
+
+.bg-accent-primary {
+  background-color: var(--color-accent-primary);
+}
+
+.bg-accent-secondary {
+  background-color: var(--color-accent-secondary);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+}
+
+.bg-error {
+  background-color: var(--color-error);
+}
+
+.bg-info {
+  background-color: var(--color-info);
+}
+
+.bg-overlay {
+  background-color: var(--color-overlay);
+}
+
+/* =============================================================================
+   Text Colors
+   ============================================================================= */
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+.text-accent {
+  color: var(--color-text-accent);
+}
+
+.text-inverse {
+  color: var(--color-text-inverse);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.text-info {
+  color: var(--color-info);
+}
+
+/* =============================================================================
+   Border Colors
+   ============================================================================= */
+
+.border-primary {
+  border-color: var(--color-border-primary);
+}
+
+.border-secondary {
+  border-color: var(--color-border-secondary);
+}
+
+.border-accent {
+  border-color: var(--color-border-accent);
+}
+
+.border-success {
+  border-color: var(--color-success);
+}
+
+.border-warning {
+  border-color: var(--color-warning);
+}
+
+.border-error {
+  border-color: var(--color-error);
+}
+
+.border-info {
+  border-color: var(--color-info);
+}
+
+/* =============================================================================
+   Ring Colors (Focus states)
+   ============================================================================= */
+
+.ring-primary {
+  --tw-ring-color: var(--color-border-primary);
+}
+
+.ring-secondary {
+  --tw-ring-color: var(--color-border-secondary);
+}
+
+.ring-accent {
+  --tw-ring-color: var(--color-accent-primary);
+}
+
+/* =============================================================================
+   Hover States
+   ============================================================================= */
+
+.hover\:bg-primary:hover {
+  background-color: var(--color-bg-primary);
+}
+
+.hover\:bg-secondary:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.hover\:bg-tertiary:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.hover\:bg-accent:hover {
+  background-color: var(--color-bg-accent);
+}
+
+.hover\:bg-accent-hover:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.hover\:text-primary:hover {
+  color: var(--color-text-primary);
+}
+
+.hover\:text-accent:hover {
+  color: var(--color-text-accent);
+}
+
+.hover\:border-accent:hover {
+  border-color: var(--color-border-accent);
+}
+
+/* =============================================================================
+   Focus States
+   ============================================================================= */
+
+.focus\:border-accent:focus {
+  border-color: var(--color-border-accent);
+}
+
+.focus\:ring-accent:focus {
+  --tw-ring-color: var(--color-accent-primary);
+}
+
+/* =============================================================================
+   Shadow Utilities
+   ============================================================================= */
+
+.shadow-themed {
+  box-shadow: 
+    0 4px 6px -1px var(--color-shadow), 
+    0 2px 4px -2px var(--color-shadow);
+}
+
+.shadow-themed-lg {
+  box-shadow: 
+    0 10px 15px -3px var(--color-shadow), 
+    0 4px 6px -4px var(--color-shadow);
+}
+
+/* =============================================================================
+   Placeholder Colors
+   ============================================================================= */
+
+.placeholder-tertiary::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+/* =============================================================================
+   Divide Colors (borders between children)
+   ============================================================================= */
+
+.divide-primary > * + * {
+  border-color: var(--color-border-primary);
+}
+
+.divide-secondary > * + * {
+  border-color: var(--color-border-secondary);
+}
