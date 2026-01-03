@@ -1,10 +1,11 @@
-# French Site Parameters
+# French Site Parameters (params.fr.toml)
 # ==============================================================================
 
 # SEO & Meta Tags
 # ------------------------------------------------------------------------------
 description = 'Révélez votre voix unique grâce au coaching média. Je vous aide à construire une marque personnelle forte et crédible en ligne. Parlez avec impact et authenticité pour fidéliser votre audience sur tous les canaux médiatiques.'
 author = 'Marie-Gaëtane Comte'
+author_subtitle = "Média training & prise de parole"
 keywords = [
   "coaching média", 
   "media training", 
@@ -21,8 +22,9 @@ keywords = [
 # Open Graph / Social Media
 # ------------------------------------------------------------------------------
 [social]
-  linkedin = 'https://linkedin.com/in/marie-gaetane-comte'
-  instagram = 'https://instagram.com/'
+  linkedin = 'https://www.linkedin.com/in/marie-ga%C3%ABtane-comte-523b60383/'
+
+  instagram = 'https://instagram.com/marie_gaetane_comte'
 
 [opengraph]
   image = '/img/logo.webp'
@@ -58,9 +60,9 @@ keywords = [
 # Contact Information
 # ------------------------------------------------------------------------------
 [contact]
-  email = 'contact@-------.fr'
-  phone = '+33 6 00 00 00 00'
-  address = 'Amiens, France'
+  email = 'mariegaetanecomte@gmail.com'
+  phone = '+33 6 16 45 74 78'
+  address = 'Amiens et ses alentours, France'
 
 # Copyright
 # ------------------------------------------------------------------------------
@@ -78,3 +80,59 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
 # ------------------------------------------------------------------------------
 [pages]
   podcasts = true
+
+[homeSection]
+  enableLatestPodcast = true
+
+[cookies]
+  enabled = false   # true = bandeau actif, false = désactivé
+
+
+
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MÉTADONNÉES DU PODCAST
+# ══════════════════════════════════════════════════════════════════════════════
+# Ces infos apparaissent sur Apple Podcasts, Spotify, etc.
+# Ajouter cette section dans config/_default/params.fr.toml
+
+[podcast]
+  # Titre du podcast (affiché sur les plateformes)
+  title = "Les Voix des Phénix - MGC Coaching"
+  
+  # Description du podcast
+  description = """
+  Le podcast de Marie-Gaëtane Comte sur la prise de parole, le média training 
+  et la communication. Conseils pratiques et interviews d'experts pour oser 
+  prendre la parole avec impact et authenticité.
+  """
+  # Auteur / Animatrice
+  author = "Marie-Gaëtane Comte"
+  email = "mariegaetanecomte@gmail.com"
+  
+  host = "Marie-Gaëtane Comte"
+  hostAvatar = "/img/mgc-avatar.jpg"
+  
+  # Langue
+  language = "fr"
+  
+  # Image de couverture du podcast
+  # IMPORTANT : Carré, minimum 1400x1400, max 3000x3000
+  # Créer ce fichier dans static/img/
+  image = "/img/podcast-cover-s01.jpg"
+  
+  # Catégorie Apple Podcasts
+  # Liste : https://podcasters.apple.com/support/1691-apple-podcasts-categories
+  category = "Business"
+  subcategory = "Careers"
+  
+  # Contenu explicite ?
+  explicit = false
+  
+  # Propriétaire (pour contact Apple)
+  owner_name = "Marie-Gaëtane Comte"
+  owner_email = "mariegaetanecomte@gmail.com"
+
+  # Optionnel : lien de soutien/financement
+  # funding_url = "https://www.buymeacoffee.com/mgccoaching"

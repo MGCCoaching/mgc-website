@@ -5,13 +5,25 @@ section: "features"
 features:
   - title: "Média Training"
     icon: "tv_signin"
-    description: "Préparez-vous à affronter les caméras et les micros avec assurance. J'accompagne dirigeants, experts et personnalités publiques à maîtriser leur communication face aux médias : interviews, plateaux TV, podcasts."
+    button_url: "/features/media-training"
+    description: |
+     Vous avez une interview de prévue avec un journaliste? Qui que vous soyez (politique, institutionnel, entreprise, association, syndicat, étudiant, en reconversion…), chaque intervention se prépare. Vous n’avez que quelques secondes pour convaincre et faire passer votre message. Il n’y a pas de question piège, il n’y a que des personnes mal préparées. 
+     
+     Je vous apprends à délivrer un message clair, direct, impactant, sans vous perdre dans les détails.
   - title: "Prise de parole en public"
     icon: "mic_external_on"
-    description: "Captivez votre audience et transmettez vos messages avec clarté. Travaillez votre posture, votre voix et votre storytelling pour transformer chaque intervention en moment mémorable."
+    button_url: "/features/prise-de-parole"
+    description: |
+     Réunion, prise de parole sur scène, soutenance ou oral d’examen… Dans ces moments clés, ce n’est pas seulement ce que vous dites qui compte, mais la manière dont vous le dites. Une idée mal portée s’efface. Un message flou n’est pas retenu. Une voix hésitante n’est pas entendue. 
+     
+     Il n’y a pas d’orateurs nés, il n’y a que des travailleurs acharnés.
   - title: "Animation d'événements"
     icon: "crowdsource"
-    description: "Confiez-moi l'animation de vos conférences, tables rondes ou séminaires. Mon expérience de journaliste me permet de créer du lien, relancer les échanges et garantir une dynamique engageante."
+    button_url: "/features/animation-evenements"
+    description: |
+      Tables rondes, conférences, séminaires, gala, colloque. Confiez-moi l'animation de vos évènements. Mon rôle est de rendre les échanges fluides et mémorables.
+
+      Vous avez un message à faire passer, des experts à faire dialoguer ou un événement à incarner ? Je mets mon expérience du micro, du direct et de la transmission au service de votre projet. Vous méritez de briller.
 ---
 
-Un accompagnement sur mesure pour révéler votre singularité.
+Investissez en vous pour ne plus laisser vos prises de parole tomber dans l’oubli

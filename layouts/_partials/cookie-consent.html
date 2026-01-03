@@ -1,0 +1,105 @@
+{{/* 
+  Cookie Consent Banner
+  =====================
+  Bandeau de consentement cookies conforme RGPD
+  
+  Usage: {{ partial "cookie-consent.html" . }}
+  Ajouter dans baseof.html juste avant </body>
+  
+  Activer/Désactiver dans config/_default/params.fr.toml :
+  [cookies]
+    enabled = true
+*/}}
+
+{{ if site.Params.cookies.enabled }}
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 z-50 transform translate-y-full transition-transform duration-500 ease-out">
+  <div class="bg-secondary border-t border-border-primary shadow-2xl">
+    <div class="container mx-auto px-4 py-4 md:py-6">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
+        
+        {{/* Icône et texte */}}
+        <div class="flex items-start gap-3 flex-1">
+          <span class="material-symbols-outlined text-accent-primary text-2xl mt-0.5 shrink-0">cookie</span>
+          <div>
+            <h4 class="text-text-primary font-semibold mb-1">Nous utilisons des cookies</h4>
+            <p class="text-text-secondary text-sm leading-relaxed">
+              Ce site utilise des cookies pour améliorer votre expérience de navigation et analyser le trafic. 
+              En cliquant sur « Accepter », vous consentez à l'utilisation de tous les cookies. 
+              <a href="/legale/#cookies" class="text-accent-primary hover:underline">En savoir plus</a>
+            </p>
+          </div>
+        </div>
+
+        {{/* Boutons */}}
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 lg:shrink-0">
+          {{/* Bouton Personnaliser - optionnel */}}
+          <button 
+            id="cookie-settings-btn"
+            type="button"
+            class="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border border-border-primary rounded-lg hover:bg-primary transition-colors"
+          >
+            Personnaliser
+          </button>
+          
+          {{/* Refuser */}}
+          <button 
+            id="cookie-reject"
+            type="button"
+            class="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border border-border-primary rounded-lg hover:bg-primary transition-colors"
+          >
+            Refuser
+          </button>
+          
+          {{/* Accepter */}}
+          <button 
+            id="cookie-accept"
+            type="button"
+            class="px-6 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-hover rounded-lg transition-colors"
+          >
+            Accepter tout
+          </button>
+        </div>
+      </div>
+
+      {{/* Panel de personnalisation (caché par défaut) */}}
+      <div id="cookie-settings-panel" class="hidden mt-6 pt-6 border-t border-border-primary">
+        <h5 class="text-text-primary font-semibold mb-4">Paramétrer les cookies</h5>
+        
+        <div class="space-y-4">
+          {{/* Cookies nécessaires - toujours actifs */}}
+          <div class="flex items-center justify-between p-3 bg-primary rounded-lg">
+            <div>
+              <p class="text-text-primary font-medium text-sm">Cookies strictement nécessaires</p>
+              <p class="text-text-tertiary text-xs mt-1">Indispensables au fonctionnement du site</p>
+            </div>
+            <span class="text-xs text-text-tertiary bg-secondary px-2 py-1 rounded">Toujours actifs</span>
+          </div>
+
+          {{/* Cookies analytiques */}}
+          <div class="flex items-center justify-between p-3 bg-primary rounded-lg">
+            <div>
+              <p class="text-text-primary font-medium text-sm">Cookies analytiques</p>
+              <p class="text-text-tertiary text-xs mt-1">Nous aident à comprendre comment vous utilisez le site</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="cookie-analytics" class="sr-only peer" checked>
+              <div class="w-11 h-6 bg-border-primary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-primary"></div>
+            </label>
+          </div>
+        </div>
+
+        {{/* Bouton sauvegarder les préférences */}}
+        <div class="mt-6 flex justify-end">
+          <button 
+            id="cookie-save-preferences"
+            type="button"
+            class="px-6 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-hover rounded-lg transition-colors"
+          >
+            Sauvegarder mes préférences
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

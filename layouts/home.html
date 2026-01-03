@@ -4,8 +4,11 @@
   {{ with $sections }} 
     {{ range .Pages.ByWeight }} 
       {{ $sectionType := .Params.section | default "default" }} 
-      {{/* Render the appropriate partial for each section type */}} 
-      {{ partial (printf "home-sections/%s.html" $sectionType) . }}
+      {{/* Skip latest-podcasts if podcast is disabled */}}
+      {{ if or (ne $sectionType "latest-podcasts") site.Params.homeSection.enableLatestPodcast }}
+        {{/* Render the appropriate partial for each section type */}} 
+        {{ partial (printf "home-sections/%s.html" $sectionType) . }}
+      {{ end }}
     {{ end }} 
   {{ end }} 
 {{ end }}

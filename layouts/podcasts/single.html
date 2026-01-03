@@ -1,123 +1,363 @@
 {{ define "main" }}
 
-{{/* Variables */}}
-{{ $audioUrl := (index (.Resources.ByType "audio") 0) }}
-{{ $image := (index (.Resources.ByType "image") 0) }}
+{{/* ══════════════════════════════════════════════════════════════════
+     VARIABLES
+     ══════════════════════════════════════════════════════════════════ */}}
 
-{{/* Schema.org PodcastEpisode */}}
+{{/* Audio : soit Page Bundle, soit URL externe */}}
+{{ $audioResource := index (.Resources.ByType "audio") 0 }}
+{{ $audioUrl := "" }}
+{{ if .Params.audio_url }}
+  {{ $audioUrl = .Params.audio_url }}
+{{ else if $audioResource }}
+  {{ $audioUrl = $audioResource.Permalink }}
+{{ end }}
+
+{{/* Image : soit Page Bundle, soit cover_image, soit fallback */}}
+{{ $imageResource := index (.Resources.ByType "image") 0 }}
+{{ $image := "" }}
+{{ if $imageResource }}
+  {{ $image = $imageResource.Permalink }}
+{{ else if .Params.cover_image }}
+  {{ $image = .Params.cover_image | relURL }}
+{{ else }}
+  {{ $image = "/img/fallback-podcast.png" | relURL }}
+{{ end }}
+
+{{/* Paramètres avec valeurs par défaut */}}
+{{ $season := .Params.season | default 1 }}
+{{ $episodeNum := .Params.episode_number | default 1 }}
+{{ $episodeType := .Params.episode_type | default "full" }}
+{{ $duration := .Params.duration | default "00:00" }}
+{{ $durationSeconds := .Params.duration_seconds | default 0 }}
+{{ $explicit := .Params.explicit | default false }}
+{{ $chapters := .Params.chapters | default slice }}
+{{ $guests := .Params.guests | default slice }}
+{{ $description := .Params.description | default "" }}
+{{ $summary := .Params.summary | default "" }}
+
+{{/* ══════════════════════════════════════════════════════════════════
+     SCHEMA.ORG - PodcastEpisode (SEO)
+     ══════════════════════════════════════════════════════════════════ */}}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "PodcastEpisode",
   "name": "{{ .Title }}",
-  "description": "{{ .Content | plainify | truncate 160 }}",
+  "description": "{{ with $description }}{{ . | plainify }}{{ else }}{{ .Content | plainify | truncate 160 }}{{ end }}",
   "url": "{{ .Permalink }}",
   "datePublished": "{{ .Date.Format "2006-01-02" }}",
-  {{- with .Params.duration }}
-  {{- $parts := split . ":" }}
+  {{/* Durée au format ISO 8601 (PT1H30M45S) */}}
+  {{- if $durationSeconds }}
+  {{- $hours := div $durationSeconds 3600 }}
+  {{- $minutes := div (mod $durationSeconds 3600) 60 }}
+  {{- $seconds := mod $durationSeconds 60 }}
+  "duration": "PT{{ if gt $hours 0 }}{{ $hours }}H{{ end }}{{ $minutes }}M{{ $seconds }}S",
+  {{- else if $duration }}
+  {{- $parts := split $duration ":" }}
+  {{- if eq (len $parts) 3 }}
+  "duration": "PT{{ index $parts 0 }}H{{ index $parts 1 }}M{{ index $parts 2 }}S",
+  {{- else if eq (len $parts) 2 }}
   "duration": "PT{{ index $parts 0 }}M{{ index $parts 1 }}S",
   {{- end }}
-  {{- with $image }}
-  "image": "{{ .Permalink }}",
   {{- end }}
-  {{- with $audioUrl }}
+  "episodeNumber": {{ $episodeNum }},
+  {{- if $image }}
+  "image": "{{ $image }}",
+  {{- end }}
+  {{- if $audioUrl }}
   "associatedMedia": {
     "@type": "MediaObject",
-    "contentUrl": "{{ .Permalink }}"
+    "contentUrl": "{{ $audioUrl }}"
   },
   {{- end }}
   "partOfSeries": {
     "@type": "PodcastSeries",
-    "name": "Podcasts",
+    "name": "{{ site.Params.podcast.title | default "Podcast MGC Coaching" }}",
     "url": "{{ "/podcasts/" | absURL }}"
+  },
+  "partOfSeason": {
+    "@type": "PodcastSeason",
+    "seasonNumber": {{ $season }}
   }
+  {{- with $guests }},
+  "actor": [
+    {{- range $i, $guest := . }}
+    {{- if $i }},{{ end }}
+    {
+      "@type": "Person",
+      "name": "{{ $guest }}"
+    }
+    {{- end }}
+  ]
+  {{- end }}
 }
 </script>
 
-    <div class=" mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-secondary">
+{{/* ══════════════════════════════════════════════════════════════════
+     CONTENU DE LA PAGE
+     ══════════════════════════════════════════════════════════════════ */}}
 
-        {{/* Laisser 'article' en flex pour la mise en page en colonnes */}}
-        <article class=" sticky lg:flex lg:space-x-12 lg:items-start">
-            
-            {{/* MODIFICATION 1 : Retirer 'h-full' de l'aside */}}
-            <aside class="lg:w-1/3 mb-8 lg:mb-0">
-                <div class="sticky top-12">
-                    <div class="md:hidden">
-                        <header class="mb-6  ">
-                            <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
-                            <h3 class=" font-extrabold text-secondary mt-1">{{ .Title }}</h3>
-                        </header>
-                        {{/*  <hr class=" text-accent-primary my-8">  */}}
-                        
-                        {{ with .Params.guests }}
-                        <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
-                            {{ range . }}
-                            <h4 class=" font-bold ">Invité(e):</h4>
-                            <h4 >{{ . }}</h4>
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-primary">
+
+    <article class="lg:flex lg:space-x-12 lg:items-start">
+        
+        {{/* ══════════════════════════════════════════════════════════
+             SIDEBAR (Image + Player + Infos)
+             ══════════════════════════════════════════════════════════ */}}
+        <aside class="lg:w-1/3 mb-8 lg:mb-0">
+            <div class="sticky top-12">
+                
+                {{/* Header Mobile */}}
+                <div class="md:hidden">
+                    <header class="mb-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                                S{{ $season }}E{{ $episodeNum }}
+                            </span>
+                            {{ if eq $episodeType "trailer" }}
+                            <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
+                            {{ else if eq $episodeType "bonus" }}
+                            <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                             {{ end }}
                         </div>
-                        {{ end }}    
-                    </div>
+                        <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
+                        <h2 class="font-extrabold text-secondary mt-1">{{ .Title }}</h2>
+                    </header>
                     
-                    {{/* Image Principale */}}
-                    <figure class="shadow-2xl rounded-lg overflow-hidden mb-8">
-                        {{ if $image }}
-                            <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode : {{ .Title }}" class="w-full object-cover aspect-square">
-                        {{ else }}
-                            <img src="{{ "/img/fallback-podcast.png" | relURL }}" alt="Couverture par défaut" class="w-full object-cover aspect-square">
+                    {{/* Invités - Mobile */}}
+                    {{ with $guests }}
+                    <div class="flex flex-col items-start gap-2 mb-8 p-4 border-l-4 border-t-4 border-accent-primary text-primary">
+                        {{ range . }}
+                        <div>
+                            <span class="font-bold">Invité(e) :</span>
+                            <span>{{ . }}</span>
+                        </div>
                         {{ end }}
-                    </figure>
+                    </div>
+                    {{ end }}    
+                </div>
+                
+                {{/* Image Principale */}}
+                <figure class="shadow-2xl rounded-lg overflow-hidden mb-6 relative">
+                    <img src="{{ $image }}" 
+                         alt="Couverture de l'épisode : {{ .Title }}" 
+                         class="w-full object-cover aspect-square">
+                    {{/* Badge épisode sur l'image */}}
+                    <div class="absolute top-3 left-3">
+                        <span class="bg-accent-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
+                            S{{ $season }}E{{ $episodeNum }}
+                        </span>
+                    </div>
+                </figure>
 
-                    {{ if $audioUrl }}
-                        <audio controls controlsList="nodownload" class="w-full  bg-secondary border-5 border-accent-primary rounded-full shadow-md">
-                            <source src="{{ $audioUrl.Permalink }}" type="audio/wav">
+                {{/* Player Audio */}}
+                {{ if $audioUrl }}
+                    {{/* Player natif (sera remplacé par le custom plus tard) */}}
+                    {{/*  <div class="mb-4">
+                        <audio controls 
+                               controlsList="nodownload" 
+                               class="w-full rounded-lg shadow-md"
+                               preload="metadata">
+                            <source src="{{ $audioUrl }}" type="{{ .Params.audio_format | default "audio/mpeg" }}">
                             Votre navigateur ne supporte pas l'élément audio.
                         </audio>
-                    {{ else }}
-                        <p class="text-red-500 text-sm italic ">Fichier audio indisponible.</p>
-                    {{ end }}
-                    
-                    <div class=" p-2  text-sm text-primary">
-                        <p><strong>Durée :</strong> {{ .Params.duration | default "N/A" }}</p>
-                        <p><strong>Publié :</strong> {{ .Date.Format "02 Janvier 2006" }}</p>
                     </div>
-
-                </div>
-            </aside>
-
-            {{/* Le conteneur du contenu principal */}}
-            <div class="lg:w-2/3"> 
-                <div class="hidden md:inline">
-                    <header class="mb-6  ">
-                        <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
-                        <h3 class=" font-extrabold text-secondary mt-1">{{ .Title }}</h3>
-                    </header>
-                    {{/*  <hr class=" text-accent-primary my-8">  */}}
+                      */}}
+                    {{/* TODO: Intégrer le player custom ici */}}
+                    {{/*  {{ partial "components/podcast-player.html" . }}  */}}
+                    {{ partial "components/podcast-player.html" . }}
                     
-                    {{ with .Params.guests }}
-                    <div class="flex items-center gap-2 mb-8 p-4  border-l-4 border-t-4 border-accent-primary  text-primary">
-                        {{ range . }}
-                        <h4 class=" font-bold ">Invité(e):</h4>
-                        <h4 >{{ . }}</h4>
+                {{ else }}
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                        <p class="text-red-600 text-sm italic flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">error</span>
+                            Fichier audio indisponible.
+                        </p>
+                    </div>
+                {{ end }}
+                
+                {{/* Métadonnées */}}
+                <div class="p-4 my-5 bg-primary rounded-lg text-sm text-primary space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary text-lg">timer</span>
+                        <span><strong>Durée :</strong> {{ $duration }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary text-lg">calendar_today</span>
+                        <span><strong>Publié :</strong> {{ .Date.Format "02 janvier 2006" }}</span>
+                    </div>
+                    {{ if eq $episodeType "trailer" }}
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary text-lg">movie</span>
+                        <span><strong>Type :</strong> Bande-annonce</span>
+                    </div>
+                    {{ else if eq $episodeType "bonus" }}
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary text-lg">star</span>
+                        <span><strong>Type :</strong> Épisode bonus</span>
+                    </div>
+                    {{ end }}
+                </div>
+
+                {{/* Liens plateformes (si renseignés) */}}
+                {{ with .Params.platforms }}
+                {{ if or .spotify .apple_podcasts .deezer .youtube }}
+                <div class="mt-6 p-4 bg-primary rounded-lg">
+                    <h4 class="font-bold text-primary mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary">headphones</span>
+                        Écouter sur
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                        {{ with .spotify }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" 
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#1DB954] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-spotify icon-lg"></i>
+                        </a>
+                        {{ end }}
+                        
+                        {{ with .apple_podcasts }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" 
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#9933FF] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-solid fa-podcast icon-lg"></i>
+                        </a>
+                        {{ end }}
+                        
+                        {{ with .deezer }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" 
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0092] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-deezer icon-lg"></i>
+                        </a>
+                        {{ end }}
+                        
+                        {{ with .youtube }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" 
+                           class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0000] text-white rounded-full hover:opacity-90 transition-opacity">
+                            <i class="fa-brands fa-youtube icon-lg"></i>
+                        </a>
                         {{ end }}
                     </div>
-                    {{ end }}
                 </div>
-                
-
-                <section class=" max-w-none text-primary">
-                    {{ .Content }}
-                </section>
-                
-                <hr class=" text-accent-primary my-8">
-
-                <div class=" text-sm text-text-primary">
-                    <h3 class="font-bold mb-2">Notes :</h3>
-                    <p>Retrouvez la transcription complète et les ressources mentionnées dans la description ci-dessus.</p>
-                </div>
+                {{ end }}
+                {{ end }}
 
             </div>
-        </article>
-    </div>
+        </aside>
+
+        {{/* ══════════════════════════════════════════════════════════
+             CONTENU PRINCIPAL
+             ══════════════════════════════════════════════════════════ */}}
+        <div class="lg:w-2/3"> 
+            
+            {{/* Header Desktop */}}
+            <div class="hidden md:block">
+                <header class="mb-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        {{/*  <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                            S{{ $season }}E{{ $episodeNum }}
+                        </span>  */}}
+                        {{ if eq $episodeType "trailer" }}
+                        <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
+                        {{ else if eq $episodeType "bonus" }}
+                        <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
+                        {{ end }}
+                        {{/*  <span class="text-sm text-tertiary">• {{ $duration }}</span>  */}}
+                    </div>
+                    <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
+                    <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ .Title }}</h1>
+                </header>
+                
+                {{/* Description courte */}}
+                {{ with $description }}
+                <p class="text-lg text-tertiary mb-6 leading-relaxed">{{ . }}</p>
+                {{ end }}
+                
+                {{/* Invités - Desktop */}}
+                {{ with $guests }}
+                <div class="flex flex-wrap items-center gap-4 mb-8 p-4 border-l-4 border-t-4 border-accent-primary text-primary bg-primary rounded-r-lg">
+                    {{ range . }}
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-accent-primary">person</span>
+                        <span class="font-bold">Invité(e) :</span>
+                        <span>{{ . }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+            
+            {{/* Contenu Markdown */}}
+            <section class="prose prose-lg max-w-none text-primary">
+                {{ .Content }}
+            </section>
+            
+            <hr class="text-accent-primary my-8">
+
+            {{/* Ressources mentionnées */}}
+            {{ with .Params.resources }}
+            <div class="mb-8">
+                <h3 class="font-bold text-primary mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-accent-primary">bookmark</span>
+                    Ressources mentionnées
+                </h3>
+                <ul class="space-y-2">
+                    {{ range . }}
+                    <li class="flex items-start gap-2">
+                        {{ if eq .type "book" }}
+                        <span class="material-symbols-outlined text-tertiary text-lg">menu_book</span>
+                        {{ else if eq .type "video" }}
+                        <span class="material-symbols-outlined text-tertiary text-lg">play_circle</span>
+                        {{ else if eq .type "tool" }}
+                        <span class="material-symbols-outlined text-tertiary text-lg">build</span>
+                        {{ else }}
+                        <span class="material-symbols-outlined text-tertiary text-lg">link</span>
+                        {{ end }}
+                        <a href="{{ .url }}" target="_blank" rel="noopener" 
+                           class="text-accent-primary hover:underline">
+                            {{ .title }}
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+
+            {{/* Transcription */}}
+            {{ with .Params.transcript }}
+            {{ if .available }}
+            <div class="mb-8 p-4 bg-primary rounded-lg">
+                <h3 class="font-bold text-primary mb-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-accent-primary">description</span>
+                    Transcription
+                </h3>
+                {{ if .url }}
+                <a href="{{ .url }}" target="_blank" rel="noopener" 
+                   class="inline-flex items-center gap-1 text-accent-primary hover:underline">
+                    <span class="material-symbols-outlined text-sm">download</span>
+                    Télécharger la transcription
+                </a>
+                {{ else }}
+                <p class="text-sm text-tertiary">Transcription disponible sur demande.</p>
+                {{ end }}
+            </div>
+            {{ end }}
+            {{ end }}
+
+            {{/* Note de bas de page */}}
+            <div class="text-sm text-tertiary p-4 bg-primary rounded-lg">
+                <p class="flex items-start gap-2">
+                    <span class="material-symbols-outlined text-accent-primary text-lg">info</span>
+                    Retrouvez la transcription complète et les ressources mentionnées dans la description ci-dessus.
+                </p>
+            </div>
+
+        </div>
+    </article>
+</div>
+
+{{/* Autres épisodes */}}
+<div>
+    {{ partial "other_podcasts.html" . }}
+</div>
 
 {{ end }}

@@ -1,44 +1,161 @@
-{{/* Section FAQ rapide */}}
-<section class="bg-secondary py-16 md:py-20">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h3 class="text-3xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up">Questions fréquentes</h3>
-        <p class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">Avant de me contacter, peut-être trouverez-vous votre réponse ici</p>
-      </div>
+{{/* Section FAQ rapide - Carrousel Responsive Dynamique */}}
+{{/* 
+  Paramètres optionnels (via dict) :
+  - bg : classe de fond de la section (défaut: "bg-secondary")
+  - cardBg : classe de fond des cartes (défaut: "bg-primary")
   
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {{/* FAQ 1 */}}
-        <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-1">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">help</span>
-            <h4 class="font-semibold text-text-primary">Comment se déroule une séance ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Chaque séance est personnalisée selon vos objectifs : exercices pratiques, mises en situation, et feedback constructif.
-          </p>
-        </div>
-  
-        {{/* FAQ 2 */}}
-        <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-2">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">payments</span>
-            <h4 class="font-semibold text-text-primary">Quels sont vos tarifs ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Les tarifs varient selon la prestation. Contactez-moi pour un devis personnalisé adapté à vos besoins.
-          </p>
-        </div>
-  
-        {{/* FAQ 3 */}}
-        <div class="bg-primary p-6 rounded-xl shadow-themed animate-on-scroll-fade-up animate-stagger-3">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="material-symbols-outlined text-accent-primary">videocam</span>
-            <h4 class="font-semibold text-text-primary">Proposez-vous des séances à distance ?</h4>
-          </div>
-          <p class="text-text-secondary text-sm">
-            Oui ! Je propose des accompagnements en présentiel à Amiens et en visioconférence partout en France.
-          </p>
-        </div>
-      </div>
+  Exemple d'appel :
+  {{ partial "faq.html" (dict "context" . "bg" "bg-primary" "cardBg" "bg-secondary") }}
+  ou simplement :
+  {{ partial "faq.html" . }}
+*/}}
+
+{{/* Récupérer les paramètres */}}
+{{ $context := . }}
+{{ $bg := "bg-secondary" }}
+{{ $cardBg := "bg-primary" }}
+
+{{/* Si appelé avec dict */}}
+{{ if reflect.IsMap . }}
+  {{ $context = .context | default . }}
+  {{ $bg = .bg | default "bg-secondary" }}
+  {{ $cardBg = .cardBg | default "bg-primary" }}
+{{ end }}
+
+{{/* Récupérer la page FAQ depuis home-sections */}}
+{{ $faqPage := site.GetPage "/home-sections/faq" }}
+{{ if not $faqPage }}
+  {{ $faqPage = $context }}
+{{ end }}
+{{ $faqs := $faqPage.Params.faqs }}
+{{ $title := $faqPage.Params.title | default "Questions fréquentes" }}
+{{ $subtitle := $faqPage.Params.subtitle }}
+
+{{ with $faqs }}
+{{ $totalFaqs := len . }}
+{{ $totalSlidesMobile := $totalFaqs }}
+{{/* Calcul du nombre de slides desktop : arrondi supérieur de totalFaqs / 2 */}}
+{{ $totalSlidesDesktop := div (add $totalFaqs 1) 2 }}
+
+<section class="{{ $bg }} py-16 md:py-20">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h3 class="text-3xl font-bold text-text-primary mb-4 animate-on-scroll-fade-up">{{ $title }}</h3>
+      {{ with $subtitle }}
+        <p class="text-text-secondary animate-on-scroll-fade-up animate-stagger-1">{{ . }}</p>
+      {{ end }}
     </div>
-  </section>
+
+    {{/* Conteneur du carrousel */}}
+    <div class="relative max-w-5xl mx-auto">
+      
+      {{/* Zone des slides avec overflow hidden */}}
+      <div class="faq-carousel-container relative overflow-hidden">
+        
+        {{/* Version MOBILE : 1 FAQ par slide */}}
+        <div class="faq-mobile-wrapper sm:hidden">
+          <div class="faq-track-mobile flex transition-transform duration-500 ease-out">
+            {{ range $index, $faq := . }}
+              <div class="faq-slide-mobile w-full shrink-0 px-1" data-slide="{{ $index }}">
+                <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
+                  <div class="flex items-center gap-3 mb-3">
+                    <span class="material-symbols-outlined text-accent-primary">{{ $faq.icon | default "help" }}</span>
+                    <h4 class="font-semibold text-text-primary">{{ $faq.question }}</h4>
+                  </div>
+                  <div class="text-text-secondary text-sm prose prose-sm">
+                    {{ $faq.answer | markdownify }}
+                  </div>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+
+        {{/* Version DESKTOP : 2 FAQ par slide */}}
+        <div class="faq-desktop-wrapper hidden sm:block">
+          <div class="faq-track-desktop flex transition-transform duration-500 ease-out">
+            {{ range $slideIndex := seq 0 (sub $totalSlidesDesktop 1) }}
+              {{ $start := mul $slideIndex 2 }}
+              {{ $faqsInSlide := first 2 (after $start $faqs) }}
+              
+              <div class="faq-slide-desktop w-full shrink-0 grid sm:grid-cols-2 gap-6 p-2" data-slide="{{ $slideIndex }}">
+                {{ range $faqsInSlide }}
+                  <div class="{{ $cardBg }} p-6 rounded-xl shadow-themed">
+                    <div class="flex items-center gap-3 mb-3">
+                      <span class="material-symbols-outlined text-accent-primary">{{ .icon | default "help" }}</span>
+                      <h4 class="font-semibold text-text-primary">{{ .question }}</h4>
+                    </div>
+                    <div class="text-text-secondary text-sm prose prose-sm">
+                      {{ .answer | markdownify }}
+                    </div>
+                  </div>
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
+        </div>
+
+      </div>
+
+      {{/* Navigation en bas : Flèche - Dots - Flèche */}}
+      
+      {{/* Version Mobile */}}
+      <div class="faq-nav-mobile flex sm:hidden items-center justify-center gap-4 mt-8">
+        <button 
+          class="faq-nav-btn faq-prev w-9 h-9 rounded-full bg-primary border-2 border-text-tertiary/30 shadow-themed flex items-center justify-center text-text-secondary hover:text-accent-primary hover:border-accent-primary transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+          aria-label="Question précédente"
+          disabled
+        >
+          <span class="material-symbols-outlined text-xl">chevron_left</span>
+        </button>
+
+        <div class="faq-dots-mobile flex items-center gap-2">
+          {{ range $index, $faq := . }}
+            <button 
+              class="faq-dot w-2.5 h-2.5 rounded-full transition-all duration-300{{ if eq $index 0 }} bg-accent-primary scale-125{{ else }} bg-text-tertiary/40{{ end }}" 
+              data-slide="{{ $index }}" 
+              aria-label="Question {{ add $index 1 }}"
+            ></button>
+          {{ end }}
+        </div>
+
+        <button 
+          class="faq-nav-btn faq-next w-9 h-9 rounded-full bg-primary border-2 border-text-tertiary/30 shadow-themed flex items-center justify-center text-text-secondary hover:text-accent-primary hover:border-accent-primary transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+          aria-label="Question suivante"
+        >
+          <span class="material-symbols-outlined text-xl">chevron_right</span>
+        </button>
+      </div>
+
+      {{/* Version Desktop */}}
+      <div class="faq-nav-desktop hidden sm:flex items-center justify-center gap-6 mt-8">
+        <button 
+          class="faq-nav-btn faq-prev w-10 h-10 rounded-full bg-primary border-2 border-text-tertiary/30 shadow-themed flex items-center justify-center text-text-secondary hover:text-accent-primary hover:border-accent-primary hover:scale-110 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+          aria-label="Questions précédentes"
+          disabled
+        >
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+
+        <div class="faq-dots-desktop flex items-center gap-3">
+          {{ range $slideIndex := seq 0 (sub $totalSlidesDesktop 1) }}
+            <button 
+              class="faq-dot w-3 h-3 rounded-full transition-all duration-300{{ if eq $slideIndex 0 }} bg-accent-primary scale-125{{ else }} bg-text-tertiary/40{{ end }}" 
+              data-slide="{{ $slideIndex }}" 
+              aria-label="Questions {{ add (mul $slideIndex 2) 1 }} et {{ add (mul $slideIndex 2) 2 }}"
+            ></button>
+          {{ end }}
+        </div>
+
+        <button 
+          class="faq-nav-btn faq-next w-10 h-10 rounded-full bg-primary border-2 border-text-tertiary/30 shadow-themed flex items-center justify-center text-text-secondary hover:text-accent-primary hover:border-accent-primary hover:scale-110 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+          aria-label="Questions suivantes"
+        >
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

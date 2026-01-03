@@ -1,0 +1,343 @@
+{{/*
+  Podcast Player - MGC Coaching
+  =============================
+  Player audio custom avec chapitres, raccourcis clavier, drag & drop
+  
+  Usage: {{ partial "components/podcast-player.html" . }}
+  
+  Requiert:
+  - assets/js/podcast-player.js (inclure via js.html)
+  - Front matter avec: audio_url, duration, duration_seconds, chapters (optionnel)
+  - Google Material Symbols déjà chargé
+*/}}
+
+{{/* ══════════════════════════════════════════════════════════════════════════
+     VARIABLES
+     ══════════════════════════════════════════════════════════════════════════ */}}
+
+{{/* Audio : soit Page Bundle, soit URL externe */}}
+{{ $audioResource := index (.Resources.ByType "audio") 0 }}
+{{ $audioUrl := "" }}
+{{ $audioFormat := "audio/mpeg" }}
+{{ if .Params.audio_url }}
+  {{ $audioUrl = .Params.audio_url }}
+  {{ $audioFormat = .Params.audio_format | default "audio/mpeg" }}
+{{ else if $audioResource }}
+  {{ $audioUrl = $audioResource.Permalink }}
+  {{ $audioFormat = $audioResource.MediaType.Type }}
+{{ end }}
+
+{{/* Image pour MediaSession */}}
+{{ $imageResource := index (.Resources.ByType "image") 0 }}
+{{ $artwork := "" }}
+{{ if $imageResource }}
+  {{ $artwork = $imageResource.Permalink }}
+{{ else if .Params.cover_image }}
+  {{ $artwork = .Params.cover_image | absURL }}
+{{ end }}
+
+{{/* Paramètres */}}
+{{ $duration := .Params.duration | default "00:00" }}
+{{ $durationSeconds := .Params.duration_seconds | default 0 }}
+{{ $chapters := .Params.chapters | default slice }}
+{{ $title := .Title }}
+{{ $artist := site.Params.podcast.author | default site.Params.author | default "MGC Coaching" }}
+
+{{/* Vérifier s'il y a des chapitres valides */}}
+{{ $hasValidChapters := false }}
+{{ range $chapters }}
+  {{ if .title }}{{ $hasValidChapters = true }}{{ end }}
+{{ end }}
+
+{{/* ══════════════════════════════════════════════════════════════════════════
+     PLAYER HTML
+     ══════════════════════════════════════════════════════════════════════════ */}}
+
+{{ if $audioUrl }}
+<div 
+  data-podcast-player
+  data-title="{{ $title }}"
+  data-artist="{{ $artist }}"
+  data-artwork="{{ $artwork }}"
+  class="w-full bg-accent backdrop-blur-xl rounded-2xl border border-secondary shadow-themed-lg"
+>
+  {{/* Audio caché */}}
+  <audio 
+    data-audio
+    src="{{ $audioUrl }}" 
+    type="{{ $audioFormat }}"
+    preload="metadata"
+    class="hidden"
+  ></audio>
+
+  {{/* Main Player */}}
+  <div class="p-4 sm:p-6 overflow-visible">
+    
+    {{/* ════════════════════════════════════════════════════════════════════
+         BARRE DE PROGRESSION
+         ════════════════════════════════════════════════════════════════════ */}}
+    <div class="mb-6">
+      {{/* Progress Bar Container */}}
+      <div 
+        data-progress-bar
+        class="relative h-3 sm:h-2 bg-primary rounded-full cursor-pointer group touch-none"
+      >
+        {{/* Marqueurs de chapitres */}}
+        {{ if $hasValidChapters }}
+          {{ $totalSeconds := $durationSeconds }}
+          {{ range $idx, $chapter := $chapters }}
+            {{ if $chapter.title }}
+              {{/* Convertir time "MM:SS" ou "HH:MM:SS" en secondes */}}
+              {{ $parts := split $chapter.time ":" }}
+              {{ $chapterSeconds := 0 }}
+              {{ if eq (len $parts) 2 }}
+                {{ $chapterSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) }}
+              {{ else if eq (len $parts) 3 }}
+                {{ $chapterSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) }}
+              {{ end }}
+              {{ $percent := 0.0 }}
+              {{ if gt $totalSeconds 0 }}
+                {{ $percent = mul (div (float $chapterSeconds) (float $totalSeconds)) 100 }}
+              {{ end }}
+              <div
+                data-chapter-marker
+                data-start-time="{{ $chapterSeconds }}"
+                class="absolute top-1/2 -translate-y-1/2 w-1.5 sm:w-1 h-5 sm:h-4 bg-overlay rounded-full z-10 hover:bg-white hover:scale-110 transition-all cursor-pointer"
+                style="left: {{ $percent }}%"
+                title="{{ $chapter.title }}"
+              ></div>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        
+        {{/* Progress Fill */}}
+        <div 
+          data-progress-fill
+          class="absolute inset-y-0 left-0 bg-accent-primary rounded-full transition-all duration-75"
+          style="width: 0%"
+        ></div>
+        
+        {{/* Ligne de preview au survol */}}
+        <div 
+          data-preview-line
+          class="absolute top-0 bottom-0 w-0.5 bg-accent-primary/60 pointer-events-none z-10 hidden"
+          style="left: 0%"
+        ></div>
+        
+        {{/* Handle/Curseur */}}
+        <div 
+          data-progress-handle
+          class="absolute top-1/2 -translate-y-1/2 w-5 h-5 sm:w-4 sm:h-4 bg-accent-primary rounded-full shadow-themed z-20 
+                 scale-100 sm:scale-0 sm:group-hover:scale-100 transition-transform duration-150"
+          style="left: -10px"
+        ></div>
+      </div>
+      
+      {{/* Affichage temps */}}
+      <div class="flex justify-between items-center mt-2 text-xs sm:text-sm font-mono text-tertiary">
+        <span data-current-time class="transition-colors duration-150">0:00</span>
+        
+        {{/* Temps au survol - Badge central */}}
+        <span 
+          data-hover-time
+          class="hidden px-2 py-0.5 bg-accent-primary text-inverse rounded text-xs font-bold"
+        >0:00</span>
+        
+        <span data-duration>{{ $duration }}</span>
+      </div>
+    </div>
+
+    {{/* ════════════════════════════════════════════════════════════════════
+         CONTRÔLES - Une seule ligne
+         ════════════════════════════════════════════════════════════════════ */}}
+    <div class="flex items-center justify-between">
+      
+      {{/* Groupe gauche - Contrôles de lecture */}}
+      <div class="flex items-center justify-center gap-1 sm:gap-2 flex-1">
+        
+        {{/* Chapitre Précédent (si chapitres) */}}
+        {{ if $hasValidChapters }}
+        <button 
+          data-prev-chapter
+          class="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 rounded-full 
+                 text-tertiary hover:text-primary hover:bg-secondary active:bg-tertiary transition-all"
+          aria-label="Chapitre précédent"
+          title="Chapitre précédent"
+        >
+          <span class="material-symbols-outlined icon-md icon-secondary" style="font-variation-settings: 'opsz' 24, 'wght' 200;">skip_previous</span>
+        </button>
+        {{ end }}
+
+        {{/* Skip Back -10s */}}
+        <button 
+          data-skip-back
+          class="flex items-center justify-center w-12 h-12 sm:w-11 sm:h-11 rounded-full 
+                  hover:bg-secondary active:bg-tertiary transition-all"
+          aria-label="Reculer de 10 secondes"
+        >
+          <span data-skip-back-icon class="material-symbols-outlined icon-lg icon-secondary transition-transform duration-200" style="font-variation-settings: 'opsz' 40, 'wght' 200;">replay_10</span>
+        </button>
+
+        {{/* Play/Pause */}}
+        <button 
+          data-play-btn
+          class="w-16 h-16 sm:w-14 sm:h-14 bg-accent-primary hover:bg-accent-hover active:opacity-90
+                 rounded-full flex items-center justify-center shadow-themed-lg 
+                 hover:shadow-xl transition-all hover:scale-105 active:scale-95 mx-1"
+          aria-label="Lecture / Pause"
+        >
+          <span data-play-icon class="material-symbols-outlined icon-lg icon-inverse" style="font-variation-settings: 'opsz' 48, 'wght' 200;">play_arrow</span>
+          <span data-pause-icon class="material-symbols-outlined icon-lg icon-inverse" style="display: none; font-variation-settings: 'opsz' 48, 'wght' 200;">pause</span>
+        </button>
+
+        {{/* Skip Forward +30s */}}
+        <button 
+          data-skip-forward
+          class="flex items-center justify-center w-12 h-12 sm:w-11 sm:h-11 rounded-full 
+                 text-primary hover:bg-secondary active:bg-tertiary transition-all"
+          aria-label="Avancer de 30 secondes"
+        >
+          <span data-skip-forward-icon class="material-symbols-outlined icon-lg icon-secondary transition-transform duration-200" style="font-variation-settings: 'opsz' 40, 'wght' 200;">forward_30</span>
+        </button>
+
+        {{/* Chapitre Suivant (si chapitres) */}}
+        {{ if $hasValidChapters }}
+        <button 
+          data-next-chapter
+          class="flex items-center justify-center w-10 h-10 sm:w-9 sm:h-9 rounded-full 
+                 text-tertiary hover:text-primary hover:bg-secondary active:bg-tertiary transition-all"
+          aria-label="Chapitre suivant"
+          title="Chapitre suivant"
+        >
+          <span class="material-symbols-outlined icon-md icon-secondary" style="font-variation-settings: 'opsz' 24, 'wght' 200;">skip_next</span>
+        </button>
+        {{ end }}
+
+      </div>
+
+      {{/* Vitesse - Menu déroulant (à droite) */}}
+      <div class="relative border border-accent-hover rounded-4xl" data-speed-container>
+        <button 
+          data-speed-btn
+          class="flex items-center justify-center gap-1 h-9 px-3 rounded-full 
+                 text-tertiary hover:text-primary hover:bg-secondary active:bg-tertiary transition-all"
+          aria-label="Vitesse de lecture"
+          title="Vitesse de lecture"
+        >
+          <span data-speed-label class="text-xs text-accent-hover font-bold">1x</span>
+          <span class="material-symbols-outlined icon-sm icon-accent-hover" style="font-variation-settings: 'opsz' 20, 'wght' 200;">expand_more</span>
+        </button>
+        
+        {{/* Menu déroulant - vers le bas */}}
+        <div 
+          data-speed-menu
+          class="hidden absolute top-full right-0 mt-2 py-2 
+                 bg-primary border border-secondary rounded-xl shadow-themed-lg min-w-[5rem]
+                 z-50"
+        >
+          <div class="flex flex-col">
+            {{ range $idx, $speed := (slice "0.5" "0.75" "1" "1.25" "1.5" "1.75" "2") }}
+            <button 
+              data-speed-option="{{ $speed }}"
+              class="px-4 py-1.5 text-sm text-center hover:bg-secondary transition-colors
+                     {{ if eq $speed "1" }}text-accent-primary font-bold{{ else }}text-primary{{ end }}"
+            >
+              {{ $speed }}x
+            </button>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {{/* ════════════════════════════════════════════════════════════════════
+       SECTION CHAPITRES
+       ════════════════════════════════════════════════════════════════════ */}}
+  {{ if $hasValidChapters }}
+  <div class="border-t border-primary overflow-hidden rounded-b-2xl">
+    {{/* Toggle */}}
+    <button
+      data-chapters-toggle
+      class="w-full px-4 sm:px-6 py-3 flex items-center justify-between text-sm text-tertiary hover:bg-secondary transition-colors"
+    >
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="material-symbols-outlined icon-sm" style="font-variation-settings: 'opsz' 20, 'wght' 200;">list</span>
+        <span class="font-medium shrink-0">Chapitres</span>
+        <span 
+          data-current-chapter
+          class="text-xs px-2 py-0.5 rounded-full truncate bg-secondary"
+        >{{ (index $chapters 0).title }}</span>
+      </div>
+      <span 
+        data-chapters-arrow
+        class="material-symbols-outlined icon-sm transition-transform duration-200"
+        style="font-variation-settings: 'opsz' 20, 'wght' 200;"
+      >expand_more</span>
+    </button>
+
+    {{/* Liste des chapitres */}}
+    <div data-chapters-list class="hidden px-3 sm:px-4 pb-4 space-y-1 max-h-64 overflow-y-auto">
+      {{ $totalSeconds := $durationSeconds }}
+      {{ range $idx, $chapter := $chapters }}
+        {{ if $chapter.title }}
+          {{/* Calculer le temps de début */}}
+          {{ $parts := split $chapter.time ":" }}
+          {{ $startSeconds := 0 }}
+          {{ if eq (len $parts) 2 }}
+            {{ $startSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) }}
+          {{ else if eq (len $parts) 3 }}
+            {{ $startSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) }}
+          {{ end }}
+          
+          {{/* Calculer le temps de fin (début du chapitre suivant ou durée totale) */}}
+          {{ $endSeconds := $totalSeconds }}
+          {{ $nextIdx := add $idx 1 }}
+          {{ if lt $nextIdx (len $chapters) }}
+            {{ $nextChapter := index $chapters $nextIdx }}
+            {{ $nextParts := split $nextChapter.time ":" }}
+            {{ if eq (len $nextParts) 2 }}
+              {{ $endSeconds = add (mul (int (index $nextParts 0)) 60) (int (index $nextParts 1)) }}
+            {{ else if eq (len $nextParts) 3 }}
+              {{ $endSeconds = add (add (mul (int (index $nextParts 0)) 3600) (mul (int (index $nextParts 1)) 60)) (int (index $nextParts 2)) }}
+            {{ end }}
+          {{ end }}
+          
+          <button
+            data-chapter
+            data-chapter-index="{{ $idx }}"
+            data-start-time="{{ $startSeconds }}"
+            data-end-time="{{ $endSeconds }}"
+            data-chapter-title="{{ $chapter.title }}"
+            class="w-full flex items-center gap-2 sm:gap-3 px-3 py-3 sm:py-2.5 rounded-lg text-left 
+                   text-primary hover:bg-secondary transition-all"
+          >
+            <span class="font-mono text-xs px-2 py-1 rounded shrink-0 bg-secondary">
+              {{ $chapter.time }}
+            </span>
+            <span class="flex-1 text-sm truncate">
+              {{ $chapter.title }}
+            </span>
+            <span 
+              data-chapter-indicator
+              class="hidden w-2 h-2 bg-accent-primary rounded-full animate-pulse shrink-0"
+            ></span>
+          </button>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+</div>
+
+{{/* Message si pas d'audio */}}
+{{ else }}
+<div class="w-full bg-error/10 border border-error/30 rounded-xl p-4">
+  <p class="text-error text-sm flex items-center gap-2">
+    <span class="material-symbols-outlined icon-sm icon-error" style="font-variation-settings: 'opsz' 20, 'wght' 200;">warning</span>
+    Fichier audio non disponible
+  </p>
+</div>
+{{ end }}

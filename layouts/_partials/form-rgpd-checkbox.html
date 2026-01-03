@@ -1,0 +1,25 @@
+{{/* 
+  RGPD Consent Checkbox
+  =====================
+  Case à cocher de consentement RGPD pour les formulaires
+  
+  Usage: {{ partial "form-rgpd-checkbox.html" . }}
+  À placer dans le formulaire avant le bouton submit
+*/}}
+
+<div class="flex items-start gap-3">
+    <div class="flex items-center h-5 mt-0.5">
+      <input 
+        type="checkbox" 
+        id="rgpd-consent" 
+        name="rgpd-consent" 
+        required
+        class="w-4 h-4 rounded border-2 border-border-primary bg-primary text-accent-primary focus:ring-accent-primary focus:ring-2 cursor-pointer"
+      >
+    </div>
+    <label for="rgpd-consent" class="text-text-secondary text-sm leading-relaxed cursor-pointer">
+      J'accepte que mes données soient utilisées pour répondre à ma demande, conformément à la 
+      <a href="/legal" class="text-accent-primary hover:underline" target="_blank">politique de confidentialité</a>. 
+      <span class="text-error">*</span>
+    </label>
+  </div>

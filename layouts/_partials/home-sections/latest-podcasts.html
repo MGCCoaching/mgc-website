@@ -1,0 +1,124 @@
+{{/* layouts/_partials/home-sections/latest-podcast.html */}}
+<section class="latest-podcast bg-secondary py-10 md:py-20">
+    <div class="container mx-auto ">
+      
+      {{/* Header */}}
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-text-primary mb-2 animate-on-scroll-fade-up">
+          {{ .Title }}
+        </h2>
+
+        <h5 class="text-text-secondary text-center animate-on-scroll-fade-up animate-stagger-1">
+            {{ .Content | plainify }}
+          </h5>
+      </div>
+  
+      {{/* Grille des podcasts */}}
+      {{ $limit := .Params.limit | default 3 }}
+      {{ $podcasts := where site.RegularPages "Section" "podcasts" }}
+      {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+      
+      {{ if $podcasts }}
+      <div class=" max-w-7xl grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
+        {{ range first $limit $podcasts.ByDate.Reverse }}
+          
+          {{ $image := (index (.Resources.ByType "image") 0) }}
+          {{ $subtitle := .Params.subtitle | default "Épisode" }}
+          {{ $duration := .Params.duration | default "Non spécifiée" }}
+    
+            {{/* Desktop view card*/}}
+            <div class="hidden lg:block">
+                <a href="{{ .Permalink }}" class="flex flex-col h-full bg-primary shadow-lg hover:shadow-2xl transition duration-500 hover:scale-102 border-2 border-accent hover:border-2 hover:border-accent-hover overflow-hidden">
+                    
+                    {{/* 2. Affichage de l'image (Bundle ou Fallback) */}}
+                    {{ if $image }}
+                        <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode {{ .Title }}" class="w-full h-48 object-cover">
+                    {{ else }}
+                        {{/* Utilisation de $fallbackImagePath avec relURL */}}
+                        <img src="{{ $fallbackImagePath | relURL }}" alt="Image de couverture par défaut du podcast" class="w-full h-48 object-cover">
+                    {{ end }}
+
+                    {{/* 3. Corps de la carte : Flexbox vertical permettant l'extension (flex-grow) */}}
+                    <div class="p-6 flex flex-col flex-grow">
+                        <p class=" text-tertiary uppercase mb-1">{{ $subtitle }}</p>
+
+                        <h3 class="text-secondary font-bold mb-2">{{ .Title }}</h3>
+                        
+                        {{/* 4. Contenu tronqué : plainify assure que c'est du texte brut pour éviter les conflits CSS */}}
+                        <p class="text-primary mb-3 text-sm">
+                            {{ .Content | plainify | truncate 100 }}...
+                        </p>
+                        
+                        {{/* 5. MÉTADONNÉES : mt-auto pousse le bloc vers le bas du conteneur flex-grow */}}
+                        <div class="mt-auto flex flex-wrap justify-between items-center gap-2 text-xs text-text-primary border-t border-accent-primary pt-3">
+                            <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
+                                Ép. {{ .Params.episode_number | default "?" }}
+                            </p>
+                            <span class="flex items-center whitespace-nowrap">
+                                <span class="material-symbols-outlined mr-1 text-base">timer</span>
+                                <p>{{ $duration }}</p>
+                            </span>
+                            <span class="flex items-center whitespace-nowrap">
+                                <span class="material-symbols-outlined mr-1 text-base">calendar_today</span>
+                                <p>{{ .Date.Format "02/01/06" }}</p>
+                            </span>
+                        </div>
+                    </div>
+                </a>    
+            </div>
+            {{/* Mobile view card */}}
+            <div class="lg:hidden px-4">
+                <a href="{{ .Permalink }}" class="relative block h-52 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
+                
+                    {{/* Image de fond */}}
+                    {{ if $image }}
+                        <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover">
+                    {{ else }}
+                        <img src="{{ $fallbackImagePath | relURL }}" alt="Podcast" class="absolute inset-0 w-full h-full object-cover">
+                    {{ end }}
+                
+                    {{/* Overlay sombre */}}
+                    <div class="absolute inset-0 bg-black/30"></div>
+                
+                    {{/* Contenu */}}
+                    <div class="relative h-full flex flex-col justify-between p-3">
+                        
+                        {{/* Numéro d'épisode en haut */}}
+                        <div>
+                        <span class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
+                            Épisode {{ .Params.episode_number | default "?" }}
+                        </span>
+                        </div>
+                
+                        {{/* Titre et durée en bas */}}
+                        <div>
+                        <h4 class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                            {{ .Title }}
+                        </h4>
+                        <p class=" text-text-inverse font-bold text-sm leading-tight  mb-1">
+                            {{ .Params.Subtitle }}
+                        </p>
+
+                        <div class="flex items-center gap-1 text-text-inverse text-xs">
+                            <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
+                            <span>{{ $duration }}</span>
+                        </div>
+                        </div>
+                
+                    </div>
+                </a>
+            </div>
+        {{ end }}
+      </div>
+  
+      {{/* Bouton voir tous */}}
+      <div class="text-center mt-10 animate-on-scroll-fade-up">
+        <a href="/podcasts/" class="btn btn-primary">
+          <span class="material-symbols-outlined">podcasts</span>
+          Tous les épisodes
+        </a>
+      </div>
+      {{ end }}
+  
+    </div>
+  </section>

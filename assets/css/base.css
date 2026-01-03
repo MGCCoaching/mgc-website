@@ -15,8 +15,38 @@
   h4 { @apply text-2xl md:text-2xl lg:text-3xl }
   h5 { @apply text-xl md:text-xl lg:text-2xl }
   
-  p { font-size: 1rem }
+  p { 
+    font-size: 1rem;
+    
+    @media (width >= 768px) {
+      font-size: 1.125rem;
+    }
+  }
+
+
+  .list-icon {
+    list-style: none; /* Remove default bullets */
+    padding-left: 5px;
+  }
   
+  .list-icon::before {
+    content: '\e5e1'; /* The unicode for 'chevron_right' */
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Positioning and Styling */
+    margin-right: 0px;
+    vertical-align: middle;
+    @apply text-accent-primary /* You can change the color easily! */
+  }
+
   /* =============================================================================
      Icons - Material Symbols
      ============================================================================= */
@@ -30,9 +60,16 @@
   .icon-accent {
     @apply text-accent-primary;
   }
+  .icon-accent-hover {
+    @apply text-accent-hover;
+  }
   
   .icon-secondary {
     @apply text-text-secondary;
+  }
+
+  .icon-tertiary{
+    @apply text-text-tertiary
   }
   
   .icon-inverse {
