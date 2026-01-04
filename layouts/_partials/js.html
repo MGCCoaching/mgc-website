@@ -1,3 +1,13 @@
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     JavaScript Includes - MGC Coaching
+     ═══════════════════════════════════════════════════════════════════════════
+     Structure modulaire - Chaque fichier expose sa fonction via window.MGC
+     Swup est bundlé via Hugo's js.Build (ESBuild) depuis npm
+     ═══════════════════════════════════════════════════════════════════════════ */}}
+
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     1. Main Script (menu mobile, dark mode, scroll animations)
+     ═══════════════════════════════════════════════════════════════════════════ */}}
 {{ with resources.Get "js/main.js" }}
   {{ if hugo.IsDevelopment }}
     <script src="{{ .RelPermalink }}" defer></script>
@@ -8,7 +18,22 @@
   {{ end }}
 {{ end }}
 
-{{/* Cookie Consent Script */}}
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     2. FAQ Carousel
+     ═══════════════════════════════════════════════════════════════════════════ */}}
+{{ with resources.Get "js/faq-carousel.js" }}
+  {{ if hugo.IsDevelopment }}
+    <script src="{{ .RelPermalink }}" defer></script>
+  {{ else }}
+    {{ with . | minify | fingerprint }}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     3. Cookie Consent
+     ═══════════════════════════════════════════════════════════════════════════ */}}
 {{ with resources.Get "js/cookie-consent.js" }}
   {{ if hugo.IsDevelopment }}
     <script src="{{ .RelPermalink }}" defer></script>
@@ -19,22 +44,36 @@
   {{ end }}
 {{ end }}
 
-{{/* Carrousel script */}}
-{{ $faqCarousel := resources.Get "js/faq-carousel.js" }}
-{{ if hugo.IsProduction }}
-  {{ $faqCarousel = $faqCarousel | minify | fingerprint }}
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     4. Podcast Player
+     ═══════════════════════════════════════════════════════════════════════════ */}}
+{{ with resources.Get "js/podcast-player.js" }}
+  {{ if hugo.IsDevelopment }}
+    <script src="{{ .RelPermalink }}" defer></script>
+  {{ else }}
+    {{ with . | minify | fingerprint }}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+    {{ end }}
+  {{ end }}
 {{ end }}
-<script src="{{ $faqCarousel.RelPermalink }}" defer></script>
 
-{{/* Podcast Player Script - Seulement sur les pages podcast */}}
-{{ if eq .Section "podcasts" }}
-  {{ with resources.Get "js/podcast-player.js" }}
-    {{ if hugo.IsDevelopment }}
-      <script src="{{ .RelPermalink }}" defer></script>
-    {{ else }}
-      {{ with . | minify | fingerprint }}
-        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
-      {{ end }}
+{{/* ═══════════════════════════════════════════════════════════════════════════
+     5. SWUP - Bundled from npm via Hugo's js.Build (ESBuild)
+     ═══════════════════════════════════════════════════════════════════════════ */}}
+{{ $swupOpts := dict 
+    "targetPath" "js/swup-bundle.js"
+    "minify" (not hugo.IsDevelopment)
+    "format" "iife"
+    "target" "es2020"
+}}
+
+{{ with resources.Get "js/swup-init.js" }}
+  {{ $swupBundle := . | js.Build $swupOpts }}
+  {{ if hugo.IsDevelopment }}
+    <script src="{{ $swupBundle.RelPermalink }}" defer></script>
+  {{ else }}
+    {{ with $swupBundle | fingerprint }}
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
     {{ end }}
   {{ end }}
 {{ end }}

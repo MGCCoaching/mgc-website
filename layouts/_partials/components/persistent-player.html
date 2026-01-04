@@ -1,0 +1,110 @@
+{{/*
+  Persistent Audio Player - MGC Coaching
+  =======================================
+  Player fixé en bas de page qui persiste entre les navigations Swup
+  
+  Ce player est caché par défaut (translate-y-full) et s'affiche
+  quand un podcast est lancé depuis une page épisode.
+*/}}
+
+<div class="bg-secondary border-t border-border-primary shadow-2xl">
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex items-center gap-4">
+      
+      {{/* Image miniature */}}
+      <div class="shrink-0">
+        <div 
+          id="persistent-player-cover" 
+          class="w-12 h-12 rounded-lg bg-tertiary overflow-hidden"
+        >
+          <img 
+            src="/img/fallback-podcast.png" 
+            alt="Podcast cover" 
+            class="w-full h-full object-cover"
+            id="persistent-player-image"
+          >
+        </div>
+      </div>
+      
+      {{/* Info épisode */}}
+      <div class="flex-1 min-w-0">
+        <p 
+          id="persistent-player-title" 
+          class="text-sm font-semibold text-text-primary truncate"
+        >
+          Aucun épisode en cours
+        </p>
+        <p 
+          id="persistent-player-subtitle" 
+          class="text-xs text-text-tertiary truncate"
+        >
+          —
+        </p>
+      </div>
+      
+      {{/* Contrôles */}}
+      <div class="flex items-center gap-2">
+        
+        {{/* Skip back */}}
+        <button 
+          id="persistent-skip-back"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-tertiary transition-colors"
+          aria-label="Reculer de 10 secondes"
+        >
+          <span class="material-symbols-outlined text-lg text-text-secondary">replay_10</span>
+        </button>
+        
+        {{/* Play/Pause */}}
+        <button 
+          id="persistent-play-btn"
+          class="w-10 h-10 flex items-center justify-center rounded-full bg-accent-primary hover:bg-accent-hover transition-colors"
+          aria-label="Lecture / Pause"
+        >
+          <span id="persistent-play-icon" class="material-symbols-outlined text-xl text-white">play_arrow</span>
+          <span id="persistent-pause-icon" class="material-symbols-outlined text-xl text-white hidden">pause</span>
+        </button>
+        
+        {{/* Skip forward */}}
+        <button 
+          id="persistent-skip-forward"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-tertiary transition-colors"
+          aria-label="Avancer de 30 secondes"
+        >
+          <span class="material-symbols-outlined text-lg text-text-secondary">forward_30</span>
+        </button>
+        
+        {{/* Close */}}
+        <button 
+          id="persistent-close"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-tertiary transition-colors ml-2"
+          aria-label="Fermer le player"
+        >
+          <span class="material-symbols-outlined text-lg text-text-tertiary">close</span>
+        </button>
+        
+      </div>
+    </div>
+    
+    {{/* Progress bar mini */}}
+    <div class="mt-2">
+      <div 
+        id="persistent-progress-bar"
+        class="h-1 bg-tertiary rounded-full overflow-hidden cursor-pointer"
+      >
+        <div 
+          id="persistent-progress-fill"
+          class="h-full bg-accent-primary rounded-full transition-all duration-100"
+          style="width: 0%"
+        ></div>
+      </div>
+      <div class="flex justify-between text-xs text-text-tertiary mt-1">
+        <span id="persistent-current-time">0:00</span>
+        <span id="persistent-duration">0:00</span>
+      </div>
+    </div>
+    
+  </div>
+  
+  {{/* Audio element caché */}}
+  <audio id="persistent-audio" preload="metadata" class="hidden"></audio>
+</div>

@@ -3,17 +3,40 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body class="bg-primary">
+  {{/* ═══════════════════════════════════════════════════════════════════════
+       HEADER - Hors du container Swup (persiste entre les pages)
+       ═══════════════════════════════════════════════════════════════════════ */}}
   <header>
     {{ partial "header.html" . }}
   </header>
-  <main>
+
+  {{/* ═══════════════════════════════════════════════════════════════════════
+       MAIN CONTENT - Container Swup (remplacé à chaque navigation)
+       ═══════════════════════════════════════════════════════════════════════ */}}
+  <main id="swup-main" class="swup-transition-main">
     {{ block "main" . }}
     {{ end }}
   </main>
+
+  {{/* ═══════════════════════════════════════════════════════════════════════
+       FOOTER - Hors du container Swup (persiste entre les pages)
+       ═══════════════════════════════════════════════════════════════════════ */}}
   <footer>
     {{ partial "footer.html" . }}
   </footer>
+
+  {{/* ═══════════════════════════════════════════════════════════════════════
+       PERSISTENT PLAYER - Hors du container Swup (persiste entre les pages)
+       ═══════════════════════════════════════════════════════════════════════ */}}
+  <div id="persistent-player" class="fixed bottom-0 left-0 right-0 z-50 transform translate-y-full transition-transform duration-300" aria-hidden="true">
+    {{/* Le player persistant sera activé via JavaScript quand un podcast est lu */}}
+    {{ partial "components/persistent-player.html" . }}
+  </div>
+
+  {{/* ═══════════════════════════════════════════════════════════════════════
+       SCRIPTS & OVERLAYS
+       ═══════════════════════════════════════════════════════════════════════ */}}
   {{ partial "js.html" . }}
   {{ partial "cookie-consent.html" . }}
   {{ partial "netlify-identity.html" . }}

@@ -18,6 +18,7 @@
 @import "./components.css";
 @import "./animations.css";
 @import "./utilities.css";
+@import "./swup-transitions.css";
 
 /* Custom variants */
 @custom-variant dark (&:where(.dark, .dark *));

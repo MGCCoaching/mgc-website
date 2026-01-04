@@ -1,0 +1,95 @@
+/* =============================================================================
+   Swup Page Transitions
+   =============================================================================
+   Animations de transition entre les pages
+   ============================================================================= */
+
+/* =============================================================================
+   Transition principale du container main
+   ============================================================================= */
+
+.swup-transition-main {
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+/* État de sortie (page qui part) */
+html.is-leaving .swup-transition-main {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* État d'entrée (page qui arrive) - géré automatiquement par Swup */
+html.is-rendering .swup-transition-main {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* =============================================================================
+   Animation alternative : Fade simple
+   ============================================================================= */
+
+.swup-transition-fade {
+  transition: opacity 0.3s ease;
+}
+
+html.is-leaving .swup-transition-fade,
+html.is-rendering .swup-transition-fade {
+  opacity: 0;
+}
+
+/* =============================================================================
+   Animation alternative : Slide horizontal
+   ============================================================================= */
+
+.swup-transition-slide {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+html.is-leaving .swup-transition-slide {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+html.is-rendering .swup-transition-slide {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+/* =============================================================================
+   Progress bar (optionnel)
+   ============================================================================= */
+
+.swup-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-accent-primary);
+  z-index: 9999;
+  transition: width 0.1s ease;
+}
+
+/* =============================================================================
+   Désactiver les transitions pour les éléments persistants
+   ============================================================================= */
+
+#persistent-player,
+header,
+footer,
+#cookie-consent {
+  /* Ces éléments ne doivent pas être affectés par les transitions de page */
+}
+
+/* =============================================================================
+   Animations au scroll - Reset pour Swup
+   ============================================================================= */
+
+/* S'assurer que les animations se réinitialisent après navigation */
+html.is-rendering [class*="animate-on-scroll"] {
+  opacity: 0;
+}
+
+/* Petite pause avant de déclencher les animations après navigation */
+html:not(.is-leaving):not(.is-rendering) [class*="animate-on-scroll"] {
+  transition-delay: 0.1s;
+}

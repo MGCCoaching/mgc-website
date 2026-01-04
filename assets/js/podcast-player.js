@@ -2,15 +2,11 @@
  * Podcast Player - MGC Coaching
  * ==============================
  * Player audio custom avec chapitres, raccourcis clavier, drag & drop
- * 
- * Usage: Inclure ce script et utiliser le partial podcast-player.html
+ * Compatible Swup via window.MGC.initPodcastPlayer()
  */
 
 (function() {
   'use strict';
-
-  // Initialisation au chargement du DOM
-  document.addEventListener('DOMContentLoaded', initPodcastPlayer);
 
   function initPodcastPlayer() {
     const player = document.querySelector('[data-podcast-player]');
@@ -192,8 +188,6 @@
     }
 
     function goToPrevChapter() {
-      // Si on est au début du chapitre (< 3s), aller au précédent
-      // Sinon, revenir au début du chapitre actuel
       const currentIdx = getCurrentChapterIndex();
       const currentChapter = chapterItems[currentIdx];
       const chapterStart = parseFloat(currentChapter?.dataset.startTime) || 0;
@@ -230,7 +224,6 @@
       if (speedLabel) {
         speedLabel.textContent = currentSpeed === 1 ? '1x' : `${currentSpeed}x`;
       }
-      // Mettre à jour les styles des options
       speedOptions.forEach(opt => {
         const optSpeed = parseFloat(opt.dataset.speedOption);
         if (optSpeed === currentSpeed) {
@@ -262,7 +255,6 @@
       });
     }
 
-    // Clic sur une option de vitesse
     speedOptions.forEach(option => {
       option.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -272,7 +264,6 @@
       });
     });
 
-    // Fermer le menu si clic en dehors
     document.addEventListener('click', (e) => {
       if (speedContainer && !speedContainer.contains(e.target)) {
         closeSpeedMenu();
@@ -283,7 +274,6 @@
     // BARRE DE PROGRESSION
     // ═══════════════════════════════════════════════════════════════════
 
-    // Mise à jour pendant la lecture
     audio.addEventListener('timeupdate', () => {
       if (!isDragging && duration > 0) {
         const percent = audio.currentTime / duration;
@@ -293,13 +283,11 @@
       }
     });
 
-    // Quand les métadonnées sont chargées
     audio.addEventListener('loadedmetadata', () => {
       duration = audio.duration;
       durationEl.textContent = formatTime(duration);
     });
 
-    // Fallback si duration déjà disponible
     if (audio.duration) {
       duration = audio.duration;
       durationEl.textContent = formatTime(duration);
@@ -313,11 +301,9 @@
       const percent = getProgressPercent(e);
       const time = percent * duration;
       
-      // Ligne de preview
       previewLine.style.left = `${percent * 100}%`;
       previewLine.classList.remove('hidden');
       
-      // Tooltip temps
       hoverTime.textContent = formatTime(time);
       hoverTime.classList.remove('hidden');
     }
@@ -363,7 +349,6 @@
       hideHoverPreview();
     }
 
-    // Mouse events
     progressBar.addEventListener('mousedown', startDrag);
     document.addEventListener('mousemove', (e) => {
       if (isDragging) updateDrag(e);
@@ -372,7 +357,6 @@
       if (isDragging) endDrag(e);
     });
 
-    // Touch events
     progressBar.addEventListener('touchstart', startDrag, { passive: false });
     document.addEventListener('touchmove', (e) => {
       if (isDragging) updateDrag(e);
@@ -392,7 +376,6 @@
     // CHAPITRES
     // ═══════════════════════════════════════════════════════════════════
 
-    // Toggle liste des chapitres
     if (chaptersToggle) {
       chaptersToggle.addEventListener('click', () => {
         chaptersList.classList.toggle('hidden');
@@ -400,15 +383,13 @@
       });
     }
 
-    // Clic sur un chapitre
-    chapterItems.forEach((item, idx) => {
+    chapterItems.forEach((item) => {
       item.addEventListener('click', () => {
         const startTime = parseFloat(item.dataset.startTime) || 0;
         audio.currentTime = startTime;
       });
     });
 
-    // Clic sur un marqueur de chapitre
     chapterMarkers.forEach(marker => {
       marker.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -422,7 +403,6 @@
     // ═══════════════════════════════════════════════════════════════════
 
     document.addEventListener('keydown', (e) => {
-      // Ignorer si on est dans un input
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       
       switch (e.code) {
@@ -476,5 +456,9 @@
     updateCurrentChapter();
     setSpeed(1);
   }
+
+  // Exposer via window.MGC
+  window.MGC = window.MGC || {};
+  window.MGC.initPodcastPlayer = initPodcastPlayer;
 
 })();
