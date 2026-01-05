@@ -8,16 +8,15 @@
 */}}
 
 <div class="flex items-start gap-3">
-  <div class="flex items-center h-5 shrink-0">
+  <div class="flex items-center h-5 shrink-0 min-w-[20px]">
     <input 
       type="checkbox" 
       id="rgpd-consent" 
       name="rgpd-consent" 
       required
-      class="w-5 h-5 md:w-4 md:h-4 rounded border-2 border-border-primary bg-primary text-accent-primary focus:ring-accent-primary focus:ring-2 cursor-pointer"
+      class="w-5 h-5 md:w-4 md:h-4 aspect-square shrink-0 rounded border-2 border-border-primary bg-primary text-accent-primary focus:ring-accent-primary focus:ring-2 cursor-pointer"
     >
   </div>
-  
   <label for="rgpd-consent" class="text-text-secondary text-sm leading-tight cursor-pointer select-none">
     J'accepte que mes données soient utilisées pour répondre à ma demande, conformément à la 
     <a href="/legal" class="text-accent-primary hover:underline font-medium" target="_blank">politique de confidentialité</a>. 
