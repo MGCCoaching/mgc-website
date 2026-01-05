@@ -1,0 +1,71 @@
+{{ define "main" }}
+
+<article class="bg-primary min-h-screen">
+  {{/* Header */}}
+  <header class="bg-secondary py-12 md:py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-4">
+          {{ .Title }}
+        </h1>
+        {{ with .Params.subtitle }}
+        <p class="text-text-secondary text-lg">{{ . }}</p>
+        {{ end }}
+        <p class="text-text-tertiary text-sm mt-4">
+          Dernière mise à jour : {{ .Params.lastUpdate | default (.Date.Format "02 janvier 2006") }}
+        </p>
+      </div>
+    </div>
+  </header>
+
+  {{/* Contenu */}}
+  <section class="py-12 md:py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        
+        {{/* Table des matières (optionnelle) */}}
+        {{ with .Params.toc }}
+        {{ if . }}
+        <nav class="bg-secondary rounded-xl p-6 mb-10 shadow-themed">
+          <h2 class="text-lg font-semibold text-text-primary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-accent-primary">list</span>
+            Sommaire
+          </h2>
+          <ul class="space-y-2 text-text-secondary">
+            {{ range $.Page.TableOfContents }}
+            {{ . }}
+            {{ end }}
+          </ul>
+        </nav>
+        {{ end }}
+        {{ end }}
+
+        {{/* Contenu Markdown */}}
+        <div class="legal-content prose prose-lg max-w-none 
+          text-text-secondary
+          prose-headings:text-text-primary 
+          prose-headings:font-semibold
+          prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border-primary
+          prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+          prose-p:mb-4 prose-p:leading-relaxed
+          prose-ul:my-4 prose-ul:space-y-2
+          prose-li:text-text-secondary
+          prose-a:text-accent-primary prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-text-primary prose-strong:font-semibold">
+          {{ .Content }}
+        </div>
+
+        {{/* Lien retour */}}
+        <div class="mt-12 pt-8 border-t border-border-primary">
+          <a href="/" class="inline-flex items-center gap-2 text-accent-primary hover:text-accent-secondary transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Retour à l'accueil
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</article>
+
+{{ end }}

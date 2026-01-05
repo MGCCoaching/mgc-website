@@ -1,0 +1,147 @@
+{{- /* 
+  RSS PODCAST - MGC Coaching
+  ==========================
+  Flux RSS compatible Apple Podcasts, Spotify, etc.
+  
+  Ce fichier génère : /podcasts/index.xml
+  
+  IMPORTANT: Requires isPlainText = true in outputFormats.RSS config
+
+*/ -}}
+{{- $podcast := .Site.Params.podcast -}}
+{{- $pages := where .Site.RegularPages "Section" "podcasts" -}}
+{{- $pages = where $pages ".Params.block" "!=" true -}}
+{{- $pages = where $pages "Draft" false -}}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" 
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:podcast="https://podcastindex.org/namespace/1.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ $podcast.title | default .Site.Title }}</title>
+    <link>{{ .Site.BaseURL }}podcasts/</link>
+    <description>{{ $podcast.description | default .Site.Params.description }}</description>
+    <language>{{ $podcast.language | default .Site.LanguageCode | default "fr" }}</language>
+    <copyright>© {{ now.Year }} {{ $podcast.author | default .Site.Title }}. Tous droits réservés.</copyright>
+    <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+    <generator>Hugo {{ hugo.Version }}</generator>
+    
+    <atom:link href="{{ .Site.BaseURL }}podcasts/index.xml" rel="self" type="application/rss+xml"/>
+
+    <itunes:type>episodic</itunes:type>
+    <itunes:author>{{ $podcast.author | default .Site.Title }}</itunes:author>
+    <itunes:summary>{{ $podcast.description | default .Site.Params.description }}</itunes:summary>
+    <itunes:explicit>{{ if $podcast.explicit }}true{{ else }}false{{ end }}</itunes:explicit>
+    
+    {{- $podcastImage := $podcast.image | default "/img/podcast-cover.webp" -}}
+    {{- if not (hasPrefix $podcastImage "http") -}}
+      {{- $podcastImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $podcastImage) -}}
+    {{- end }}
+    <itunes:image href="{{ $podcastImage }}"/>
+    <image>
+      <url>{{ $podcastImage }}</url>
+      <title>{{ $podcast.title | default .Site.Title }}</title>
+      <link>{{ .Site.BaseURL }}podcasts/</link>
+    </image>
+
+    <itunes:category text="{{ $podcast.category | default "Business" }}">
+      {{- with $podcast.subcategory }}
+      <itunes:category text="{{ . }}"/>
+      {{- end }}
+    </itunes:category>
+
+    <itunes:owner>
+      <itunes:name>{{ $podcast.owner_name | default $podcast.author | default .Site.Title }}</itunes:name>
+      <itunes:email>{{ $podcast.owner_email | default $podcast.email | default "contact@example.com" }}</itunes:email>
+    </itunes:owner>
+
+    <podcast:locked>no</podcast:locked>
+    {{- with $podcast.funding_url }}
+    <podcast:funding url="{{ . }}">Soutenir le podcast</podcast:funding>
+    {{- end }}
+
+    {{- range $pages.ByDate.Reverse }}
+    {{- /* Récupérer l'audio - soit URL externe, soit Page Bundle */ -}}
+    {{- $audioResource := index (.Resources.ByType "audio") 0 -}}
+    {{- $audioUrl := .Params.audio_url -}}
+    {{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
+    {{- if and (not $audioUrl) $audioResource -}}
+      {{- $audioUrl = $audioResource.Permalink -}}
+      {{- $audioFormat = $audioResource.MediaType.Type -}}
+    {{- else if $audioUrl -}}
+      {{- /* Convertir URL relative en absolue */ -}}
+      {{- if not (hasPrefix $audioUrl "http") -}}
+        {{- $audioUrl = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $audioUrl) -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{- /* Image de l'épisode */ -}}
+    {{- $episodeImageResource := index (.Resources.ByType "image") 0 -}}
+    {{- $episodeImage := .Params.cover_image -}}
+    {{- if and (not $episodeImage) $episodeImageResource -}}
+      {{- $episodeImage = $episodeImageResource.Permalink -}}
+    {{- else if $episodeImage -}}
+      {{- if not (hasPrefix $episodeImage "http") -}}
+        {{- $episodeImage = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $episodeImage) -}}
+      {{- end -}}
+    {{- end -}}
+    
+    {{- if $audioUrl }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+
+      {{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) }}
+      <description>{{ $desc | plainify | htmlUnescape }}</description>
+      <content:encoded><![CDATA[{{ $desc | markdownify }}]]></content:encoded>
+
+      <enclosure 
+        url="{{ $audioUrl }}" 
+        length="{{ .Params.file_size_bytes | default 0 }}" 
+        type="{{ $audioFormat }}"/>
+
+      <itunes:title>{{ .Title }}</itunes:title>
+      <itunes:summary>{{ .Params.description | default ($desc | truncate 200) | plainify | htmlUnescape }}</itunes:summary>
+      <itunes:duration>{{ .Params.duration_seconds | default .Params.duration | default "0" }}</itunes:duration>
+      <itunes:explicit>{{ if .Params.explicit }}true{{ else }}false{{ end }}</itunes:explicit>
+      <itunes:episodeType>{{ .Params.episode_type | default "full" }}</itunes:episodeType>
+      
+      {{- with .Params.season }}
+      <itunes:season>{{ . }}</itunes:season>
+      {{- end }}
+      {{- with .Params.episode_number }}
+      <itunes:episode>{{ . }}</itunes:episode>
+      {{- end }}
+
+      {{- with $episodeImage }}
+      <itunes:image href="{{ . }}"/>
+      {{- end }}
+
+      {{- with .Params.chapters }}
+      {{- if gt (len .) 0 }}
+      <podcast:chapters>
+        {{- range . }}
+        {{- if .title }}
+        <podcast:chapter start="{{ .time }}" title="{{ .title }}"/>
+        {{- end }}
+        {{- end }}
+      </podcast:chapters>
+      {{- end }}
+      {{- end }}
+
+      {{- with .Params.transcript }}
+      {{- if .available }}
+      {{- with .url }}
+      <podcast:transcript url="{{ . }}" type="text/plain"/>
+      {{- end }}
+      {{- end }}
+      {{- end }}
+
+    </item>
+    {{- end }}
+    {{- end }}
+  </channel>
+</rss>

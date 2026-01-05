@@ -2,7 +2,7 @@
 title: "Prêt à faire entendre votre voix ?"
 weight: 40
 section: "cta"
-button_text: "Prendre rendez-vous"
+button_text: "Me contacter"
 button_url: "/contact"
 ---
 

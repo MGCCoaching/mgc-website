@@ -1,30 +1,41 @@
 <section class="features bg-secondary py-20 ">
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-text-primary text-center mb-4">
+    <h2 class="font-bold text-text-primary text-center mb-4">
       {{ .Title }}
     </h2>
-    <h5 class="text-text-secondary text-center mb-12">
-      {{ .Content }}
+    <h5 class="text-text-secondary text-center text-2xl mb-12">
+      {{ .Content | plainify }}
     </h5>
     
     {{ with .Params.features }}
-      <div class="grid md:grid-cols-3 gap-8">
-        {{ range . }}
-          <div class="bg-primary p-6 rounded-lg shadow-themed">
+    <div class="grid lg:grid-cols-3 gap-8">
+      {{ range . }}
+        <div class="bg-primary p-4 border-accent-primary border rounded-lg shadow-themed flex flex-col">
+          
+          <div class="flex flex-col flex-grow">
             {{ with .icon }}
-              <div class="text-accent-primary text-3xl mb-4">
-                <span class="material-symbols-outlined icon-accent">{{ . }}</span>
+              <div class="text-center">
+                <span class="material-symbols-outlined icon-accent icon-lg">{{ . }}</span>
               </div>
             {{ end }}
-            <h3 class="text-xl font-semibold text-text-primary mb-2">
+            
+            <h3 class="font-semibold text-text-primary mb-2 text-center">
               {{ .title }}
             </h3>
-            <p class="text-text-secondary">
-              {{ .description }}
-            </p>
+            
+            <div class="text-text-primary max-w-2xl mx-auto  space-y-4">
+              {{ .description | markdownify }}
+            </div>
           </div>
-        {{ end }}
-      </div>
+    
+          <div class="mt-4 text-center">
+            <a href="{{ .button_url | relURL }}" class="inline-block btn-primary bg-accent-primary hover:bg-accent-hover text-text-inverse px-8 py-3 rounded-lg font-semibold transition-colors">
+              En savoir plus
+            </a>
+          </div>
+        </div>
+      {{ end }}
+    </div>
     {{ end }}
   </div>
 </section>

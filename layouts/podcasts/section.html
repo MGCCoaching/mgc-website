@@ -16,65 +16,113 @@
 }
 </script>
 
-    <section class="bg-primary md:px-30 py-6">
-        <h1 class=" text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h1>
-        <div class="text-primary p-3 prose max-w-none mx-auto">{{ .Content }}</div>
-    </section>
-    
-    <section class="bg-primary p-6 sm:p-12 bg-secondary">    
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            {{/* Chemin de l'image de secours (dans static/img) */}}
-            {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+<section class="bg-primary md:px-30 pt-12 py-6">
+    <div class="block w-fit mx-auto bg-accent-primary text-white text-sm font-medium px-3 py-1 rounded-full mb-4 animate-on-scroll-fade-up">
+        Podcasts
+    </div>
+    <h2 class="text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h2>
+    <div class="text-primary p-3 prose prose-lg max-w-none mx-auto animate-on-scroll-fade-up animate-stagger-2">{{ .Content }}</div>
+</section>
 
-            {{ range .Pages.ByDate.Reverse }}
-            
-            {{/* 💡 Récupère la première image trouvée dans le bundle (méthode flexible) */}}
-            {{ $image := (index (.Resources.ByType "image") 0) }}
-            
-            {{/* Extraction des paramètres */}}
-            {{ $subtitle := .Params.subtitle | default "Épisode" }}
-            {{ $duration := .Params.duration | default "Non spécifiée" }}
+<section class="bg-primary p-6 sm:p-12 bg-secondary">    
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {{/* Chemin de l'image de secours (dans static/img) */}}
+        {{ $fallbackImagePath := "/img/fallback-podcast.webp" }}
 
-            {{/* 1. Conteneur de la carte : Flexbox vertical (flex-col) prenant toute la hauteur (h-full) */}}
+        {{ range .Pages.ByDate.Reverse }}
+        
+        {{/* Récupère la première image trouvée dans le bundle */}}
+        {{ $image := (index (.Resources.ByType "image") 0) }}
+        
+        {{/* Extraction des paramètres avec fallbacks */}}
+        {{ $subtitle := .Params.subtitle | default "Épisode" }}
+        {{ $duration := .Params.duration | default "Non spécifiée" }}
+
+        {{/* Desktop view */}}
+        <div class="hidden md:block">
             <a href="{{ .Permalink }}" class="flex flex-col h-full bg-primary shadow-lg hover:shadow-2xl transition duration-500 hover:scale-102 border-2 border-accent hover:border-2 hover:border-accent-hover overflow-hidden">
                 
-                {{/* 2. Affichage de l'image (Bundle ou Fallback) */}}
+                {{/* Image (Bundle ou Fallback) */}}
                 {{ if $image }}
                     <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode {{ .Title }}" class="w-full h-48 object-cover">
                 {{ else }}
-                    {{/* Utilisation de $fallbackImagePath avec relURL */}}
                     <img src="{{ $fallbackImagePath | relURL }}" alt="Image de couverture par défaut du podcast" class="w-full h-48 object-cover">
                 {{ end }}
 
-                {{/* 3. Corps de la carte : Flexbox vertical permettant l'extension (flex-grow) */}}
+                {{/* Corps de la carte */}}
                 <div class="p-6 flex flex-col flex-grow">
-                    <p class=" text-tertiary uppercase mb-1">{{ $subtitle }}</p>
+                    <p class="text-tertiary uppercase mb-1">{{ $subtitle }}</p>
 
                     <h3 class="text-secondary font-bold mb-2">{{ .Title }}</h3>
                     
-                    {{/* 4. Contenu tronqué : plainify assure que c'est du texte brut pour éviter les conflits CSS */}}
                     <p class="text-primary mb-3 text-sm">
                         {{ .Content | plainify | truncate 100 }}...
                     </p>
                     
-                    {{/* 5. MÉTADONNÉES : mt-auto pousse le bloc vers le bas du conteneur flex-grow */}}
-                    <div class="mt-auto flex justify-between items-center text-xs text-text-primary border-t border-accent-primary pt-3 mt-4">
-                        <span class="flex items-center">
-                            {{/* 💡 REMPLACEMENT DE L'ICÔNE DURÉE (Timer) */}}
-                            <span class="material-symbols-outlined mr-1">timer</span>
+                    {{/* Métadonnées : mt-auto pousse vers le bas */}}
+                    <div class="mt-auto flex flex-wrap justify-between items-center gap-2 text-xs text-text-primary border-t border-accent-primary pt-3">
+                        <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
+                            Ép. {{ .Params.episode_number | default "?" }}
+                        </p>
+                        <div class="flex items-center whitespace-nowrap">
+                            <span class="material-symbols-outlined mr-1 text-base">timer</span>
                             <p>{{ $duration }}</p>
-                        </span>
-                        <span class="flex items-center">
-                            {{/* 💡 REMPLACEMENT DE L'ICÔNE DATE (Calendar) */}}
-                            <span class="material-symbols-outlined mr-1">calendar_today</span>
-                            <p>{{ .Date.Format "02 Jan 2006" }}</p>
-                        </span>
+                        </div>
+                        <div class="flex items-center whitespace-nowrap">
+                            <span class="material-symbols-outlined mr-1 text-base">calendar_today</span>
+                            <p>{{ .Date.Format "02/01/06" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>         
+        </div> 
+
+        {{/* Mobile view */}}
+        <div class="md:hidden">
+            <a href="{{ .Permalink }}" class="relative block h-52 gap-2 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
+            
+                {{/* Image de fond */}}
+                {{ if $image }}
+                    <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover">
+                {{ else }}
+                    <img src="{{ $fallbackImagePath | relURL }}" alt="Podcast" class="absolute inset-0 w-full h-full object-cover">
+                {{ end }}
+            
+                {{/* Overlay sombre */}}
+                <div class="absolute inset-0 bg-black/30"></div>
+            
+                {{/* Contenu */}}
+                <div class="relative h-full flex flex-col justify-between p-3">
+                    
+                    {{/* Numéro d'épisode en haut */}}
+                    <div>
+                        <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
+                            Épisode {{ .Params.episode_number | default "?" }}
+                        </p>
+                    </div>
+            
+                    {{/* Titre et durée en bas */}}
+                    <div>
+                        <h4 class="text-text-inverse font-bold text-sm leading-tight mb-1">
+                            {{ .Title }}
+                        </h4>
+                        <p class="text-text-inverse font-bold text-sm leading-tight mb-1">
+                            {{ $subtitle }}
+                        </p>
+
+                        <div class="flex items-center gap-1 text-text-inverse text-xs">
+                            <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
+                            <p>{{ $duration }}</p>
+                            <span class="material-symbols-outlined ml-4 mr-1 text-base">calendar_today</span>
+                            <p>{{ .Date.Format "02/01/06" }}</p>
+                        </div>
                     </div>
                 </div>
             </a>
-            {{ end }}
-        </div>
-    </section>
+        </div> 
+        {{ end }}
+    </div>
+</section>
 
 {{ end }}

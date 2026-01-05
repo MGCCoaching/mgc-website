@@ -1,44 +1,129 @@
 ---
-title: "Maîtriser le Message Clé : Comment s'assurer que l'on retient VRAIMENT l'essentiel"
-subtitle: "Épisode 07 | Structuration du Discours"
-date: 2025-12-16T18:31:00+01:00
-draft: true
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                    ÉPISODE DE PODCAST                            ║
+# ║                      MGC Coaching                                ║
+# ╚══════════════════════════════════════════════════════════════════╝
+#
+# INSTRUCTION : Créer un dossier content/podcasts/episode-XX/
+#               avec ce fichier renommé index.md
+#               + une image de couverture (optionnel)
+
+draft: false
+date: 2024-02-20T10:00:00+01:00
+
+is_episode: true # use for decap to filter episode to Podacast collection 
+
+# ══════════════════════════════════════════════════════════════════
+# INFORMATIONS DE BASE
+# ══════════════════════════════════════════════════════════════════
+
+title: "Sample Podcast"
+subtitle: "Podcast Sample MGC Coaching"
+
+# Description courte (150-160 caractères) pour SEO et réseaux sociaux
+description: "Here is a short description that suposed to describe the episode"
+
+# Description longue pour Apple Podcasts / Spotify
+summary: |
+  Écrivez ici une description plus complète de l'épisode.
+  Vous pouvez utiliser plusieurs lignes.
+
+# ══════════════════════════════════════════════════════════════════
+# NUMÉROTATION
+# ══════════════════════════════════════════════════════════════════
+
+season: 1                    # Numéro de saison
+episode_number: 1            # Numéro d'épisode
+episode_type: "full"         # "full", "trailer", "bonus"
+
+# ══════════════════════════════════════════════════════════════════
+# FICHIER AUDIO
+# ══════════════════════════════════════════════════════════════════
+
+# Option 1 : URL externe (CloudFront) - RECOMMANDÉ pour production
+audio_url: "/podcast-S01/ep_01.mp3"                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
+
+# Option 2 : Fichier local dans le Page Bundle
+# → Placer le fichier .mp3 dans le même dossier que index.md
+# → Laisser audio_url vide, Hugo le détectera automatiquement
+
+# Format audio
+audio_format: "audio/mpeg"   # audio/mpeg (MP3) ou audio/wav
+
+# Durée (les deux formats sont requis)
+duration: "04:55"            # Format MM:SS ou HH:MM:SS
+duration_seconds: 295          # En secondes : (min × 60) + sec
+
+# Taille du fichier en octets (OBLIGATOIRE pour Apple Podcasts)
+# Commande : ls -l fichier.mp3 | awk '{print $5}'
+file_size_bytes: 78201188
+
+# ══════════════════════════════════════════════════════════════════
+# CATÉGORISATION
+# ══════════════════════════════════════════════════════════════════
+
 categories:
-  - Stratégie
+  - Podcast
+
 tags:
-  - message
-  - clé
-  - structuration
-  - pitch
-episode_number: 7
-duration: "22:45"
-hosts:
-  - Votre Nom
+  - communication
+  - prise de parole
+
+# ══════════════════════════════════════════════════════════════════
+# INVITÉ(E)S
+# ══════════════════════════════════════════════════════════════════
+
 guests:
-  - Jane Smith
-audio_url: "https://votre-cdn.com/podcast/episode-07-message-cle.mp3"
+  - "Nom de l'invité(e) (Fonction)"
+# Format compatible avec ton layout actuel
+
+# ══════════════════════════════════════════════════════════════════
+# CHAPITRES / TIMESTAMPS (pour le player)
+# ══════════════════════════════════════════════════════════════════
+
+chapters:
+  - time: "00:00"
+    title: "Introduction"
+  - time: "2:00"
+    title: "Main topic"
+  - time: "2:30"
+    title: "Steph"
+  - time: "04:15"
+    title: "Conclusion"
+
+# ══════════════════════════════════════════════════════════════════
+# OPTIONS RSS
+# ══════════════════════════════════════════════════════════════════
+
+explicit: false              # Contenu adulte ?
+block: false                 # Exclure du flux RSS ?
+
+# ══════════════════════════════════════════════════════════════════
+# LIENS PLATEFORMES (remplir après publication)
+# ══════════════════════════════════════════════════════════════════
+
+platforms:
+  spotify: "spotify//"
+  apple_podcasts: "appleMusic//"
+  deezer: "deezer//"
+  youtube: ""
+
 ---
 
 ### Introduction
 
-(Ce bloc de texte sera la première partie visible de la description de l'épisode sur votre site et les plateformes d'écoute.)
+Résumé accrocheur de l'épisode qui apparaîtra dans les cartes d'aperçu. Décrivez brièvement le sujet abordé et pourquoi il est pertinent pour votre audience.
 
-Dans cet épisode crucial de notre podcast de Media Training, nous nous attaquons à l'élément fondamental de toute prise de parole : **le message clé**. Peu importe votre aisance, si l'auditoire ne retient pas l'essentiel, votre communication est un échec. Je vous révèle les trois règles d'or pour concevoir des messages percutants qui collent à la mémoire, même sous la pression d'une interview difficile.
+### Points Clés Abordés
 
-### Au Programme
+* **Premier point :** Description du premier sujet important.
+* **Deuxième point :** Description du deuxième sujet important.
+* **Troisième point :** Description du troisième sujet important.
 
-* **L'Erreur Fatale :** Pourquoi la plupart des gens diluent leur message et comment l'éviter.
-* **La Règle des Trois :** Comment synthétiser des informations complexes en un triptyque facile à mémoriser.
-* **Le Cadrage (Framing) :** Techniques pour orienter le débat autour de vos propres messages clés, plutôt que de suivre passivement l'agenda du journaliste.
-* **Exercice Pratique :** Je vous donne un cas de crise et nous structurons ensemble les trois messages clés à livrer en 60 secondes.
+### L'Invité(e) du Jour
 
-### Ressources Mentionnées
+Présentation de l'invité(e), son parcours et son expertise.
 
-* [Lien vers l'article] : Notre guide PDF gratuit sur "Comment préparer ses messages clés en 10 minutes".
-* [Lien vers la vidéo] : La fameuse interview où le PDG a parfaitement réussi à recadrer le débat. (Vidéo YouTube).
+### Pour Aller Plus Loin
 
-### Citation Inspirante de l'Épisode
-
-> "Si vous essayez de dire trois choses, vous n'en direz aucune. Restez à une seule idée forte."
-
-
+Ressources, liens et références mentionnés dans l'épisode.

@@ -1,20 +1,10 @@
 ---
-title: "Podcasts"
+title: "Les Voix des Phénix "
 layout: "coming-soon"
-subtitle: "Le portail sera accessible très prochainement.Un espace dédié, où tous mes podcasts seront disponibles à l'écoute."
-progress: 65
-launch_date: "Janvier 2026"
+subtitle: "Le premier épisode du podcast arrive dans les prochains jours."
+progress: 
+launch_date: 
 show_notification: false
 ---
 
-Je suis ravi de vous accueillir ici. Si vous êtes sur cette page, c'est que vous êtes prêt à passer à la vitesse supérieure dans votre communication et votre prise de parole en public.
-
-Ce podcast est votre ressource dédiée au Media Training. Mon objectif est de vous équiper des stratégies, des techniques et de la confiance nécessaires pour exceller devant n'importe quel micro, caméra ou auditoire.
-
-### Chaque épisode est conçu pour vous offrir :
-
-**Des analyses concrètes :** Décryptage des interviews réussies (ou ratées).
-
-**Des conseils pratiques :** Maîtriser le langage corporel, structurer un message clé.
-
-**Des exercices stimulants :** Gérer les questions pièges et les situations de crise.
+<!-- Je ne suis plus journaliste mais tendre le micro aux autres et les faire parler d’eux est dans mon ADN. Je ne pouvais pas y renoncer. C’est pour cela que j’ai eu envie de lancer un podcast. Chaque personne a une histoire à raconter. Nous sommes tous des anonymes extraordinaires. Avec un dénominateur commun **notre voix**. Je veux donner la parole à ceux qui ont décidé de l’écouter, et de la faire entendre coûte que coûte. J’aimerai que ces histoires vous portent, vous donnent de la force. Ces histoires prouvent que même dans les épreuves, on peut avancer joyeusement et danser sous la pluie.  -->

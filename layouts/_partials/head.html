@@ -2,8 +2,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
 
+<script>
+  (function(){
+    const savedTheme = localStorage.getItem('theme');
+    const htmlElement = document.documentElement;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      htmlElement.classList.add('dark');
+    }
+  })();
+</script>
+
 {{/* --- 1. Balises Méta SEO classiques --- */}}
-{{- $description := .Description | default .Site.Params.description -}}
+{{/* Priorité : .Params.description (front matter) > .Description (Hugo auto) > Site.Params.description */}}
+{{- $description := .Params.description | default .Description | default .Site.Params.description -}}
 <meta name="description" content="{{ $description }}">
 {{ with .Site.Params.author }}
 <meta name="author" content="{{ . }}">
@@ -19,17 +31,35 @@
 <meta name="robots" content="{{ if .Site.Params.robots.index }}index{{ else }}noindex{{ end }}, {{ if .Site.Params.robots.follow }}follow{{ else }}nofollow{{ end }}{{ if .Site.Params.robots.noarchive }}, noarchive{{ end }}{{ if .Site.Params.robots.nosnippet }}, nosnippet{{ end }}">
 
 {{/* --- 4. Balises Open Graph (OG) pour le partage social --- */}}
+{{/* Déterminer l'image OG : priorité à cover.*, sinon fallback sur l'image globale */}}
+{{- $ogImage := "" -}}
+{{- $ogImageWidth := .Site.Params.opengraph.imageWidth | default 1200 -}}
+{{- $ogImageHeight := .Site.Params.opengraph.imageHeight | default 630 -}}
+{{- $ogImageAlt := .Title | default .Site.Title -}}
+
+{{/* 1. Chercher une image cover.* dans le bundle (cover.jpg, cover.png, cover.webp, etc.) */}}
+{{- $coverImage := .Resources.GetMatch "cover.*" -}}
+{{- if $coverImage -}}
+  {{- $ogImage = $coverImage.Permalink -}}
+{{/* 2. Vérifier si une image est définie dans le front matter */}}
+{{- else if .Params.image -}}
+  {{- $ogImage = .Params.image | absURL -}}
+{{/* 3. Fallback sur l'image Open Graph globale du site */}}
+{{- else if .Site.Params.opengraph.image -}}
+  {{- $ogImage = .Site.Params.opengraph.image | absURL -}}
+{{- end -}}
+
 <meta property="og:title" content="{{ .Title }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:locale" content="{{ .Site.Language.Lang }}">
-{{ with .Site.Params.opengraph.image }}
-<meta property="og:image" content="{{ . | absURL }}">
-<meta property="og:image:width" content="{{ $.Site.Params.opengraph.imageWidth | default 1200 }}">
-<meta property="og:image:height" content="{{ $.Site.Params.opengraph.imageHeight | default 630 }}">
-<meta property="og:image:alt" content="{{ $.Site.Title }}">
+{{ if $ogImage }}
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:image:width" content="{{ $ogImageWidth }}">
+<meta property="og:image:height" content="{{ $ogImageHeight }}">
+<meta property="og:image:alt" content="{{ $ogImageAlt }}">
 {{ end }}
 
 {{/* --- 5. Twitter Cards --- */}}
@@ -44,8 +74,8 @@
 {{ end }}
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ $description }}">
-{{ with .Site.Params.opengraph.image }}
-<meta name="twitter:image" content="{{ . | absURL }}">
+{{ if $ogImage }}
+<meta name="twitter:image" content="{{ $ogImage }}">
 {{ end }}
 
 {{/* --- 6. Schema.org (JSON-LD) - ProfessionalService --- */}}
@@ -108,13 +138,14 @@
 {{ end }}
 
 {{/* --- 8. Favicon --- */}}
-<link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/img/logo.png">
+<link rel="icon" type="image/webp" sizes="32x32" href="/img/logo.webp">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/logo.webp">
 
 {{/* --- 9. Preconnect & Polices (ordre optimisé pour performance) --- */}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 {{/* --- 10. CSS --- */}}
 {{ with (templates.Defer (dict "key" "global")) }}

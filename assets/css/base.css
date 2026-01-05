@@ -1,141 +1,224 @@
 /* =============================================================================
-   Global Overflow Prevention - Empêche le scroll horizontal
+   Base Styles
+   =============================================================================
+   - Global resets
+   - Typography (headings, paragraphs, lists)
+   - Material Symbols icons
    ============================================================================= */
-   html, body {
-    overflow-x: hidden;
-    max-width: 100vw;
+
+/* =============================================================================
+   Global Reset
+   ============================================================================= */
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* =============================================================================
+   Typography - Headings
+   ============================================================================= */
+
+h1 {
+  @apply text-5xl md:text-6xl lg:text-8xl;
+}
+
+h2 {
+  @apply text-4xl md:text-4xl lg:text-6xl;
+}
+
+h3 {
+  @apply text-3xl md:text-3xl lg:text-4xl;
+}
+
+h4 {
+  @apply text-2xl md:text-2xl lg:text-3xl;
+}
+
+h5 {
+  @apply text-xl md:text-xl lg:text-2xl;
+}
+
+/* =============================================================================
+   Typography - Body Text
+   ============================================================================= */
+
+p {
+  font-size: 1rem;
+
+  @media (width >= 768px) {
+    font-size: 1.125rem;
   }
-  
-  /* =============================================================================
-     Typography
-     ============================================================================= */
-  h1 { @apply text-5xl md:text-6xl lg:text-8xl }
-  h2 { @apply text-4xl md:text-4xl lg:text-6xl }
-  h3 { @apply text-3xl md:text-3xl lg:text-4xl }
-  h4 { @apply text-2xl md:text-2xl lg:text-3xl }
-  h5 { @apply text-xl md:text-xl lg:text-2xl }
-  
-  p { font-size: 1rem }
-  
-  /* =============================================================================
-     Icons - Material Symbols
-     ============================================================================= */
-  
-  .material-symbols-outlined {
-    @apply text-text-primary;
-    /* Default size - inherited from parent font-size */
-  }
-  
-  /* Icon color variants */
-  .icon-accent {
-    @apply text-accent-primary;
-  }
-  
-  .icon-secondary {
-    @apply text-text-secondary;
-  }
-  
-  .icon-inverse {
-    @apply text-text-inverse;
-  }
-  
-  .icon-success {
-    @apply text-success;
-  }
-  
-  .icon-warning {
-    @apply text-warning;
-  }
-  
-  .icon-error {
-    @apply text-error;
-  }
-  
-  /* Icons inherit color from parent (useful in buttons) */
-  .btn .material-symbols-outlined,
-  .btn-menu .material-symbols-outlined {
-    @apply text-inherit;
-  }
-  
-  /* Icon Size Utilities
-     -------------------------------------------------------------------------- */
-  
-  /* Extra Small - 16px */
-  .icon-xs {
-    @apply text-base;
-    font-variation-settings: 'opsz' 20;
-  }
-  
-  /* Small - 20px */
-  .icon-sm {
-    @apply text-xl;
-    font-variation-settings: 'opsz' 20;
-  }
-  
-  /* Medium (Default) - 24px */
-  .icon-md {
-    @apply text-2xl;
-    font-variation-settings: 'opsz' 24;
-  }
-  
-  /* Large - 32px */
-  .icon-lg {
-    @apply text-4xl;
-    font-variation-settings: 'opsz' 40;
-  }
-  
-  /* Extra Large - 48px */
-  .icon-xl {
-    @apply text-6xl;
-    font-variation-settings: 'opsz' 48;
-  }
-  
-  /* 2X Large - 64px */
-  .icon-2xl {
-    @apply text-8xl;
-    font-variation-settings: 'opsz' 48;
-  }
-  
-  /* 3X Large - 96px */
-  .icon-3xl {
-    font-size: 6rem;
-    font-variation-settings: 'opsz' 48;
-  }
-  
-  /* 4X Large - 128px */
-  .icon-4xl {
-    font-size: 8rem;
-    font-variation-settings: 'opsz' 48;
-  }
-  
-  /* Icon Weight Utilities
-     -------------------------------------------------------------------------- */
-  .icon-thin {
-    font-variation-settings: 'wght' 100;
-  }
-  
-  .icon-light {
-    font-variation-settings: 'wght' 200;
-  }
-  
-  .icon-regular {
-    font-variation-settings: 'wght' 400;
-  }
-  
-  .icon-medium {
-    font-variation-settings: 'wght' 500;
-  }
-  
-  .icon-bold {
-    font-variation-settings: 'wght' 700;
-  }
-  
-  /* Icon Fill Styles
-     -------------------------------------------------------------------------- */
-  .icon-filled {
-    font-variation-settings: 'FILL' 1;
-  }
-  
-  .icon-outlined {
-    font-variation-settings: 'FILL' 0;
-  }
+}
+
+/* =============================================================================
+   Typography - Lists
+   ============================================================================= */
+
+.list-icon {
+  list-style: none;
+  padding-left: 5px;
+}
+
+.list-icon::before {
+  content: '\e5e1'; /* chevron_right */
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  margin-right: 0px;
+  vertical-align: middle;
+  @apply text-accent-primary;
+}
+
+/* =============================================================================
+   Typography - Fonts
+   ============================================================================= */
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+/* =============================================================================
+   Material Symbols - Base
+   ============================================================================= */
+
+.material-symbols-outlined {
+  @apply text-text-primary;
+}
+
+/* =============================================================================
+   Material Symbols - Color Variants
+   ============================================================================= */
+
+.icon-accent {
+  @apply text-accent-primary;
+}
+
+.icon-accent-hover {
+  @apply text-accent-hover;
+}
+
+.icon-secondary {
+  @apply text-text-secondary;
+}
+
+.icon-tertiary {
+  @apply text-text-tertiary;
+}
+
+.icon-inverse {
+  @apply text-text-inverse;
+}
+
+.icon-success {
+  @apply text-success;
+}
+
+.icon-warning {
+  @apply text-warning;
+}
+
+.icon-error {
+  @apply text-error;
+}
+
+/* Icons inherit color from parent (buttons, links) */
+.btn .material-symbols-outlined,
+.btn-menu .material-symbols-outlined {
+  @apply text-inherit;
+}
+
+/* =============================================================================
+   Material Symbols - Size Variants
+   ============================================================================= */
+
+/* Extra Small - 16px */
+.icon-xs {
+  @apply text-base;
+  font-variation-settings: 'opsz' 20;
+}
+
+/* Small - 20px */
+.icon-sm {
+  @apply text-xl;
+  font-variation-settings: 'opsz' 20;
+}
+
+/* Medium (Default) - 24px */
+.icon-md {
+  @apply text-2xl;
+  font-variation-settings: 'opsz' 24;
+}
+
+/* Large - 32px */
+.icon-lg {
+  @apply text-4xl;
+  font-variation-settings: 'opsz' 40;
+}
+
+/* Extra Large - 48px */
+.icon-xl {
+  @apply text-6xl;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 2X Large - 64px */
+.icon-2xl {
+  @apply text-8xl;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 3X Large - 96px */
+.icon-3xl {
+  font-size: 6rem;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* 4X Large - 128px */
+.icon-4xl {
+  font-size: 8rem;
+  font-variation-settings: 'opsz' 48;
+}
+
+/* =============================================================================
+   Material Symbols - Weight Variants
+   ============================================================================= */
+
+.icon-thin {
+  font-variation-settings: 'wght' 100;
+}
+
+.icon-light {
+  font-variation-settings: 'wght' 200;
+}
+
+.icon-regular {
+  font-variation-settings: 'wght' 400;
+}
+
+.icon-medium {
+  font-variation-settings: 'wght' 500;
+}
+
+.icon-bold {
+  font-variation-settings: 'wght' 700;
+}
+
+/* =============================================================================
+   Material Symbols - Fill Styles
+   ============================================================================= */
+
+.icon-filled {
+  font-variation-settings: 'FILL' 1;
+}
+
+.icon-outlined {
+  font-variation-settings: 'FILL' 0;
+}

@@ -26,9 +26,9 @@ uglyURLs = false
 
 # Taxonomies
 # ------------------------------------------------------------------------------
-[taxonomies]
-  tag = 'tags'
-  category = 'categories'
+# [taxonomies]
+#   tag = 'tags'
+#   category = 'categories'
 
 # Permalinks
 # ------------------------------------------------------------------------------
@@ -36,22 +36,46 @@ uglyURLs = false
   posts = '/:year/:month/:slug/'
   pages = '/:slug/'
 
-# Output Formats
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# OUTPUT FORMATS - CRITICAL FOR RSS
+# ==============================================================================
+
+# Define media types
+[mediaTypes]
+  [mediaTypes."application/rss+xml"]
+    suffixes = ["xml"]
+
+# Define output formats
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "index"
+    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    notAlternative = false
+  
+  # Custom podcast RSS (alternative approach)
+  [outputFormats.PodcastRSS]
+    mediaType = "application/rss+xml"
+    baseName = "index"
+    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    path = ""
+
+# Outputs per section type
 [outputs]
   home = ['HTML', 'RSS']
   section = ['HTML', 'RSS']
   page = ['HTML']
 
-# Minification
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# MINIFICATION - Disable XML minification to avoid issues
+# ==============================================================================
 [minify]
   disableCSS = false
   disableHTML = false
   disableJS = false
   disableJSON = false
   disableSVG = false
-  disableXML = false
+  disableXML = true       # ← Disable XML minification for RSS
   minifyOutput = true
 
 # Module Mounts
@@ -82,7 +106,7 @@ uglyURLs = false
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = false
+      unsafe = true
   [markup.highlight]
     style = 'monokai'
     lineNos = false
@@ -96,3 +120,7 @@ uglyURLs = false
     languageName = 'Français'
     weight = 1
     title = 'Marie-Gaëtane Comte'
+
+
+[params.colors]
+  accent = "#D4A574"      # Pour le player
