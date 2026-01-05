@@ -47,10 +47,12 @@
             <div class="grid sm:grid-cols-2 gap-5">
               {{/* Nom */}}
               <div class="space-y-2">
-                <label for="name" class="flex items-center gap-2 text-text-primary font-medium">
+                <div class="flex gap-1">
                   <span class="material-symbols-outlined icon-sm text-accent-primary">person</span>
-                  Nom complet
-                </label>
+                  <label for="name" class="flex items-center gap-2 text-text-primary font-medium">
+                    Nom complet
+                  </label>
+                </div>
                 <input 
                   type="text" 
                   id="name" 
@@ -63,10 +65,12 @@
 
               {{/* Email */}}
               <div class="space-y-2">
-                <label for="email" class="flex items-center gap-2 text-text-primary font-medium">
+                <div class="flex gap-1">
                   <span class="material-symbols-outlined icon-sm text-accent-primary">mail</span>
-                  Email
-                </label>
+                  <label for="email" class="flex items-center gap-2 text-text-primary font-medium">
+                    Email
+                  </label>
+                </div>
                 <input 
                   type="email" 
                   id="email" 
@@ -82,11 +86,13 @@
             <div class="grid sm:grid-cols-2 gap-5">
               {{/* Téléphone */}}
               <div class="space-y-2">
-                <label for="phone" class="flex items-center gap-2 text-text-primary font-medium">
+                <div class="flex gap-1 items-center">
                   <span class="material-symbols-outlined icon-sm text-accent-primary">phone</span>
-                  Téléphone
+                  <label for="phone" class="flex items-center gap-2 text-text-primary font-medium">
+                    Téléphone
+                  </label>
                   <span class="text-text-tertiary text-sm font-normal">(optionnel)</span>
-                </label>
+                </div>
                 <input 
                   type="tel" 
                   id="phone" 
@@ -98,10 +104,12 @@
 
               {{/* Sujet */}}
               <div class="space-y-2">
-                <label for="subject" class="flex items-center gap-2 text-text-primary font-medium">
+                <div class="flex gap-1">
                   <span class="material-symbols-outlined icon-sm text-accent-primary">category</span>
-                  Sujet
-                </label>
+                  <label for="subject" class="flex items-center gap-2 text-text-primary font-medium">
+                    Sujet
+                  </label>
+                </div>
                 <select 
                   id="subject" 
                   name="subject" 
@@ -120,10 +128,12 @@
 
             {{/* Message */}}
             <div class="space-y-2">
-              <label for="message" class="flex items-center gap-2 text-text-primary font-medium">
+              <div class="flex gap-1">
                 <span class="material-symbols-outlined icon-sm text-accent-primary">edit_note</span>
-                Votre message
-              </label>
+                <label for="message" class="flex items-center gap-2 text-text-primary font-medium">
+                  Votre message
+                </label>
+              </div>
               <textarea 
                 id="message" 
                 name="message" 
