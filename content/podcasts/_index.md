@@ -1,9 +1,9 @@
 ---
 title: "Les Voix des Phénix "
 layout: "coming-soon"
-subtitle: "Le portail sera accessible très prochainement.Un espace dédié, où tous mes podcasts seront disponibles à l'écoute."
-progress: 65
-launch_date: "Janvier 2026"
+subtitle: "Le premier épisode du podcast arrive dans les prochains jours."
+progress: 
+launch_date: 
 show_notification: false
 ---
 
