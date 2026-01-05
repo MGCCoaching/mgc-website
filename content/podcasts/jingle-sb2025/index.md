@@ -5,7 +5,7 @@ subtitle: Test DecapBridge -Podcast MGC Coachig
 date: 2026-01-04
 draft: false
 season: 1
-episode_number: 1
+episode_number: 2
 episode_type: full
 cover: mike-meyers-haaxbjihds-unsplash.jpg
 audio_file: sb-jinglev2.mp3
