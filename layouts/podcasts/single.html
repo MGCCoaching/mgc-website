@@ -4,15 +4,6 @@
      VARIABLES
      ══════════════════════════════════════════════════════════════════ */}}
 
-{{/* Audio : soit Page Bundle, soit URL externe */}}
-{{ $audioResource := index (.Resources.ByType "audio") 0 }}
-{{ $audioUrl := "" }}
-{{ if .Params.audio_url }}
-  {{ $audioUrl = .Params.audio_url }}
-{{ else if $audioResource }}
-  {{ $audioUrl = $audioResource.Permalink }}
-{{ end }}
-
 {{/* Image : soit Page Bundle, soit cover_image, soit fallback */}}
 {{ $imageResource := index (.Resources.ByType "image") 0 }}
 {{ $image := "" }}
@@ -30,11 +21,9 @@
 {{ $episodeType := .Params.episode_type | default "full" }}
 {{ $duration := .Params.duration | default "00:00" }}
 {{ $durationSeconds := .Params.duration_seconds | default 0 }}
-{{ $explicit := .Params.explicit | default false }}
 {{ $chapters := .Params.chapters | default slice }}
 {{ $guests := .Params.guests | default slice }}
 {{ $description := .Params.description | default "" }}
-{{ $summary := .Params.summary | default "" }}
 
 {{/* ══════════════════════════════════════════════════════════════════
      SCHEMA.ORG - PodcastEpisode (SEO)
@@ -47,29 +36,9 @@
   "description": "{{ with $description }}{{ . | plainify }}{{ else }}{{ .Content | plainify | truncate 160 }}{{ end }}",
   "url": "{{ .Permalink }}",
   "datePublished": "{{ .Date.Format "2006-01-02" }}",
-  {{/* Durée au format ISO 8601 (PT1H30M45S) */}}
-  {{- if $durationSeconds }}
-  {{- $hours := div $durationSeconds 3600 }}
-  {{- $minutes := div (mod $durationSeconds 3600) 60 }}
-  {{- $seconds := mod $durationSeconds 60 }}
-  "duration": "PT{{ if gt $hours 0 }}{{ $hours }}H{{ end }}{{ $minutes }}M{{ $seconds }}S",
-  {{- else if $duration }}
-  {{- $parts := split $duration ":" }}
-  {{- if eq (len $parts) 3 }}
-  "duration": "PT{{ index $parts 0 }}H{{ index $parts 1 }}M{{ index $parts 2 }}S",
-  {{- else if eq (len $parts) 2 }}
-  "duration": "PT{{ index $parts 0 }}M{{ index $parts 1 }}S",
-  {{- end }}
-  {{- end }}
   "episodeNumber": {{ $episodeNum }},
   {{- if $image }}
   "image": "{{ $image }}",
-  {{- end }}
-  {{- if $audioUrl }}
-  "associatedMedia": {
-    "@type": "MediaObject",
-    "contentUrl": "{{ $audioUrl }}"
-  },
   {{- end }}
   "partOfSeries": {
     "@type": "PodcastSeries",
@@ -80,17 +49,6 @@
     "@type": "PodcastSeason",
     "seasonNumber": {{ $season }}
   }
-  {{- with $guests }},
-  "actor": [
-    {{- range $i, $guest := . }}
-    {{- if $i }},{{ end }}
-    {
-      "@type": "Person",
-      "name": "{{ $guest }}"
-    }
-    {{- end }}
-  ]
-  {{- end }}
 }
 </script>
 
@@ -103,7 +61,7 @@
     <article class="lg:flex lg:space-x-12 lg:items-start">
         
         {{/* ══════════════════════════════════════════════════════════
-             SIDEBAR (Image + Player + Infos)
+             SIDEBAR (Image + Player Trigger + Infos)
              ══════════════════════════════════════════════════════════ */}}
         <aside class="lg:w-1/3 mb-8 lg:mb-0">
             <div class="sticky top-12">
@@ -151,31 +109,10 @@
                     </div>
                 </figure>
 
-                {{/* Player Audio */}}
-                {{ if $audioUrl }}
-                    {{/* Player natif (sera remplacé par le custom plus tard) */}}
-                    {{/*  <div class="mb-4">
-                        <audio controls 
-                               controlsList="nodownload" 
-                               class="w-full rounded-lg shadow-md"
-                               preload="metadata">
-                            <source src="{{ $audioUrl }}" type="{{ .Params.audio_format | default "audio/mpeg" }}">
-                            Votre navigateur ne supporte pas l'élément audio.
-                        </audio>
-                    </div>
-                      */}}
-                    {{/* TODO: Intégrer le player custom ici */}}
-                    {{/*  {{ partial "components/podcast-player.html" . }}  */}}
-                    {{ partial "components/podcast-player.html" . }}
-                    
-                {{ else }}
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-                        <p class="text-red-600 text-sm italic flex items-center gap-2">
-                            <span class="material-symbols-outlined text-lg">error</span>
-                            Fichier audio indisponible.
-                        </p>
-                    </div>
-                {{ end }}
+                {{/* ════════════════════════════════════════════════════════
+                     TRIGGER PLAYER (remplace le player complet)
+                     ════════════════════════════════════════════════════════ */}}
+                {{ partial "components/podcast-trigger.html" . }}
                 
                 {{/* Métadonnées */}}
                 <div class="p-4 my-5 bg-primary rounded-lg text-sm text-primary space-y-2">
@@ -253,15 +190,11 @@
             <div class="hidden md:block">
                 <header class="mb-6">
                     <div class="flex items-center gap-2 mb-2">
-                        {{/*  <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
-                            S{{ $season }}E{{ $episodeNum }}
-                        </span>  */}}
                         {{ if eq $episodeType "trailer" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
                         {{ else if eq $episodeType "bonus" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                         {{ end }}
-                        {{/*  <span class="text-sm text-tertiary">• {{ $duration }}</span>  */}}
                     </div>
                     <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
                     <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ .Title }}</h1>
@@ -320,27 +253,6 @@
                     {{ end }}
                 </ul>
             </div>
-            {{ end }}
-
-            {{/* Transcription */}}
-            {{ with .Params.transcript }}
-            {{ if .available }}
-            <div class="mb-8 p-4 bg-primary rounded-lg">
-                <h3 class="font-bold text-primary mb-2 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-accent-primary">description</span>
-                    Transcription
-                </h3>
-                {{ if .url }}
-                <a href="{{ .url }}" target="_blank" rel="noopener" 
-                   class="inline-flex items-center gap-1 text-accent-primary hover:underline">
-                    <span class="material-symbols-outlined text-sm">download</span>
-                    Télécharger la transcription
-                </a>
-                {{ else }}
-                <p class="text-sm text-tertiary">Transcription disponible sur demande.</p>
-                {{ end }}
-            </div>
-            {{ end }}
             {{ end }}
 
             {{/* Note de bas de page */}}

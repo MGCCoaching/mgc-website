@@ -141,21 +141,19 @@ const swup = new Swup({
   }
 
   function initPagePlayer() {
-    // Synchroniser le player de page avec le player persistant
-    const pagePlayer = document.querySelector('[data-podcast-player]');
-    const persistentPlayer = document.getElementById('persistent-player');
+    // Réinitialiser le trigger podcast si présent sur la nouvelle page
+    if (typeof window.MGC?.initPersistentPlayer === 'function') {
+      window.MGC.initPersistentPlayer();
+    }
     
-    if (pagePlayer && persistentPlayer) {
-      // Logique de synchronisation à implémenter
-      syncPlayers(pagePlayer, persistentPlayer);
+    // Synchroniser l'état du trigger avec le player persistant
+    if (typeof window.MGC?.syncTrigger === 'function') {
+      window.MGC.syncTrigger();
     }
   }
 
   function syncPlayers(pagePlayer, persistentPlayer) {
-    // TODO: Implémenter la synchronisation bidirectionnelle
-    // - Si même épisode: synchroniser currentTime
-    // - Si nouvel épisode: charger dans le player persistant
-    console.log('Player sync initialized');
+    // Géré par persistent-player.js via window.MGC.syncTrigger
   }
 
   // ===========================================================================

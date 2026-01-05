@@ -222,3 +222,14 @@ p {
 .icon-outlined {
   font-variation-settings: 'FILL' 0;
 }
+
+
+
+/* Par défaut, on cache la pause */
+.pause-icon { display: none; }
+.play-icon { display: block; }
+
+/* Si le parent a la classe .is-playing, on inverse */
+.is-playing .pause-icon { display: block; }
+.is-playing .play-icon { display: none; }
+

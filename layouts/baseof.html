@@ -3,7 +3,7 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-<body class="bg-primary">
+<body>
   {{/* ═══════════════════════════════════════════════════════════════════════
        HEADER - Hors du container Swup (persiste entre les pages)
        ═══════════════════════════════════════════════════════════════════════ */}}
@@ -29,10 +29,7 @@
   {{/* ═══════════════════════════════════════════════════════════════════════
        PERSISTENT PLAYER - Hors du container Swup (persiste entre les pages)
        ═══════════════════════════════════════════════════════════════════════ */}}
-  <div id="persistent-player" class="fixed bottom-0 left-0 right-0 z-50 transform translate-y-full transition-transform duration-300" aria-hidden="true">
-    {{/* Le player persistant sera activé via JavaScript quand un podcast est lu */}}
-    {{ partial "components/persistent-player.html" . }}
-  </div>
+  {{ partial "components/persistent-player.html" . }}
 
   {{/* ═══════════════════════════════════════════════════════════════════════
        SCRIPTS & OVERLAYS

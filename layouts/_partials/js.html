@@ -45,9 +45,9 @@
 {{ end }}
 
 {{/* ═══════════════════════════════════════════════════════════════════════════
-     4. Podcast Player
+     4. Persistent Podcast Player (remplace podcast-player.js)
      ═══════════════════════════════════════════════════════════════════════════ */}}
-{{ with resources.Get "js/podcast-player.js" }}
+{{ with resources.Get "js/persistent-player.js" }}
   {{ if hugo.IsDevelopment }}
     <script src="{{ .RelPermalink }}" defer></script>
   {{ else }}

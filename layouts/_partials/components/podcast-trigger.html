@@ -1,0 +1,119 @@
+{{/*
+  Podcast Page Trigger - MGC Coaching
+  ====================================
+  Bloc simple : bouton play/pause + texte Écouter/Pause/Reprendre
+  Active le player persistant
+*/}}
+
+{{/* Variables */}}
+{{ $audioResource := index (.Resources.ByType "audio") 0 }}
+{{ $audioUrl := "" }}
+{{ $audioFormat := "audio/mpeg" }}
+{{ if .Params.audio_url }}
+  {{ $audioUrl = .Params.audio_url }}
+  {{ $audioFormat = .Params.audio_format | default "audio/mpeg" }}
+{{ else if $audioResource }}
+  {{ $audioUrl = $audioResource.Permalink }}
+  {{ $audioFormat = $audioResource.MediaType.Type }}
+{{ end }}
+
+{{/* Image */}}
+{{ $imageResource := index (.Resources.ByType "image") 0 }}
+{{ $image := "" }}
+{{ if $imageResource }}
+  {{ $image = $imageResource.Permalink }}
+{{ else if .Params.cover_image }}
+  {{ $image = .Params.cover_image | relURL }}
+{{ else }}
+  {{ $image = "/img/fallback-podcast.png" | relURL }}
+{{ end }}
+
+{{/* Chapitres en JSON */}}
+{{ $chapters := .Params.chapters | default slice }}
+{{ $chaptersJSON := slice }}
+{{ $durationSeconds := .Params.duration_seconds | default 0 }}
+{{ range $chapters }}
+  {{ if .title }}
+    {{ $parts := split .time ":" }}
+    {{ $startSeconds := 0 }}
+    {{ if eq (len $parts) 2 }}
+      {{ $startSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) }}
+    {{ else if eq (len $parts) 3 }}
+      {{ $startSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) }}
+    {{ end }}
+    {{ $chaptersJSON = $chaptersJSON | append (dict "title" .title "time" .time "startSeconds" $startSeconds) }}
+  {{ end }}
+{{ end }}
+
+{{ if $audioUrl }}
+<div 
+  data-podcast-trigger
+  data-audio-url="{{ $audioUrl }}"
+  data-audio-format="{{ $audioFormat }}"
+  data-title="{{ .Title }}"
+  data-subtitle="{{ .Params.subtitle | default "Podcast" }}"
+  data-cover="{{ $image }}"
+  data-duration="{{ .Params.duration | default "00:00" }}"
+  data-duration-seconds="{{ $durationSeconds }}"
+  data-chapters='{{ $chaptersJSON | jsonify }}'
+  class="w-full bg-accent backdrop-blur-xl rounded-2xl border border-border-secondary 
+         shadow-themed-lg p-4 sm:p-5"
+>
+  <div class="flex items-center gap-4">
+    
+    {{/* Bouton Play/Pause */}}
+    <button 
+      data-trigger-play-btn
+      class="relative w-14 h-14 sm:w-16 sm:h-16 bg-accent-primary rounded-full flex items-center justify-center
+             shadow-lg hover:bg-accent-hover hover:scale-105 active:scale-95 transition-all duration-200 shrink-0"
+      aria-label="Lecture / Pause"
+    >
+      {{/* Icône Play - visible par défaut */}}
+      <span 
+        data-trigger-play-icon 
+        class="material-symbols-outlined text-2xl sm:text-3xl text-white "
+      >play_arrow</span>
+      
+      {{/* Icône Pause - cachée par défaut */}}
+      <span 
+        data-trigger-pause-icon 
+        class="material-symbols-outlined text-2xl sm:text-3xl text-white hidden"
+      >pause</span>
+    </button>
+
+    {{/* Infos */}}
+    <div class="flex-1 min-w-0">
+      {{/* Label dynamique */}}
+      <p 
+        data-trigger-label
+        class="text-text-primary font-bold text-lg sm:text-xl"
+      >Écouter</p>
+      
+      {{/* Métadonnées */}}
+      <div class="flex items-center gap-3 text-text-secondary text-sm mt-1">
+        <span class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-base">timer</span>
+          {{ .Params.duration | default "00:00" }}
+        </span>
+        {{ if $chapters }}
+        <span class="text-text-tertiary">•</span>
+        <span class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-base">list</span>
+          {{ len $chapters }} chapitres
+        </span>
+        {{ end }}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{ else }}
+{{/* Message si pas d'audio */}}
+<div class="w-full bg-error/10 border border-error/30 rounded-xl p-4">
+  <p class="text-error text-sm flex items-center gap-2">
+    <span class="material-symbols-outlined">warning</span>
+    Fichier audio non disponible
+  </p>
+</div>
+{{ end }}
