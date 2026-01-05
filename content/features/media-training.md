@@ -3,7 +3,7 @@ title: "Média Training"
 subtitle: "Préparez-vous à réussir chaque interview avec impact et authenticité"
 icon: "tv_signin"
 category: "Formation"
-image: "/img/media_training.png"
+image: "/img/media_training.webp"
 weight: 1
 
 # Bénéfices clés

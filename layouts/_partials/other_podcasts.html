@@ -22,7 +22,7 @@
       {{ $allPodcasts := where site.RegularPages "Section" "podcasts" }}
       {{ $otherPodcasts := where $allPodcasts "Permalink" "ne" $currentPage.Permalink }}
       {{ $limit := 3 }}
-      {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+      {{ $fallbackImagePath := "/img/fallback-podcast.webp" }}
       
       {{ if $otherPodcasts }}
       <div class="max-w-7xl grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">

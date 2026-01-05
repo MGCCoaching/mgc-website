@@ -16,7 +16,7 @@
       {{/* Grille des podcasts */}}
       {{ $limit := .Params.limit | default 3 }}
       {{ $podcasts := where site.RegularPages "Section" "podcasts" }}
-      {{ $fallbackImagePath := "/img/fallback-podcast.png" }}
+      {{ $fallbackImagePath := "/img/fallback-podcast.webp" }}
       
       {{ if $podcasts }}
       <div class=" max-w-7xl grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
