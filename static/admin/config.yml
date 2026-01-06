@@ -5,7 +5,7 @@
 
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
-#local_backend: true
+local_backend: true
 
 # Use DecapBridge PKCE auth (required)
 backend:
