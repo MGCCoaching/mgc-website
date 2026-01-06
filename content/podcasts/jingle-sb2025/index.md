@@ -1,7 +1,7 @@
 ---
 is_episode: true
 title: Jingle SB2025
-subtitle: Test DecapBridge -Podcast MGC Coachig
+subtitle: Episode 2
 date: 2026-01-04
 draft: false
 season: 1
