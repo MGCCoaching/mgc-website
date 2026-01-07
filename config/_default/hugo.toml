@@ -1,7 +1,7 @@
 # Hugo Core Configuration
 # ==============================================================================
 
-baseURL = 'https://mgc-coaching-officiel.netlify.app'
+baseURL = 'https://mariegaetanecomte.fr/'
 title = 'Marie-Gaëtane Comte'
 defaultContentLanguage = 'fr'
 defaultContentLanguageInSubdir = false
