@@ -7,7 +7,7 @@ draft: false
 season: 1
 episode_number: 2
 episode_type: full
-cover: brand-placeholder.png
+cover: 
 audio_file: sb-jinglev2.mp3
 audio_format: audio/mpeg
 description: Voici un bo jingle
