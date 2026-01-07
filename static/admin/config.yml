@@ -5,7 +5,7 @@
 
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
-#local_backend: true
+local_backend: true
 
 # Use DecapBridge PKCE auth (required)
 backend:
@@ -99,10 +99,11 @@ collections:
         widget: "string"
         required: true
       
-      - label: "Sous-titre"
+      - label: "Episode"
         name: "subtitle"
         widget: "string"
-        default: "Podcast MGC Coaching"
+        default: "Episode: "
+        hint: "Numero d'episode affiché en haut"
       
       - label: "Date de publication"
         name: "date"
@@ -155,6 +156,7 @@ collections:
       - label: "Fichier audio (local)"
         name: "audio_file"
         widget: "file"
+        default: ""
         required: false
         hint: "Téléverser le MP3 ici (stocké avec l'épisode)"
       
@@ -182,12 +184,7 @@ collections:
         required: false
         hint: "150-160 caractères pour le SEO et réseaux sociaux"
       
-      - label: "Résumé détaillé"
-        name: "summary"
-        widget: "text"
-        required: false
-        hint: "Description plus complète pour Apple Podcasts / Spotify"
-      
+
       # ══════════════════════════════════════════════════════════════════
       # DURÉE ET TAILLE
       # ══════════════════════════════════════════════════════════════════
@@ -283,9 +280,9 @@ collections:
       - label: "Contenu de l'épisode"
         name: "body"
         widget: "markdown"
-        hint: "Notes de l'épisode, points clés, ressources..."
+        hint: "⚠️ Ne pas mettre de 'Title 1'. Notes de l'épisode, points clés, ressources..."
 
-  # ────────────────────────────────────────────────────────────────────────────
+ # ────────────────────────────────────────────────────────────────────────────
   # SECTIONS PAGE D'ACCUEIL
   # ────────────────────────────────────────────────────────────────────────────
   - name: "home_sections"
@@ -302,7 +299,7 @@ collections:
       
       - label: "Type de section"
         name: "section"
-        widget: "select"
+        widget: "hidden"
         options:
           - { label: "Hero (bannière)", value: "hero" }
           - { label: "À propos", value: "about" }
@@ -310,38 +307,66 @@ collections:
           - { label: "Appel à l'action", value: "cta" }
           - { label: "FAQ", value: "faq" }
           - { label: "Derniers podcasts", value: "latest-podcasts" }
+
+      # --- BLOC SPECIFIQUE POUR LES SERVICES ---
+      # Ce champ n'apparaîtra ou ne sera pertinent que pour la section "features"
+      - label: "Liste des Services (Seulement Pour les cartes 'Mes Services')"
+        name: "features"
+        widget: "list"
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "Titre du service", name: "title", widget: "string" }
+          - { label: "Icône", name: "icon", widget: "hidden", hint: "Ex: tv_signin, mic_external_on" }
+          - { label: "Lien du bouton", name: "button_url", widget: "hidden" }
+          - { label: "Description courte", name: "description", widget: "text" }
       
       - label: "Ordre d'affichage"
         name: "weight"
-        widget: "number"
-        default: 10
-        hint: "Plus petit = affiché en premier"
+        widget: "hidden"
       
       - label: "Texte du bouton"
         name: "button_text"
-        widget: "string"
+        widget: "hidden"
         required: false
       
       - label: "Lien du bouton"
         name: "button_url"
-        widget: "string"
+        widget: "hidden"
         required: false
       
       - label: "Image"
         name: "image"
         widget: "image"
         required: false
-        allow_multiple: false
       
-      - label: "Contenu"
+      - label: "Contenu (Conclusion)"
         name: "body"
         widget: "markdown"
+# ────────────────────────────────────────────────────────────────────────────
+  # PRESTATIONS (FEATURES)
+  # ────────────────────────────────────────────────────────────────────────────
+  - name: "Page"
+    label: "✨ Pages Service"
+    folder: "content/features"
+    create: false
+    slug: "{{slug}}"
+    fields:
+      # --- Champs visibles et modifiables ---
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Sous-titre", name: "subtitle", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Contenu", name: "body", widget: "markdown" }
 
+      # --- Champs cachés (Préservent les valeurs existantes de chaque fichier) ---
+      - { label: "Icône", name: "icon", widget: "hidden" }
+      - { label: "Catégorie", name: "category", widget: "hidden" }
+      - { label: "Poids (Ordre)", name: "weight", widget: "hidden" }
   # ────────────────────────────────────────────────────────────────────────────
   # PAGES
   # ────────────────────────────────────────────────────────────────────────────
   - name: "pages"
-    label: "📄 Pages"
+    label: "📄 Autres Pages"
     files:
       - label: "Podcasts"
         name: "podcasts"
@@ -367,6 +392,8 @@ collections:
           - { label: "Layout", name: "layout", widget: "hidden", default: "legal" }
           - { label: "Dernière mise à jour", name: "lastUpdate", widget: "date", required: false }
           - { label: "Contenu", name: "body", widget: "markdown" }
+
+
 
   # ────────────────────────────────────────────────────────────────────────────
   # PARAMÈTRES DU SITE
