@@ -268,9 +268,9 @@
                 </header>
                 
                 {{/* Description courte */}}
-                {{ with $description }}
+                {{/*  {{ with $description }}
                 <p class="text-lg text-tertiary mb-6 leading-relaxed">{{ . }}</p>
-                {{ end }}
+                {{ end }}  */}}
                 
                 {{/* Invités - Desktop */}}
                 {{ with $guests }}
@@ -344,12 +344,12 @@
             {{ end }}
 
             {{/* Note de bas de page */}}
-            <div class="text-sm text-tertiary p-4 bg-primary rounded-lg">
+            {{/*  <div class="text-sm text-tertiary p-4 bg-primary rounded-lg">
                 <p class="flex items-start gap-2">
                     <span class="material-symbols-outlined text-accent-primary text-lg">info</span>
                     Retrouvez la transcription complète et les ressources mentionnées dans la description ci-dessus.
                 </p>
-            </div>
+            </div>  */}}
 
         </div>
     </article>
@@ -357,7 +357,11 @@
 
 {{/* Autres épisodes */}}
 <div>
-    {{ partial "other_podcasts.html" . }}
+    {{ $allPodcasts := where site.RegularPages "Section" "podcasts" }}
+
+    {{ if ge (len $allPodcasts) 2 }}
+        {{ partial "other_podcasts.html" . }}
+    {{ end }}
 </div>
 
 {{ end }}

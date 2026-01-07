@@ -5,7 +5,7 @@
 
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
-# local_backend: true
+local_backend: true
 
 # Use DecapBridge PKCE auth (required)
 backend:
@@ -156,6 +156,7 @@ collections:
       - label: "Fichier audio (local)"
         name: "audio_file"
         widget: "file"
+        default: ""
         required: false
         hint: "Téléverser le MP3 ici (stocké avec l'épisode)"
       
@@ -183,12 +184,7 @@ collections:
         required: false
         hint: "150-160 caractères pour le SEO et réseaux sociaux"
       
-      - label: "Résumé détaillé"
-        name: "summary"
-        widget: "text"
-        required: false
-        hint: "Description plus complète pour Apple Podcasts / Spotify"
-      
+
       # ══════════════════════════════════════════════════════════════════
       # DURÉE ET TAILLE
       # ══════════════════════════════════════════════════════════════════
@@ -284,7 +280,7 @@ collections:
       - label: "Contenu de l'épisode"
         name: "body"
         widget: "markdown"
-        hint: "Notes de l'épisode, points clés, ressources..."
+        hint: "⚠️ Ne pas mettre de 'Title 1'. Notes de l'épisode, points clés, ressources..."
 
  # ────────────────────────────────────────────────────────────────────────────
   # SECTIONS PAGE D'ACCUEIL
