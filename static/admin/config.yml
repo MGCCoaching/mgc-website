@@ -194,13 +194,7 @@ collections:
         default: "00:00"
         hint: "Format MM:SS ou HH:MM:SS"
       
-      - label: "Durée en secondes"
-        name: "duration_seconds"
-        widget: "number"
-        default: 0
-        value_type: "int"
-        hint: "Calculé: (minutes × 60) + secondes ou https://www.inchcalculator.com/time-to-seconds-calculator/ "
-      
+
       - label: "Taille du fichier (octets)"
         name: "file_size_bytes"
         widget: "hidden"
