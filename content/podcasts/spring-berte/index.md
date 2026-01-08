@@ -13,7 +13,7 @@ audio_format: audio/mpeg
 description: Voici un bo jingle
 duration: 00:22
 duration_seconds: 22
-file_size_bytes: 123
+file_size_bytes: 0
 categories:
   - Podcast
 tags:

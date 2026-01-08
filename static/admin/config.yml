@@ -203,8 +203,7 @@ collections:
       
       - label: "Taille du fichier (octets)"
         name: "file_size_bytes"
-        widget: "number"
-        default: 0
+        widget: "hidden"
         value_type: "int"
         required: false
         hint: "Obligatoire pour Apple Podcasts. Commande: ls -l fichier.mp3"

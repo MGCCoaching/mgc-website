@@ -12,6 +12,12 @@ enableRobotsTXT = true
 enableGitInfo = false
 enableEmoji = true
 
+# Security - autoriser HEAD pour GetRemote
+[security]
+  [security.http]
+    methods = ['(?i)GET|POST|HEAD']
+    urls = ['.*']
+
 # Content Settings
 # ------------------------------------------------------------------------------
 summaryLength = 70

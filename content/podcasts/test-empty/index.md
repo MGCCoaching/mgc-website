@@ -9,7 +9,7 @@
 #               + une image de couverture (optionnel)
 
 draft: false
-date: 2024-02-20T10:00:00+01:00
+date: 2026-01-08T13:17:25+01:00
 
 is_episode: true # use for decap to filter episode to Podacast collection 
 
@@ -17,11 +17,11 @@ is_episode: true # use for decap to filter episode to Podacast collection
 # INFORMATIONS DE BASE
 # ══════════════════════════════════════════════════════════════════
 
-title: "Sample Podcast"
-subtitle: "Podcast Sample MGC Coaching"
+title: "Test Empty"
+subtitle: "Podcast MGC Coaching"
 
 # Description courte (150-160 caractères) pour SEO et réseaux sociaux
-description: "Here is a short description that suposed to describe the episode"
+description: ""
 
 # Description longue pour Apple Podcasts / Spotify
 summary: |
@@ -41,7 +41,7 @@ episode_type: "full"         # "full", "trailer", "bonus"
 # ══════════════════════════════════════════════════════════════════
 
 # Option 1 : URL externe (CloudFront) - RECOMMANDÉ pour production
-audio_url: "/podcast-S01/ep_01.mp3"                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
+audio_url: ""                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
 
 # Option 2 : Fichier local dans le Page Bundle
 # → Placer le fichier .mp3 dans le même dossier que index.md
@@ -51,12 +51,12 @@ audio_url: "/podcast-S01/ep_01.mp3"                # Ex: https://dXXXXX.cloudfro
 audio_format: "audio/mpeg"   # audio/mpeg (MP3) ou audio/wav
 
 # Durée (les deux formats sont requis)
-duration: "02:15"            # Format MM:SS ou HH:MM:SS
-#duration_seconds: 295          # En secondes : (min × 60) + sec
+duration: "00:00"            # Format MM:SS ou HH:MM:SS
+duration_seconds: 0          # En secondes : (min × 60) + sec
 
 # Taille du fichier en octets (OBLIGATOIRE pour Apple Podcasts)
 # Commande : ls -l fichier.mp3 | awk '{print $5}'
-file_size_bytes: 
+file_size_bytes: 0
 
 # ══════════════════════════════════════════════════════════════════
 # CATÉGORISATION
@@ -84,12 +84,10 @@ guests:
 chapters:
   - time: "00:00"
     title: "Introduction"
-  - time: "2:00"
-    title: "Main topic"
-  - time: "2:30"
-    title: "Steph"
-  - time: "04:15"
-    title: "Conclusion"
+#  - time: "05:00"
+#    title: "Sujet principal"
+#  - time: "20:00"
+#    title: "Conclusion"
 
 # ══════════════════════════════════════════════════════════════════
 # OPTIONS RSS
@@ -103,9 +101,9 @@ block: false                 # Exclure du flux RSS ?
 # ══════════════════════════════════════════════════════════════════
 
 platforms:
-  spotify: "spotify//"
-  apple_podcasts: "appleMusic//"
-  deezer: "deezer//"
+  spotify: ""
+  apple_podcasts: ""
+  deezer: ""
   youtube: ""
 
 ---

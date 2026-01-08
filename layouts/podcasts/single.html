@@ -1,5 +1,116 @@
 {{ define "main" }}
 
+{{/* ══════════════════════════════════════════════════════════════════════════
+     DEBUG AUDIO + DURÉE - À coller dans layouts/podcasts/single.html après {{ define "main" }}
+     Supprimer après les tests !
+     ══════════════════════════════════════════════════════════════════════════ */}}
+
+     <div style="background: #1a1a2e; color: #eee; padding: 20px; margin: 20px; border-radius: 10px; font-family: monospace; font-size: 14px;">
+        <h2 style="color: #00d9ff; margin-top: 0;">🔍 DEBUG Audio Resource & Duration</h2>
+      
+        {{/* ═══════════ INFOS FRONT MATTER ═══════════ */}}
+        <div style="background: #16213e; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <h3 style="color: #ffd700; margin-top: 0;">📄 Front Matter</h3>
+          <p><strong>audio_url:</strong> <code style="color: #00ff88;">{{ .Params.audio_url | default "NON DÉFINI" }}</code></p>
+          <p><strong>file_size_bytes:</strong> <code style="color: #00ff88;">{{ .Params.file_size_bytes | default "NON DÉFINI" }}</code></p>
+          <p><strong>audio_format:</strong> <code style="color: #00ff88;">{{ .Params.audio_format | default "audio/mpeg" }}</code></p>
+          <p><strong>duration_seconds:</strong> <code style="color: #00ff88;">{{ .Params.duration_seconds | default 0 }}</code></p>
+          <p><strong>duration:</strong> <code style="color: #00ff88;">{{ .Params.duration | default "NON DÉFINI" }}</code></p>
+        </div>
+      
+        {{/* ═══════════ DÉTECTION DU TYPE ═══════════ */}}
+        {{ $audioUrl := .Params.audio_url }}
+        {{ $isRemote := false }}
+        {{ $isRelative := false }}
+        {{ $isBundle := false }}
+        {{ $audioResource := index (.Resources.ByType "audio") 0 }}
+      
+        {{ if $audioUrl }}
+          {{ if hasPrefix $audioUrl "http" }}
+            {{ $isRemote = true }}
+          {{ else }}
+            {{ $isRelative = true }}
+          {{ end }}
+        {{ else if $audioResource }}
+          {{ $isBundle = true }}
+        {{ end }}
+      
+        <div style="background: #16213e; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <h3 style="color: #ffd700; margin-top: 0;">🎯 Type Détecté</h3>
+          <p>
+            {{ if $isRemote }}
+              <span style="background: #e74c3c; padding: 5px 10px; border-radius: 5px;">🌐 URL EXTERNE</span>
+            {{ else if $isRelative }}
+              <span style="background: #f39c12; padding: 5px 10px; border-radius: 5px;">📁 URL RELATIVE</span>
+            {{ else if $isBundle }}
+              <span style="background: #27ae60; padding: 5px 10px; border-radius: 5px;">📦 BUNDLE LOCAL</span>
+            {{ else }}
+              <span style="background: #7f8c8d; padding: 5px 10px; border-radius: 5px;">❌ AUCUNE AUDIO</span>
+            {{ end }}
+          </p>
+        </div>
+      
+        {{/* ═══════════ TAILLE ET URL FINALE ═══════════ */}}
+        {{ $finalSize := .Params.file_size_bytes | default 0 }}
+        {{ $finalUrl := "" }}
+        {{ $method := "file_size_bytes (fallback)" }}
+      
+        {{ if $isRemote }}
+          {{ $finalUrl = $audioUrl }}
+          {{ $opts := dict "method" "HEAD" }}
+          {{ $result := try (resources.GetRemote $audioUrl $opts) }}
+          {{ if not $result.Err }}
+            {{ with $result.Value }}
+              {{ with .Data.ContentLength }}
+                {{ $finalSize = . }}
+                {{ $method = "GetRemote HEAD" }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        {{ else if $isRelative }}
+          {{ $finalUrl = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $audioUrl) }}
+          {{ $staticPath := printf "static%s" $audioUrl }}
+          {{ with os.Stat $staticPath }}
+            {{ $finalSize = .Size }}
+            {{ $method = "os.Stat" }}
+          {{ end }}
+        {{ else if $isBundle }}
+          {{ with $audioResource }}
+            {{ $finalUrl = .Permalink }}
+            {{ $finalSize = len .Content }}
+            {{ $method = "len .Content" }}
+          {{ end }}
+        {{ end }}
+      
+        {{/* ═══════════ CALCUL DUREE APPROX (si duration_seconds absent) ═══════════ */}}
+        {{ $durationSec := .Params.duration_seconds | default 0 }}
+        {{ if and (eq $durationSec 0) (gt $finalSize 0) }}
+          {{/* Approximation MP3 bitrate 128kbps = 16000 bytes/sec */}}
+          {{ $durationSec = div $finalSize 16000 }}
+        {{ end }}
+      
+        {{/* Génération duration HH:MM:SS ou MM:SS */}}
+        {{ $durationStr := .Params.duration | default "" }}
+        {{ if and (eq $durationStr "") (gt $durationSec 0) }}
+          {{ $h := div $durationSec 3600 }}
+          {{ $m := mod (div $durationSec 60) 60 }}
+          {{ $s := mod $durationSec 60 }}
+          {{ if gt $h 0 }}
+            {{ $durationStr = printf "%02d:%02d:%02d" $h $m $s }}
+          {{ else }}
+            {{ $durationStr = printf "%02d:%02d" $m $s }}
+          {{ end }}
+        {{ end }}
+      
+        <div style="background: #0f3460; padding: 15px; border-radius: 8px; border-left: 4px solid #00d9ff;">
+          <h3 style="color: #00d9ff; margin-top: 0;">📊 Résumé Audio & Durée</h3>
+          <p><strong>URL finale:</strong> <code style="color: #00ff88;">{{ $finalUrl | default "AUCUNE" }}</code></p>
+          <p><strong>Taille finale:</strong> <code style="background: #00d9ff; color: #000; padding: 2px 8px; border-radius: 3px;">{{ $finalSize }}</code> bytes</p>
+          <p><strong>Méthode utilisée:</strong> <code style="color: #ffd700;">{{ $method }}</code></p>
+          <p><strong>Durée calculée:</strong> <code style="color: #00ff88;">{{ $durationSec }} sec → {{ $durationStr }}</code></p>
+        </div>
+      </div>
+      
 {{/* ══════════════════════════════════════════════════════════════════
      VARIABLES
      ══════════════════════════════════════════════════════════════════ */}}
