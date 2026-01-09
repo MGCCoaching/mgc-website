@@ -13,7 +13,7 @@ draft: false
 season: 1
 episode_number: 1
 episode_type: full
-audio_url: /podcast-S01/ep_01.mp3
+audio_url: 
 chapters:
   - time: 00:00
     title: Introduction
