@@ -143,9 +143,9 @@
       <link>{{ .Permalink }}</link>
       <guid isPermaLink="true">{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
-{{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) }}
+{{- $desc := .Params.description | default (.Content | plainify | truncate 300) }}
       <description>{{ $desc | plainify | htmlUnescape }}</description>
-      <content:encoded><![CDATA[{{ $desc | markdownify }}]]></content:encoded>
+      <content:encoded><![CDATA[{{ .Content | markdownify }}]]></content:encoded>
       <enclosure url="{{ $audioUrl }}" length="{{ $fileSize }}" type="{{ $audioFormat }}"/>
       <itunes:title>{{ .Title }}</itunes:title>
       <itunes:summary>{{ .Params.description | default ($desc | truncate 200) | plainify | htmlUnescape }}</itunes:summary>

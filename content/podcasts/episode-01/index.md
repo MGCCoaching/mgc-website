@@ -28,9 +28,6 @@ platforms:
   apple_podcasts: appleMusic//
   deezer: deezer//
   youtube: ""
-summary: |
-  Écrivez ici une description plus complète de l'épisode.
-  Vous pouvez utiliser plusieurs lignes.
 block: false
 file_size_bytes: null
 duration: 02:15

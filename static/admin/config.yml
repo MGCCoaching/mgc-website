@@ -64,6 +64,9 @@ collections:
     path: "{{slug}}/index"
     media_folder: ""
     public_folder: ""
+    filter:
+      field: is_episode
+      value: true
     summary: "S{{season}}E{{episode_number}} - {{title}}"
     sortable_fields: ["date", "episode_number", "title"]
     view_groups:
