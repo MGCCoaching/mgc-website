@@ -13,7 +13,12 @@ draft: false
 season: 1
 episode_number: 1
 episode_type: full
-audio_url: 
+audio_url: https://s3.eu-west-3.amazonaws.com/assets.mariegaetanecomte.fr/podcasts/ep_01.mp3
+duration: 04:55
+description: Here is a short description that suposed to describe the episode
+guests:
+  - Nom de l'invité(e) (Fonction)
+  - AUrle
 chapters:
   - time: 00:00
     title: Introduction
@@ -23,19 +28,17 @@ chapters:
     title: Steph
   - time: 04:15
     title: Conclusion
+advanced:
+  explicit: false
+  block: false
 platforms:
-  spotify: spotify//
-  apple_podcasts: appleMusic//
-  deezer: deezer//
+  spotify: ""
+  apple_podcasts: ""
+  deezer: ""
   youtube: ""
 block: false
 file_size_bytes: null
-duration: 02:15
 explicit: false
-description: Here is a short description that suposed to describe the episode
-guests:
-  - Nom de l'invité(e) (Fonction)
-  - AUrle
 options:
   explicit: false
   block: false
