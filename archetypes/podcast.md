@@ -52,11 +52,11 @@ audio_format: "audio/mpeg"   # audio/mpeg (MP3) ou audio/wav
 
 # Durée (les deux formats sont requis)
 duration: "00:00"            # Format MM:SS ou HH:MM:SS
-duration_seconds: 0          # En secondes : (min × 60) + sec
+
 
 # Taille du fichier en octets (OBLIGATOIRE pour Apple Podcasts)
 # Commande : ls -l fichier.mp3 | awk '{print $5}'
-file_size_bytes: 0
+file_size_bytes: 
 
 # ══════════════════════════════════════════════════════════════════
 # CATÉGORISATION

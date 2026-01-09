@@ -1,5 +1,7 @@
 {{ define "main" }}
 
+
+      
 {{/* ══════════════════════════════════════════════════════════════════
      VARIABLES
      ══════════════════════════════════════════════════════════════════ */}}
@@ -21,7 +23,7 @@
 {{ else if .Params.cover_image }}
   {{ $image = .Params.cover_image | relURL }}
 {{ else }}
-  {{ $image = "/img/fallback-podcast.webp" | relURL }}
+  {{ $image = "/img/fallback-podcast.jpg" | relURL }}
 {{ end }}
 
 {{/* Paramètres avec valeurs par défaut */}}
