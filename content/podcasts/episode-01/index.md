@@ -13,7 +13,7 @@ draft: false
 season: 1
 episode_number: 1
 episode_type: full
-audio_url: https://s3.eu-west-3.amazonaws.com/assets.mariegaetanecomte.fr/podcasts/ep_01.mp3
+audio_url: https://media.mariegaetanecomte.fr/podcasts/s01/ep_01.mp3
 duration: 04:55
 description: Here is a short description that suposed to describe the episode
 guests:
