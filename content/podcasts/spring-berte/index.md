@@ -8,10 +8,10 @@ season: 1
 episode_number: 2
 episode_type: full
 cover: 
-audio_file: sb-jinglev2.mp3
-audio_format: audio/mpeg
+audio_file: ""
+audio_format: debug
 description: Voici un bo jingle
-duration: 00:22
+duration: 01:22
 duration_seconds: 22
 file_size_bytes: 0
 categories:

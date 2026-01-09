@@ -7,7 +7,6 @@
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
 local_backend: true
 
-# Use DecapBridge PKCE auth (required)
 backend:
   name: git-gateway
   repo: MGCCoaching/mgc-website
@@ -18,39 +17,30 @@ backend:
   auth_token_endpoint: /sites/5cdd74d8-4be1-4c81-961d-5930b10bef6f/token
   gateway_url: https://gateway.decapbridge.com
 
-  # See who did what (optional)
   commit_messages:
-    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
-# Enable PKCE fields (optional, recommended)
 auth:
   email_claim: email
   first_name_claim: first_name
   last_name_claim: last_name
   avatar_url_claim: avatar_url
 
-# Better Decap + Bridge logo (optional)
 logo_url: /img/logo.webp
-
-# Add site links in Decap CMS (optional)
 site_url: https://mariegaetanecomte.fr
-
 
 publish_mode: editorial_workflow
 
-# Dossier pour les uploads média
 media_folder: "static/img/uploads"
 public_folder: "/img/uploads"
 
-# Langue de l'interface
 locale: "fr"
 
-# Slug settings
 slug:
   encoding: "ascii"
   clean_accents: true
@@ -63,7 +53,7 @@ slug:
 collections:
 
   # ────────────────────────────────────────────────────────────────────────────
-  # PODCASTS (Épisodes uniquement)
+  # PODCASTS (Épisodes)
   # ────────────────────────────────────────────────────────────────────────────
   - name: "podcasts"
     label: "🎙️ Épisodes de Podcast"
@@ -74,190 +64,180 @@ collections:
     path: "{{slug}}/index"
     media_folder: ""
     public_folder: ""
-    filter:
-      field: is_episode
-      value: true
     summary: "S{{season}}E{{episode_number}} - {{title}}"
     sortable_fields: ["date", "episode_number", "title"]
     view_groups:
       - label: "Saison"
         field: season
-      - label: "Année"
-        field: date
-        pattern: \d{4}
     fields:
       # ══════════════════════════════════════════════════════════════════
-      # INFORMATIONS DE BASE
+      # CHAMPS CACHÉS (système)
       # ══════════════════════════════════════════════════════════════════
-      - label: "Type de contenu"
-        name: "is_episode"
-        widget: "hidden"
-        default: true
+      - { label: "Type", name: "is_episode", widget: "hidden", default: true }
+      - { label: "Catégories", name: "categories", widget: "hidden", default: ["Podcast"] }
+      - { label: "Tags", name: "tags", widget: "hidden", default: ["podcast"] }
+      - { label: "Format audio", name: "audio_format", widget: "hidden", default: "audio/mpeg" }
 
-      - label: "Titre de l'épisode"
+      # ══════════════════════════════════════════════════════════════════
+      # INFORMATIONS PRINCIPALES
+      # ══════════════════════════════════════════════════════════════════
+      - label: "📌 Titre de l'épisode"
         name: "title"
         widget: "string"
         required: true
-      
-      - label: "Episode"
+        hint: "Le titre qui apparaîtra partout"
+
+      - label: "📝 Sous-titre"
         name: "subtitle"
         widget: "string"
-        default: "Episode: "
-        hint: "Numero d'episode affiché en haut"
-      
-      - label: "Date de publication"
+        required: false
+        hint: "Ex: Interview avec Jean Dupont"
+
+      - label: "📅 Date de publication"
         name: "date"
         widget: "datetime"
         format: "YYYY-MM-DD"
         date_format: "DD/MM/YYYY"
         time_format: false
-      
-      - label: "Brouillon"
+
+      - label: "✏️ Brouillon"
         name: "draft"
         widget: "boolean"
         default: true
-        hint: "Décochez pour publier l'épisode"
-      
+        hint: "⚠️ Décochez quand l'épisode est prêt à être publié"
+
       # ══════════════════════════════════════════════════════════════════
       # NUMÉROTATION
       # ══════════════════════════════════════════════════════════════════
-      - label: "Saison"
+      - label: "🔢 Saison"
         name: "season"
         widget: "number"
         default: 1
         value_type: "int"
         min: 1
-      
-      - label: "Numéro d'épisode"
+
+      - label: "🔢 Numéro d'épisode"
         name: "episode_number"
         widget: "number"
-        default: 1
+        required: true
         value_type: "int"
         min: 1
-      
-      - label: "Type d'épisode"
+        hint: "Ex: 1, 2, 3..."
+
+      - label: "📁 Type d'épisode"
         name: "episode_type"
         widget: "select"
         options:
-          - { label: "Épisode complet", value: "full" }
+          - { label: "Épisode normal", value: "full" }
           - { label: "Bande-annonce", value: "trailer" }
           - { label: "Bonus", value: "bonus" }
         default: "full"
-      
+
       # ══════════════════════════════════════════════════════════════════
-      # MÉDIAS (Image + Audio)
+      # FICHIER AUDIO
       # ══════════════════════════════════════════════════════════════════
-      - label: "Image de couverture"
-        name: "cover"
-        widget: "image"
-        required: false
-        hint: "Image carrée recommandée (1400x1400 minimum)"
-      
-      - label: "Fichier audio (local)"
-        name: "audio_file"
-        widget: "file"
-        default: ""
-        required: false
-        hint: "Téléverser le MP3 ici (stocké avec l'épisode)"
-      
-      - label: "URL audio externe (CDN)"
+      - label: "🎵 Option 1 : Lien S3/CloudFront (recommandé)"
         name: "audio_url"
         widget: "string"
         required: false
-        hint: "Prioritaire sur le fichier local. Ex: https://cdn.../episode.mp3"
-      
-      - label: "Format audio"
-        name: "audio_format"
-        widget: "select"
-        options:
-          - { label: "MP3", value: "audio/mpeg" }
-          - { label: "M4A/AAC", value: "audio/mp4" }
-          - { label: "WAV", value: "audio/wav" }
-        default: "audio/mpeg"
-      
-      # ══════════════════════════════════════════════════════════════════
-      # DESCRIPTION
-      # ══════════════════════════════════════════════════════════════════
-      - label: "Description courte (SEO)"
-        name: "description"
-        widget: "string"
-        required: false
-        hint: "150-160 caractères pour le SEO et réseaux sociaux"
-      
+        hint: "Collez l'URL complète du fichier MP3 hébergé sur S3/CloudFront. Ex: https://d1234.cloudfront.net/podcasts/episode.mp3"
 
-      # ══════════════════════════════════════════════════════════════════
-      # DURÉE ET TAILLE
-      # ══════════════════════════════════════════════════════════════════
-      - label: "Durée (MM:SS)"
+      - label: "🎵 Option 2 : Télécharger le fichier audio"
+        name: "audio_file"
+        widget: "file"
+        required: false
+        media_folder: ""
+        hint: "⚠️ Utilisez SEULEMENT si S3 n'est pas disponible. Le fichier sera stocké avec l'épisode."
+
+      - label: "⏱️ Durée"
         name: "duration"
         widget: "string"
+        required: true
         default: "00:00"
-        hint: "Format MM:SS ou HH:MM:SS"
-      
+        hint: "Format MM:SS (ex: 25:30) ou HH:MM:SS (ex: 1:05:30)"
 
-      - label: "Taille du fichier (octets)"
-        name: "file_size_bytes"
-        widget: "hidden"
-        value_type: "int"
+      # ══════════════════════════════════════════════════════════════════
+      # IMAGE & DESCRIPTION
+      # ══════════════════════════════════════════════════════════════════
+      - label: "🖼️ Image de couverture"
+        name: "cover"
+        widget: "image"
         required: false
-        hint: "Obligatoire pour Apple Podcasts. Commande: ls -l fichier.mp3"
-      
+        hint: "Image carrée recommandée (1400x1400 pixels). Sinon l'image par défaut sera utilisée."
+
+      - label: "📄 Description courte"
+        name: "description"
+        widget: "text"
+        required: true
+        hint: "2-3 phrases qui résument l'épisode. Apparaît dans les applications podcast (Spotify, Apple...)."
+
       # ══════════════════════════════════════════════════════════════════
-      # CATÉGORISATION
+      # INVITÉ(E)S
       # ══════════════════════════════════════════════════════════════════
-      - label: "Catégories"
-        name: "categories"
-        widget: "list"
-        default: ["Podcast"]
-      
-      - label: "Tags"
-        name: "tags"
-        widget: "list"
-        default: ["communication", "prise de parole"]
-      
-      # ══════════════════════════════════════════════════════════════════
-      # INVITÉS
-      # ══════════════════════════════════════════════════════════════════
-      - label: "Invité(e)s"
+      - label: "👤 Invité(e)s"
         name: "guests"
         widget: "list"
         required: false
-        hint: "Format: Nom (Fonction)"
-      
+        hint: "Ajoutez les noms des invités"
+        collapsed: true
+        allow_add: true
+        field:
+          label: "Nom"
+          name: "name"
+          widget: "string"
+
       # ══════════════════════════════════════════════════════════════════
       # CHAPITRES
       # ══════════════════════════════════════════════════════════════════
-      - label: "Chapitres"
+      - label: "📑 Chapitres (optionnel)"
         name: "chapters"
         widget: "list"
         required: false
         collapsed: true
+        hint: "Permet aux auditeurs de naviguer dans l'épisode"
+        summary: "{{fields.time}} - {{fields.title}}"
         fields:
           - label: "Temps"
             name: "time"
             widget: "string"
-            hint: "Format MM:SS"
+            hint: "Ex: 00:00, 05:30, 12:45"
           - label: "Titre du chapitre"
             name: "title"
             widget: "string"
-      
+
       # ══════════════════════════════════════════════════════════════════
-      # OPTIONS RSS
+      # NOTES DE L'ÉPISODE
       # ══════════════════════════════════════════════════════════════════
-      - label: "Contenu explicite"
-        name: "explicit"
-        widget: "boolean"
-        default: false
-      
-      - label: "Exclure du flux RSS"
-        name: "block"
-        widget: "boolean"
-        default: false
-      
+      - label: "📝 Notes de l'épisode"
+        name: "body"
+        widget: "markdown"
+        required: false
+        hint: "Contenu détaillé affiché sur la page de l'épisode : résumé, points clés, liens mentionnés..."
+
       # ══════════════════════════════════════════════════════════════════
-      # LIENS PLATEFORMES
+      # OPTIONS AVANCÉES (repliées par défaut)
       # ══════════════════════════════════════════════════════════════════
-      - label: "Liens plateformes"
+      - label: "⚙️ Options avancées"
+        name: "advanced"
+        widget: "object"
+        collapsed: true
+        fields:
+          - label: "Contenu explicite (adulte)"
+            name: "explicit"
+            widget: "boolean"
+            default: false
+            hint: "Cochez si l'épisode contient du contenu réservé aux adultes"
+          
+          - label: "Masquer des plateformes"
+            name: "block"
+            widget: "boolean"
+            default: false
+            hint: "Cochez pour que l'épisode n'apparaisse PAS sur Spotify, Apple Podcasts, etc."
+
+      # ══════════════════════════════════════════════════════════════════
+      # LIENS PLATEFORMES (optionnel)
+      # ══════════════════════════════════════════════════════════════════
+      - label: "🔗 Liens vers les plateformes (optionnel)"
         name: "platforms"
         widget: "object"
         collapsed: true
@@ -266,16 +246,8 @@ collections:
           - { label: "Apple Podcasts", name: "apple_podcasts", widget: "string", required: false }
           - { label: "Deezer", name: "deezer", widget: "string", required: false }
           - { label: "YouTube", name: "youtube", widget: "string", required: false }
-      
-      # ══════════════════════════════════════════════════════════════════
-      # CONTENU
-      # ══════════════════════════════════════════════════════════════════
-      - label: "Contenu de l'épisode"
-        name: "body"
-        widget: "markdown"
-        hint: "⚠️ Ne pas mettre de 'Title 1'. Notes de l'épisode, points clés, ressources..."
 
- # ────────────────────────────────────────────────────────────────────────────
+  # ────────────────────────────────────────────────────────────────────────────
   # SECTIONS PAGE D'ACCUEIL
   # ────────────────────────────────────────────────────────────────────────────
   - name: "home_sections"
@@ -286,82 +258,48 @@ collections:
     slug: "{{slug}}"
     sortable_fields: ["weight", "title"]
     fields:
-      - label: "Titre"
-        name: "title"
-        widget: "string"
-      
-      - label: "Type de section"
-        name: "section"
-        widget: "hidden"
-        options:
-          - { label: "Hero (bannière)", value: "hero" }
-          - { label: "À propos", value: "about" }
-          - { label: "Services/Features", value: "features" }
-          - { label: "Appel à l'action", value: "cta" }
-          - { label: "FAQ", value: "faq" }
-          - { label: "Derniers podcasts", value: "latest-podcasts" }
-
-      # --- BLOC SPECIFIQUE POUR LES SERVICES ---
-      # Ce champ n'apparaîtra ou ne sera pertinent que pour la section "features"
-      - label: "Liste des Services (Seulement Pour les cartes 'Mes Services')"
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Type de section", name: "section", widget: "hidden" }
+      - label: "Liste des Services (Seulement pour 'Mes Services')"
         name: "features"
         widget: "list"
         required: false
         summary: "{{fields.title}}"
         fields:
           - { label: "Titre du service", name: "title", widget: "string" }
-          - { label: "Icône", name: "icon", widget: "hidden", hint: "Ex: tv_signin, mic_external_on" }
+          - { label: "Icône", name: "icon", widget: "hidden" }
           - { label: "Lien du bouton", name: "button_url", widget: "hidden" }
           - { label: "Description courte", name: "description", widget: "text" }
-      
-      - label: "Ordre d'affichage"
-        name: "weight"
-        widget: "hidden"
-      
-      - label: "Texte du bouton"
-        name: "button_text"
-        widget: "hidden"
-        required: false
-      
-      - label: "Lien du bouton"
-        name: "button_url"
-        widget: "hidden"
-        required: false
-      
-      - label: "Image"
-        name: "image"
-        widget: "image"
-        required: false
-      
-      - label: "Contenu (Conclusion)"
-        name: "body"
-        widget: "markdown"
-# ────────────────────────────────────────────────────────────────────────────
+      - { label: "Ordre d'affichage", name: "weight", widget: "hidden" }
+      - { label: "Texte du bouton", name: "button_text", widget: "hidden", required: false }
+      - { label: "Lien du bouton", name: "button_url", widget: "hidden", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+  # ────────────────────────────────────────────────────────────────────────────
   # PRESTATIONS (FEATURES)
   # ────────────────────────────────────────────────────────────────────────────
-  - name: "Page"
-    label: "✨ Pages Service"
+  - name: "features"
+    label: "✨ Pages Services"
     folder: "content/features"
     create: false
     slug: "{{slug}}"
     fields:
-      # --- Champs visibles et modifiables ---
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Sous-titre", name: "subtitle", widget: "string" }
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Contenu", name: "body", widget: "markdown" }
-
-      # --- Champs cachés (Préservent les valeurs existantes de chaque fichier) ---
       - { label: "Icône", name: "icon", widget: "hidden" }
       - { label: "Catégorie", name: "category", widget: "hidden" }
       - { label: "Poids (Ordre)", name: "weight", widget: "hidden" }
+
   # ────────────────────────────────────────────────────────────────────────────
   # PAGES
   # ────────────────────────────────────────────────────────────────────────────
   - name: "pages"
     label: "📄 Autres Pages"
     files:
-      - label: "Podcasts"
+      - label: "Page Podcasts"
         name: "podcasts"
         file: "content/podcasts/_index.md"
         fields:
@@ -386,15 +324,16 @@ collections:
           - { label: "Dernière mise à jour", name: "lastUpdate", widget: "date", required: false }
           - { label: "Contenu", name: "body", widget: "markdown" }
 
-
-
   # ────────────────────────────────────────────────────────────────────────────
   # PARAMÈTRES DU SITE
   # ────────────────────────────────────────────────────────────────────────────
   - name: "settings"
     label: "⚙️ Paramètres"
     files:
-      - label: "Informations générales"
+      # ────────────────────────────────────────────────────────────────────
+      # Informations générales
+      # ────────────────────────────────────────────────────────────────────
+      - label: "🌐 Informations générales"
         name: "params"
         file: "config/_default/params.fr.toml"
         fields:
@@ -424,3 +363,100 @@ collections:
             fields:
               - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
               - { label: "Instagram", name: "instagram", widget: "string", required: false }
+
+          # ────────────────────────────────────────────────────────────────
+          # Paramètres Podcast
+          # ────────────────────────────────────────────────────────────────
+          - label: "🎙️ Paramètres du Podcast"
+            name: "podcast"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Titre du podcast"
+                name: "title"
+                widget: "string"
+                hint: "Le nom affiché sur Spotify, Apple Podcasts, etc."
+              
+              - label: "Description"
+                name: "description"
+                widget: "text"
+                hint: "Description qui apparaît sur les plateformes de podcast"
+              
+              - label: "Auteur / Animatrice"
+                name: "author"
+                widget: "string"
+              
+              - label: "Email de contact"
+                name: "email"
+                widget: "string"
+                hint: "Email affiché sur les plateformes (Apple Podcasts, etc.)"
+              
+              - label: "Nom de l'hôte"
+                name: "host"
+                widget: "string"
+              
+              - label: "Avatar de l'hôte"
+                name: "hostAvatar"
+                widget: "image"
+                required: false
+              
+              - label: "Langue"
+                name: "language"
+                widget: "select"
+                options:
+                  - { label: "Français", value: "fr" }
+                  - { label: "English", value: "en" }
+                default: "fr"
+              
+              - label: "Image de couverture"
+                name: "image"
+                widget: "image"
+                hint: "⚠️ IMPORTANT : Image carrée, minimum 1400x1400 pixels, maximum 3000x3000"
+              
+              - label: "Catégorie principale"
+                name: "category"
+                widget: "select"
+                options:
+                  - "Arts"
+                  - "Business"
+                  - "Comedy"
+                  - "Education"
+                  - "Health & Fitness"
+                  - "Leisure"
+                  - "Music"
+                  - "News"
+                  - "Science"
+                  - "Society & Culture"
+                  - "Sports"
+                  - "Technology"
+                  - "True Crime"
+                default: "Business"
+                hint: "Catégorie Apple Podcasts"
+              
+              - label: "Sous-catégorie"
+                name: "subcategory"
+                widget: "string"
+                required: false
+                hint: "Ex: Careers, Entrepreneurship, Management..."
+              
+              - label: "Contenu explicite"
+                name: "explicit"
+                widget: "boolean"
+                default: false
+                hint: "Cochez si le podcast contient du contenu adulte"
+              
+              - label: "Nom du propriétaire"
+                name: "owner_name"
+                widget: "string"
+                hint: "Pour le contact avec Apple Podcasts"
+              
+              - label: "Email du propriétaire"
+                name: "owner_email"
+                widget: "string"
+                hint: "Email de contact pour les plateformes"
+              
+              - label: "Lien de soutien (optionnel)"
+                name: "funding_url"
+                widget: "string"
+                required: false
+                hint: "Ex: https://www.buymeacoffee.com/votrepodcast"

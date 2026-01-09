@@ -27,227 +27,172 @@
   <channel>
     <title>{{ $podcast.title | default .Site.Title }}</title>
     <link>{{ .Site.BaseURL }}podcasts/</link>
-    <description>{{ $podcast.description | default .Site.Params.description }}</description>
+    <description>{{ $podcast.description | default .Site.Params.description | plainify | htmlUnescape }}</description>
     <language>{{ $podcast.language | default .Site.LanguageCode | default "fr" }}</language>
     <copyright>© {{ now.Year }} {{ $podcast.author | default .Site.Title }}. Tous droits réservés.</copyright>
     <lastBuildDate>{{ now.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
     <generator>Hugo {{ hugo.Version }}</generator>
-    
     <atom:link href="{{ .Site.BaseURL }}podcasts/index.xml" rel="self" type="application/rss+xml"/>
-
     <itunes:type>episodic</itunes:type>
     <itunes:author>{{ $podcast.author | default .Site.Title }}</itunes:author>
-    <itunes:summary>{{ $podcast.description | default .Site.Params.description }}</itunes:summary>
+    <itunes:summary>{{ $podcast.description | default .Site.Params.description | plainify | htmlUnescape }}</itunes:summary>
     <itunes:explicit>{{ if $podcast.explicit }}true{{ else }}false{{ end }}</itunes:explicit>
-    
-    {{- $podcastImage := $podcast.image | default "/img/podcast-cover.jpg" -}}
-    {{- if not (hasPrefix $podcastImage "http") -}}
-      {{- $podcastImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $podcastImage) -}}
-    {{- end }}
+{{- $podcastImage := $podcast.image | default "/img/podcast-cover.jpg" -}}
+{{- if not (hasPrefix $podcastImage "http") -}}
+{{- $podcastImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $podcastImage) -}}
+{{- end }}
     <itunes:image href="{{ $podcastImage }}"/>
     <image>
       <url>{{ $podcastImage }}</url>
       <title>{{ $podcast.title | default .Site.Title }}</title>
       <link>{{ .Site.BaseURL }}podcasts/</link>
     </image>
-
     <itunes:category text="{{ $podcast.category | default "Business" }}">
-      {{- with $podcast.subcategory }}
+{{- with $podcast.subcategory }}
       <itunes:category text="{{ . }}"/>
-      {{- end }}
+{{- end }}
     </itunes:category>
-
     <itunes:owner>
       <itunes:name>{{ $podcast.owner_name | default $podcast.author | default .Site.Title }}</itunes:name>
       <itunes:email>{{ $podcast.owner_email | default $podcast.email | default "contact@example.com" }}</itunes:email>
     </itunes:owner>
-
     <podcast:locked>no</podcast:locked>
-    {{- with $podcast.funding_url }}
+{{- with $podcast.funding_url }}
     <podcast:funding url="{{ . }}">Soutenir le podcast</podcast:funding>
-    {{- end }}
-
-    {{- range $pages.ByDate.Reverse }}
-    {{- /* ══════════════════════════════════════════════════════════════════
-           RÉCUPÉRATION AUDIO - S3 > Static > Bundle
-           ══════════════════════════════════════════════════════════════════ */ -}}
-    {{- $audioUrl := "" -}}
-    {{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
-    {{- $fileSize := .Params.file_size_bytes | default 0 -}}
-    {{- $isRemote := false -}}
-    {{- $isRelative := false -}}
-    {{- $audioResource := false -}}
-    
-    {{- /* 1. Vérifier si URL définie dans front matter */ -}}
-    {{- with .Params.audio_url -}}
-      {{- if hasPrefix . "http" -}}
-        {{- /* URL externe absolue (S3/CloudFront) */ -}}
-        {{- $audioUrl = . -}}
-        {{- $isRemote = true -}}
-      {{- else -}}
-        {{- /* URL relative (fichier dans static/) */ -}}
-        {{- $audioUrl = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" .) -}}
-        {{- $isRelative = true -}}
-      {{- end -}}
-    {{- end -}}
-    
-    {{- /* 2. Si URL S3 absolue et pas de taille, tenter GetRemote HEAD */ -}}
-    {{- if and $isRemote (eq $fileSize 0) -}}
-      {{- $opts := dict "method" "HEAD" -}}
-      {{- $result := try (resources.GetRemote .Params.audio_url $opts) -}}
-      {{- with $result.Err -}}
-        {{- warnf "[RSS] GetRemote HEAD failed for %s: %s" $.Params.audio_url . -}}
-      {{- else -}}
-        {{- with $result.Value -}}
-          {{- with .Data.ContentLength -}}
-            {{- $fileSize = . -}}
-          {{- end -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-    
-    {{- /* 3. Si URL relative (static/), récupérer taille via os.Stat */ -}}
-    {{- if and $isRelative (eq $fileSize 0) -}}
-      {{- $staticPath := printf "static%s" .Params.audio_url -}}
-      {{- with os.Stat $staticPath -}}
-        {{- $fileSize = .Size -}}
-      {{- else -}}
-        {{- warnf "[RSS] File not found in static: %s" $staticPath -}}
-      {{- end -}}
-    {{- end -}}
-    
-    {{- /* 4. Si pas d'URL, chercher fichier audio dans le bundle */ -}}
-    {{- if not $audioUrl -}}
-      {{- $audioResource = index (.Resources.ByType "audio") 0 -}}
-      {{- with $audioResource -}}
-        {{- $audioUrl = .Permalink -}}
-        {{- $audioFormat = .MediaType.Type -}}
-        {{- /* Récupérer la taille via len .Content */ -}}
-        {{- if eq $fileSize 0 -}}
-          {{- $fileSize = len .Content -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-
-    {{/* ═══════════════════════════════════════════════
-      DURATION → SECONDES
-      Accepts MM:SS or HH:MM:SS
-      ═══════════════════════════════════════════════ */}}
-
-    {{ $durationRaw := .Params.duration | default "" }}
-    {{ $durationSeconds := 0 }}
-
-    {{ if ne $durationRaw "" }}
-      {{ $parts := split $durationRaw ":" }}
-
-      {{ if eq (len $parts) 2 }}
-        {{/* MM:SS */}}
-        {{ $m := int (index $parts 0) }}
-        {{ $s := int (index $parts 1) }}
-        {{ $durationSeconds = add (mul $m 60) $s }}
-
-      {{ else if eq (len $parts) 3 }}
-        {{/* HH:MM:SS */}}
-        {{ $h := int (index $parts 0) }}
-        {{ $m := int (index $parts 1) }}
-        {{ $s := int (index $parts 2) }}
-        {{ $durationSeconds = add (mul $h 3600) (mul $m 60) $s }}
-      {{ end }}
-    {{ end }}
-    
-    {{- /* ══════════════════════════════════════════════════════════════════
-          IMAGE DE L'ÉPISODE
-          ══════════════════════════════════════════════════════════════════ */ -}}
-    {{- $episodeImageResource := index (.Resources.ByType "image") 0 -}}
-    {{- $episodeImage := .Params.cover_image -}}
-
-    {{- if and (not $episodeImage) $episodeImageResource -}}
-      {{- $episodeImage = $episodeImageResource.Permalink -}}
-    {{- else if $episodeImage -}}
-      {{- if not (hasPrefix $episodeImage "http") -}}
-        {{- $episodeImage = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $episodeImage) -}}
-      {{- end -}}
-    {{- else -}}
-      {{- /* Fallback final */ -}}
-      {{- $episodeImage = printf "%s%s" $.Site.BaseURL "img/fallback-podcast.jpg" -}}
-    {{- end -}}
-
-
-    
-    {{- /* ══════════════════════════════════════════════════════════════════
-           ITEM RSS (seulement si audio disponible)
-           ══════════════════════════════════════════════════════════════════ */ -}}
-    {{- if $audioUrl }}
+{{- end }}
+{{- range $pages.ByDate.Reverse }}
+{{- /* ═══════════ RÉCUPÉRATION AUDIO ═══════════ */ -}}
+{{- $audioUrl := "" -}}
+{{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
+{{- $fileSize := .Params.file_size_bytes | default 0 -}}
+{{- $isRemote := false -}}
+{{- $isRelative := false -}}
+{{- $audioResource := false -}}
+{{- with .Params.audio_url -}}
+{{- if hasPrefix . "http" -}}
+{{- $audioUrl = . -}}
+{{- $isRemote = true -}}
+{{- else -}}
+{{- $audioUrl = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" .) -}}
+{{- $isRelative = true -}}
+{{- end -}}
+{{- end -}}
+{{- if and $isRemote (eq $fileSize 0) -}}
+{{- $opts := dict "method" "HEAD" -}}
+{{- $result := try (resources.GetRemote .Params.audio_url $opts) -}}
+{{- with $result.Err -}}
+{{- warnf "[RSS] GetRemote HEAD failed for %s: %s" $.Params.audio_url . -}}
+{{- else -}}
+{{- with $result.Value -}}
+{{- with .Data.ContentLength -}}
+{{- $fileSize = . -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- if and $isRelative (eq $fileSize 0) -}}
+{{- $staticPath := printf "static%s" .Params.audio_url -}}
+{{- with os.Stat $staticPath -}}
+{{- $fileSize = .Size -}}
+{{- else -}}
+{{- warnf "[RSS] File not found in static: %s" $staticPath -}}
+{{- end -}}
+{{- end -}}
+{{- if not $audioUrl -}}
+{{- $audioResource = index (.Resources.ByType "audio") 0 -}}
+{{- with $audioResource -}}
+{{- $audioUrl = .Permalink -}}
+{{- $audioFormat = .MediaType.Type -}}
+{{- if eq $fileSize 0 -}}
+{{- $fileSize = len .Content -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- /* ═══════════ DURATION → SECONDES ═══════════ */ -}}
+{{- $durationRaw := .Params.duration | default "" -}}
+{{- $durationSeconds := 0 -}}
+{{- if ne $durationRaw "" -}}
+{{- $parts := split $durationRaw ":" -}}
+{{- if eq (len $parts) 2 -}}
+{{- $m := int (index $parts 0) -}}
+{{- $s := int (index $parts 1) -}}
+{{- $durationSeconds = add (mul $m 60) $s -}}
+{{- else if eq (len $parts) 3 -}}
+{{- $h := int (index $parts 0) -}}
+{{- $m := int (index $parts 1) -}}
+{{- $s := int (index $parts 2) -}}
+{{- $durationSeconds = add (mul $h 3600) (add (mul $m 60) $s) -}}
+{{- end -}}
+{{- end -}}
+{{- /* ═══════════ IMAGE DE L'ÉPISODE ═══════════ */ -}}
+{{- $episodeImageResource := index (.Resources.ByType "image") 0 -}}
+{{- $episodeImage := .Params.cover_image -}}
+{{- if and (not $episodeImage) $episodeImageResource -}}
+{{- $episodeImage = $episodeImageResource.Permalink -}}
+{{- else if $episodeImage -}}
+{{- if not (hasPrefix $episodeImage "http") -}}
+{{- $episodeImage = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $episodeImage) -}}
+{{- end -}}
+{{- else -}}
+{{- $episodeImage = printf "%s%s" $.Site.BaseURL "img/fallback-podcast.jpg" -}}
+{{- end -}}
+{{- /* ═══════════ ITEM RSS ═══════════ */ -}}
+{{- if $audioUrl }}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <guid isPermaLink="true">{{ .Permalink }}</guid>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
-
-      {{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) }}
+{{- $desc := .Params.summary | default .Params.description | default (.Content | plainify | truncate 300) }}
       <description>{{ $desc | plainify | htmlUnescape }}</description>
       <content:encoded><![CDATA[{{ $desc | markdownify }}]]></content:encoded>
-
-      <enclosure 
-        url="{{ $audioUrl }}" 
-        length="{{ $fileSize }}" 
-        type="{{ $audioFormat }}"/>
-
+      <enclosure url="{{ $audioUrl }}" length="{{ $fileSize }}" type="{{ $audioFormat }}"/>
       <itunes:title>{{ .Title }}</itunes:title>
       <itunes:summary>{{ .Params.description | default ($desc | truncate 200) | plainify | htmlUnescape }}</itunes:summary>
       <itunes:duration>{{ $durationSeconds }}</itunes:duration>
       <itunes:explicit>{{ if .Params.explicit }}true{{ else }}false{{ end }}</itunes:explicit>
       <itunes:episodeType>{{ .Params.episode_type | default "full" }}</itunes:episodeType>
-      
-      {{- with .Params.season }}
+{{- with .Params.season }}
       <itunes:season>{{ . }}</itunes:season>
-      {{- end }}
-      {{- with .Params.episode_number }}
+{{- end }}
+{{- with .Params.episode_number }}
       <itunes:episode>{{ . }}</itunes:episode>
-      {{- end }}
-
-      {{- with $episodeImage }}
+{{- end }}
+{{- with $episodeImage }}
       <itunes:image href="{{ . }}"/>
-      {{- end }}
-
-
+{{- end }}
+{{- with .Params.chapters }}
       <podcast:chapters>
-      {{- range .Params.chapters }}
-        {{- if .title }}
-          {{- $parts := split .time ":" -}}
-          {{- $len := len $parts -}}
-          {{- $h := 0 -}}
-          {{- $m := 0 -}}
-          {{- $s := 0 -}}
-          {{- if eq $len 2 -}}
-            {{- $m = int (index $parts 0) -}}
-            {{- $s = int (index $parts 1) -}}
-          {{- else if eq $len 3 -}}
-            {{- $h = int (index $parts 0) -}}
-            {{- $m = int (index $parts 1) -}}
-            {{- $s = int (index $parts 2) -}}
-          {{- else -}}
-            {{- warnf "[RSS] Chapitre start time format invalide: %s" .time -}}
-          {{- end -}}
-          {{- $startHHMMSS := printf "%02d:%02d:%02d" $h $m $s -}}
-          <podcast:chapter start="{{ $startHHMMSS }}" title="{{ .title }}"/>
-        {{- end }}
-      {{- end }}
+{{- range . }}
+{{- if .title }}
+{{- $parts := split .time ":" -}}
+{{- $len := len $parts -}}
+{{- $h := 0 -}}
+{{- $m := 0 -}}
+{{- $s := 0 -}}
+{{- if eq $len 2 -}}
+{{- $m = int (index $parts 0) -}}
+{{- $s = int (index $parts 1) -}}
+{{- else if eq $len 3 -}}
+{{- $h = int (index $parts 0) -}}
+{{- $m = int (index $parts 1) -}}
+{{- $s = int (index $parts 2) -}}
+{{- end -}}
+{{- $startHHMMSS := printf "%02d:%02d:%02d" $h $m $s }}
+        <podcast:chapter start="{{ $startHHMMSS }}" title="{{ .title }}"/>
+{{- end }}
+{{- end }}
       </podcast:chapters>
-
-
-
-
-      {{- with .Params.transcript }}
-      {{- if .available }}
-      {{- with .url }}
+{{- end }}
+{{- with .Params.transcript }}
+{{- if .available }}
+{{- with .url }}
       <podcast:transcript url="{{ . }}" type="text/plain"/>
-      {{- end }}
-      {{- end }}
-      {{- end }}
-
+{{- end }}
+{{- end }}
+{{- end }}
     </item>
-    {{- end }}
-    {{- end }}
+{{- end }}
+{{- end }}
   </channel>
 </rss>
