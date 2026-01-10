@@ -1,0 +1,59 @@
+{{- /*
+  Podcast Audio URL Helper
+  ========================
+  Partial réutilisable pour récupérer l'URL audio d'un épisode de podcast.
+  
+  Usage: {{ $audioData := partial "podcasts/get-audio-url.html" . }}
+  
+  Retourne un dict avec:
+  - url: l'URL du fichier audio
+  - format: le type MIME (audio/mpeg, etc.)
+  - isRemote: true si URL externe
+  
+  Logique de priorité:
+  1. Champs Decap simplifiés : audio_url_prefix + season + file_name
+  2. Upload local Decap : audio_file
+  3. URL directe (compatibilité) : audio_url
+  4. Fichier dans le bundle Hugo
+*/ -}}
+
+{{- $audioUrl := "" -}}
+{{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
+{{- $isRemote := false -}}
+
+{{- /* 1. PRIORITÉ 1 : Champs Decap simplifiés (prefix + season + file_name) */ -}}
+{{- $prefix := .Params.audio_url_prefix | default "" -}}
+{{- $seasonRaw := .Params.season | default 1 -}}
+{{- $fileName := .Params.file_name | default "" -}}
+
+{{- /* Formater la saison en "s01", "s02", etc. */ -}}
+{{- $seasonFormatted := printf "s%02d" (int $seasonRaw) -}}
+
+{{- if and $prefix $fileName -}}
+  {{- /* Construire l'URL : {prefix}/{seasonFormatted}/{file_name} */ -}}
+  {{- $audioUrl = printf "%s/%s/%s" $prefix $seasonFormatted $fileName -}}
+  {{- $isRemote = true -}}
+{{- end -}}
+
+
+{{- /* 2. PRIORITÉ 2 : URL directe (ancien champ, compatibilité) */ -}}
+{{- if and (not $audioUrl) .Params.audio_url -}}
+  {{- if hasPrefix .Params.audio_url "http" -}}
+    {{- $audioUrl = .Params.audio_url -}}
+    {{- $isRemote = true -}}
+  {{- else -}}
+    {{- $audioUrl = .Params.audio_url | absURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 3. PRIORITÉ 3 : Fichier dans le bundle Hugo */ -}}
+{{- if not $audioUrl -}}
+  {{- $audioResource := index (.Resources.ByType "audio") 0 -}}
+  {{- with $audioResource -}}
+    {{- $audioUrl = .Permalink -}}
+    {{- $audioFormat = .MediaType.Type -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Retourner le résultat */ -}}
+{{- return (dict "url" $audioUrl "format" $audioFormat "isRemote" $isRemote) -}}

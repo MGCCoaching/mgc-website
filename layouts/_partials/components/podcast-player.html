@@ -1,3 +1,4 @@
+
 {{/*
   Podcast Player - MGC Coaching
   =============================
@@ -7,33 +8,43 @@
   
   Requiert:
   - assets/js/podcast-player.js (inclure via js.html)
-  - Front matter avec: audio_url, duration, duration_seconds, chapters (optionnel)
+  - Front matter avec: duration, chapters (optionnel)
   - Google Material Symbols déjà chargé
+  
+  Logique audio (ordre de priorité):
+  1. Champs Decap : audio_url_prefix + season + file_name
+  2. Upload Decap : audio_file  
+  3. URL directe : audio_url
+  4. Bundle Hugo : fichier .mp3 dans le dossier
 */}}
 
 {{/* ══════════════════════════════════════════════════════════════════════════
-     VARIABLES
+     VARIABLES - Récupération URL Audio
      ══════════════════════════════════════════════════════════════════════════ */}}
 
-{{/* Audio : soit Page Bundle, soit URL externe */}}
-{{ $audioResource := index (.Resources.ByType "audio") 0 }}
-{{ $audioUrl := "" }}
-{{ $audioFormat := "audio/mpeg" }}
-{{ if .Params.audio_url }}
-  {{ $audioUrl = .Params.audio_url }}
-  {{ $audioFormat = .Params.audio_format | default "audio/mpeg" }}
-{{ else if $audioResource }}
-  {{ $audioUrl = $audioResource.Permalink }}
-  {{ $audioFormat = $audioResource.MediaType.Type }}
-{{ end }}
+{{/* Utiliser le partial helper pour récupérer l'URL audio */}}
+{{- $audioData := partial "podcasts/get-audio-url.html" . -}}
+{{- $audioUrl := $audioData.url -}}
+{{- $audioFormat := $audioData.format -}}
 
 {{/* Image pour MediaSession */}}
 {{ $imageResource := index (.Resources.ByType "image") 0 }}
 {{ $artwork := "" }}
-{{ if $imageResource }}
-  {{ $artwork = $imageResource.Permalink }}
-{{ else if .Params.cover_image }}
+{{/* 1. Image via Decap (cover) */}}
+{{ with .Params.cover }}
+  {{ if hasPrefix . "http" }}
+    {{ $artwork = . }}
+  {{ else }}
+    {{ $artwork = . | absURL }}
+  {{ end }}
+{{ end }}
+{{/* 2. Ancien champ cover_image */}}
+{{ if and (not $artwork) .Params.cover_image }}
   {{ $artwork = .Params.cover_image | absURL }}
+{{ end }}
+{{/* 3. Image dans le bundle */}}
+{{ if and (not $artwork) $imageResource }}
+  {{ $artwork = $imageResource.Permalink }}
 {{ end }}
 
 {{/* Paramètres */}}
