@@ -5,7 +5,7 @@
 
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL, COMMENTER POUR PRODUCTION
-local_backend: true
+#local_backend: true
 
 backend:
   name: git-gateway
@@ -34,7 +34,7 @@ auth:
 logo_url: /img/logo.webp
 site_url: https://mariegaetanecomte.fr
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 
 media_folder: "static/img/uploads"
 public_folder: "/img/uploads"
