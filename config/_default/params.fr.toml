@@ -102,11 +102,7 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
   title = "Les Voix des Phénix - MGC Coaching"
   
   # Description du podcast
-  description = """
-  Le podcast de Marie-Gaëtane Comte sur la prise de parole, le média training 
-  et la communication. Conseils pratiques et interviews d'experts pour oser 
-  prendre la parole avec impact et authenticité.
-  """
+  description = "Le podcast de Marie-Gaëtane Comte sur la prise de parole, le média training et la communication. Conseils pratiques et interviews d'experts pour oser prendre la parole avec impact et authenticité."
   # Auteur / Animatrice
   author = "Marie-Gaëtane Comte"
   email = "mariegaetanecomte@gmail.com"

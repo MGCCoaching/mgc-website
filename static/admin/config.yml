@@ -112,20 +112,20 @@ collections:
       # ══════════════════════════════════════════════════════════════════
       # NUMÉROTATION
       # ══════════════════════════════════════════════════════════════════
-      - label: "🔢 Saison"
-        name: "season"
-        widget: "number"
-        default: 1
-        value_type: "int"
-        min: 1
+      # - label: "🔢 Saison"
+      #   name: "season"
+      #   widget: "number"
+      #   default: 1
+      #   value_type: "int"
+      #   min: 1
 
-      - label: "🔢 Numéro d'épisode"
-        name: "episode_number"
-        widget: "number"
-        required: true
-        value_type: "int"
-        min: 1
-        hint: "Ex: 1, 2, 3..."
+      # - label: "🔢 Numéro d'épisode"
+      #   name: "episode_number"
+      #   widget: "number"
+      #   required: true
+      #   value_type: "int"
+      #   min: 1
+      #   hint: "Ex: 1, 2, 3..."
 
       - label: "📁 Type d'épisode"
         name: "episode_type"
@@ -137,27 +137,53 @@ collections:
         default: "full"
 
       # ══════════════════════════════════════════════════════════════════
-      # FICHIER AUDIO
+      # FICHIER AUDIO (URL EXTERNE INTELLIGENTE)
       # ══════════════════════════════════════════════════════════════════
-      - label: "🎵 Option 1 : Lien S3/CloudFront (recommandé)"
-        name: "audio_url"
+
+      - label: "🎵 Audio hébergé sur S3 / CloudFront ?"
+        name: "audio_url_prefix"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Oui (recommandé)", value: "https://media.mariegaetanecomte.fr/podcasts" }
+          - { label: "Non (upload local)", value: "" }
+
+      - label: "Saison"
+        name: "season"
+        widget: "select"
+        required: false
+        default: "s01"
+        options:
+          - { label: "Saison 1", value: "01" }
+          - { label: "Saison 2", value: "02" }
+
+      - label: "🔢 Numéro d'épisode"
+        name: "episode_number"
+        widget: "number"
+        required: true
+        value_type: "int"
+        min: 1
+        hint: "Ex: 1, 2, 3..."
+
+      - label: "Nom du fichier audio"
+        name: "file_name"
         widget: "string"
         required: false
-        hint: "Collez l'URL complète du fichier MP3 hébergé sur S3/CloudFront. Ex: https://d1234.cloudfront.net/podcasts/episode.mp3"
+        hint: "Ex : ep_01.mp3"
 
-      - label: "🎵 Option 2 : Télécharger le fichier audio"
+      - label: "🎵 Option secours : télécharger le fichier audio"
         name: "audio_file"
         widget: "file"
         required: false
         media_folder: ""
-        hint: "⚠️ Utilisez SEULEMENT si S3 n'est pas disponible. Le fichier sera stocké avec l'épisode."
+        hint: "⚠️ À utiliser uniquement si vous avez choisi NON ci-dessus."
 
       - label: "⏱️ Durée"
         name: "duration"
         widget: "string"
         required: true
         default: "00:00"
-        hint: "Format MM:SS (ex: 25:30) ou HH:MM:SS (ex: 1:05:30)"
+        hint: "Format MM:SS ou HH:MM:SS"
 
       # ══════════════════════════════════════════════════════════════════
       # IMAGE & DESCRIPTION

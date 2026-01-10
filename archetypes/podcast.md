@@ -11,10 +11,10 @@
 draft: true
 date: {{ .Date }}
 
-is_episode: true # use for decap to filter episode to Podacast collection 
+is_episode: true # Utilisé par Decap CMS pour filtrer les épisodes
 
 # ══════════════════════════════════════════════════════════════════
-# INFORMATIONS DE BASE
+# INFORMATIONS PRINCIPALES
 # ══════════════════════════════════════════════════════════════════
 
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
@@ -23,40 +23,44 @@ subtitle: "Podcast MGC Coaching"
 # Description courte (150-160 caractères) pour SEO et réseaux sociaux
 description: ""
 
-# Description longue pour Apple Podcasts / Spotify
-summary: |
-  Écrivez ici une description plus complète de l'épisode.
-  Vous pouvez utiliser plusieurs lignes.
-
 # ══════════════════════════════════════════════════════════════════
 # NUMÉROTATION
 # ══════════════════════════════════════════════════════════════════
 
-season: 1                    # Numéro de saison
+season: "01"                 # "01", "02", etc.
 episode_number: 1            # Numéro d'épisode
 episode_type: "full"         # "full", "trailer", "bonus"
 
 # ══════════════════════════════════════════════════════════════════
-# FICHIER AUDIO
+# FICHIER AUDIO - Nouvelle méthode simplifiée
 # ══════════════════════════════════════════════════════════════════
 
-# Option 1 : URL externe (CloudFront) - RECOMMANDÉ pour production
-audio_url: ""                # Ex: https://dXXXXX.cloudfront.net/podcasts/s01e01.mp3
+# MÉTHODE 1 (recommandée) : Audio sur S3/CloudFront
+# L'URL sera construite automatiquement : {prefix}/s{season}/{file_name}
+audio_url_prefix: "https://media.mariegaetanecomte.fr/podcasts"
+file_name: ""                # Ex: "ep_01.mp3"
 
-# Option 2 : Fichier local dans le Page Bundle
-# → Placer le fichier .mp3 dans le même dossier que index.md
-# → Laisser audio_url vide, Hugo le détectera automatiquement
+# MÉTHODE 2 : Upload local (laisser audio_url_prefix vide)
+# audio_file: ""             # Chemin vers le fichier uploadé
+
+# MÉTHODE 3 (compatibilité) : URL directe complète
+# audio_url: ""
 
 # Format audio
 audio_format: "audio/mpeg"   # audio/mpeg (MP3) ou audio/wav
 
-# Durée (les deux formats sont requis)
+# Durée
 duration: "00:00"            # Format MM:SS ou HH:MM:SS
+duration_seconds: 0          # En secondes (optionnel, pour SEO)
 
+# Taille du fichier en octets (optionnel, récupéré automatiquement si sur S3)
+file_size_bytes: 0
 
-# Taille du fichier en octets (OBLIGATOIRE pour Apple Podcasts)
-# Commande : ls -l fichier.mp3 | awk '{print $5}'
-file_size_bytes: 
+# ══════════════════════════════════════════════════════════════════
+# IMAGE DE COUVERTURE
+# ══════════════════════════════════════════════════════════════════
+
+# cover: ""                  # Uploadée via Decap CMS
 
 # ══════════════════════════════════════════════════════════════════
 # CATÉGORISATION
@@ -73,9 +77,9 @@ tags:
 # INVITÉ(E)S
 # ══════════════════════════════════════════════════════════════════
 
-guests:
-  - "Nom de l'invité(e) (Fonction)"
-# Format compatible avec ton layout actuel
+guests: []
+# Exemple:
+#   - "Nom de l'invité(e)"
 
 # ══════════════════════════════════════════════════════════════════
 # CHAPITRES / TIMESTAMPS (pour le player)
@@ -84,10 +88,11 @@ guests:
 chapters:
   - time: "00:00"
     title: "Introduction"
-#  - time: "05:00"
-#    title: "Sujet principal"
-#  - time: "20:00"
-#    title: "Conclusion"
+# Exemple:
+#   - time: "05:00"
+#     title: "Sujet principal"
+#   - time: "20:00"
+#     title: "Conclusion"
 
 # ══════════════════════════════════════════════════════════════════
 # OPTIONS RSS

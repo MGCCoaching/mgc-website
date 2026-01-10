@@ -10,15 +10,12 @@ title: Sample Podcast
 subtitle: Podcast Sample MGC Coaching
 date: 2024-02-20T10:00:00+01:00
 draft: false
-season: 1
-episode_number: 1
 episode_type: full
-audio_url: https://media.mariegaetanecomte.fr/podcasts/s01/ep_01.mp3
+audio_external: "true"
+season: "01"
+episode_number: 1
+file_name: ep_01.mp3
 duration: 04:55
-description: Here is a short description that suposed to describe the episode
-guests:
-  - Nom de l'invité(e) (Fonction)
-  - AUrle
 chapters:
   - time: 00:00
     title: Introduction
@@ -36,9 +33,15 @@ platforms:
   apple_podcasts: ""
   deezer: ""
   youtube: ""
+
+audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
 block: false
 file_size_bytes: null
 explicit: false
+description: Here is a short description that suposed to describe the episode
+guests:
+  - Nom de l'invité(e) (Fonction)
+  - AUrle
 options:
   explicit: false
   block: false

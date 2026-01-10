@@ -1,33 +1,41 @@
 {{ define "main" }}
 
-
-      
 {{/* ══════════════════════════════════════════════════════════════════
-     VARIABLES
+     VARIABLES - Récupération Audio via Partial Helper
      ══════════════════════════════════════════════════════════════════ */}}
 
-{{/* Audio : soit Page Bundle, soit URL externe */}}
-{{ $audioResource := index (.Resources.ByType "audio") 0 }}
-{{ $audioUrl := "" }}
-{{ if .Params.audio_url }}
-  {{ $audioUrl = .Params.audio_url }}
-{{ else if $audioResource }}
-  {{ $audioUrl = $audioResource.Permalink }}
-{{ end }}
-
-{{/* Image : soit Page Bundle, soit cover_image, soit fallback */}}
-{{ $imageResource := index (.Resources.ByType "image") 0 }}
+{{- $audioData := partial "podcasts/get-audio-url.html" . -}}
+{{- $audioUrl := $audioData.url -}}
+{{- $audioFormat := $audioData.format -}}
+<p> {{$audioUrl}} </p>
+{{/* Image : soit via Decap (cover), soit Page Bundle, soit cover_image, soit fallback */}}
 {{ $image := "" }}
-{{ if $imageResource }}
-  {{ $image = $imageResource.Permalink }}
-{{ else if .Params.cover_image }}
+{{/* 1. Image via Decap (cover) */}}
+{{/*  {{ with .Params.cover }}
+  {{ if hasPrefix . "http" }}
+    {{ $image = . }}
+  {{ else }}
+    {{ $image = . | absURL }}
+  {{ end }}
+{{ end }}  */}}
+{{/* 2. Image dans le bundle */}}
+{{ if not $image }}
+  {{ $imageResource := index (.Resources.ByType "image") 0 }}
+  {{ with $imageResource }}
+    {{ $image = .Permalink }}
+  {{ end }}
+{{ end }}
+{{/* 3. Ancien champ cover_image */}}
+{{ if and (not $image) .Params.cover_image }}
   {{ $image = .Params.cover_image | relURL }}
-{{ else }}
+{{ end }}
+{{/* 4. Fallback */}}
+{{ if not $image }}
   {{ $image = "/img/fallback-podcast.jpg" | relURL }}
 {{ end }}
 
 {{/* Paramètres avec valeurs par défaut */}}
-{{ $season := .Params.season | default 1 }}
+{{ $season := .Params.season | default "01" }}
 {{ $episodeNum := .Params.episode_number | default 1 }}
 {{ $episodeType := .Params.episode_type | default "full" }}
 {{ $duration := .Params.duration | default "00:00" }}
@@ -155,21 +163,7 @@
 
                 {{/* Player Audio */}}
                 {{ if $audioUrl }}
-                    {{/* Player natif (sera remplacé par le custom plus tard) */}}
-                    {{/*  <div class="mb-4">
-                        <audio controls 
-                               controlsList="nodownload" 
-                               class="w-full rounded-lg shadow-md"
-                               preload="metadata">
-                            <source src="{{ $audioUrl }}" type="{{ .Params.audio_format | default "audio/mpeg" }}">
-                            Votre navigateur ne supporte pas l'élément audio.
-                        </audio>
-                    </div>
-                      */}}
-                    {{/* TODO: Intégrer le player custom ici */}}
-                    {{/*  {{ partial "components/podcast-player.html" . }}  */}}
                     {{ partial "components/podcast-player.html" . }}
-                    
                 {{ else }}
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                         <p class="text-red-600 text-sm italic flex items-center gap-2">
@@ -255,15 +249,11 @@
             <div class="hidden md:block">
                 <header class="mb-6">
                     <div class="flex items-center gap-2 mb-2">
-                        {{/*  <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
-                            S{{ $season }}E{{ $episodeNum }}
-                        </span>  */}}
                         {{ if eq $episodeType "trailer" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
                         {{ else if eq $episodeType "bonus" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                         {{ end }}
-                        {{/*  <span class="text-sm text-tertiary">• {{ $duration }}</span>  */}}
                     </div>
                     <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
                     <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ .Title }}</h1>
@@ -359,11 +349,7 @@
 
 {{/* Autres épisodes */}}
 <div>
-    {{ $allPodcasts := where site.RegularPages "Section" "podcasts" }}
-
-    {{ if ge (len $allPodcasts) 2 }}
-        {{ partial "other_podcasts.html" . }}
-    {{ end }}
+    {{ partial "other_podcasts.html" . }}
 </div>
 
 {{ end }}
