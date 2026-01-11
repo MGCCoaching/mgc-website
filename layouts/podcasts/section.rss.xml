@@ -127,12 +127,19 @@
     {{- $episodeImage := "" -}}
     {{- $cover := .Params.cover | default .Params.cover_image -}}
     {{- if $cover -}}
-      {{- if hasPrefix $cover "http" -}}{{- $episodeImage = $cover -}}
-      {{- else -}}{{- $episodeImage = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $cover) -}}
+      {{- if hasPrefix $cover "http" -}}
+        {{- $episodeImage = $cover -}}
+      {{- else -}}
+        {{- with .Resources.GetMatch $cover -}}
+          {{- $episodeImage = .Permalink -}}
+        {{- end -}}
       {{- end -}}
-    {{- else -}}
-      {{- with index (.Resources.ByType "image") 0 -}}{{- $episodeImage = .Permalink -}}
-      {{- else -}}{{- $episodeImage = printf "%simg/fallback-podcast.jpg" $.Site.BaseURL -}}
+    {{- end -}}
+    {{- if not $episodeImage -}}
+      {{- with index (.Resources.ByType "image") 0 -}}
+        {{- $episodeImage = .Permalink -}}
+      {{- else -}}
+        {{- $episodeImage = printf "%simg/fallback-podcast.jpg" $.Site.BaseURL -}}
       {{- end -}}
     {{- end -}}
 
