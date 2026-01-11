@@ -1,5 +1,8 @@
 ---
 is_episode: true
+output: 
+  - HTML
+  - chapters
 categories:
   - Podcast
 tags:

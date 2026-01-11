@@ -56,21 +56,29 @@ uglyURLs = false
   [outputFormats.RSS]
     mediaType = "application/rss+xml"
     baseName = "index"
-    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    isPlainText = true
     notAlternative = false
   
-  # Custom podcast RSS (alternative approach)
   [outputFormats.PodcastRSS]
     mediaType = "application/rss+xml"
     baseName = "index"
-    isPlainText = true    # ← CRUCIAL: Prevents HTML escaping!
+    isPlainText = true
     path = ""
 
-# Outputs per section type
+  [outputFormats.chapters]
+    mediaType = "application/json"
+    baseName = "chapters"
+    isPlainText = true
+    
+  [outputFormats.data]
+    mediaType = "application/json"
+    baseName = "data"
+    isPlainText = true
+
 [outputs]
   home = ['HTML', 'RSS']
   section = ['HTML', 'RSS']
-  page = ['HTML']
+  page = ['HTML', 'chapters', 'data']
 
 # ==============================================================================
 # MINIFICATION - Disable XML minification to avoid issues
