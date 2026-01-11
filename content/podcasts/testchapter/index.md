@@ -15,7 +15,7 @@ season: "01"
 episode_number: 3
 audio_file: sb-jinglev2.mp3
 duration: 00:22
-cover: httpss///testurlimage
+cover: https://cdn.nba.com/teams/uploads/sites/1610612748/2026/01/1takeaway3.jpg
 description: Jingle SpringBerte
 guests:
   - Leo
