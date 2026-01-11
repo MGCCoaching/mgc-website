@@ -15,6 +15,7 @@ season: "01"
 episode_number: 3
 audio_file: sb-jinglev2.mp3
 duration: 00:22
+cover: httpss///testurlimage
 description: Jingle SpringBerte
 guests:
   - Leo
