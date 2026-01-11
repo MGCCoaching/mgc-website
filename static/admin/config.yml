@@ -154,8 +154,8 @@ collections:
         required: false
         default: "s01"
         options:
-          - { label: "Saison 1", value: "01" }
-          - { label: "Saison 2", value: "02" }
+          - { label: "Saison 1", value: "1" }
+          - { label: "Saison 2", value: "2" }
 
       - label: "🔢 Numéro d'épisode"
         name: "episode_number"

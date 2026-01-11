@@ -1,0 +1,23 @@
+{{- with .Params.chapters -}}
+{
+  "version": "1.2.0",
+  "chapters": [
+    {{- range $i, $ch := . -}}
+    {{- if $ch.title -}}
+    {{- if $i }},{{ end }}
+    {
+      {{- $p := split $ch.time ":" -}}
+      {{- $seconds := 0 -}}
+      {{- if eq (len $p) 2 -}}
+        {{- $seconds = add (mul (int (index $p 0)) 60) (int (index $p 1)) -}}
+      {{- else if eq (len $p) 3 -}}
+        {{- $seconds = add (add (mul (int (index $p 0)) 3600) (mul (int (index $p 1)) 60)) (int (index $p 2)) -}}
+      {{- end -}}
+      "startTime": {{ $seconds }},
+      "title": {{ $ch.title | jsonify }}
+    }
+    {{- end -}}
+    {{- end }}
+  ]
+}
+{{- end -}}
