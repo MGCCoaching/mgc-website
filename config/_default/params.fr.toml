@@ -82,7 +82,7 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
   podcasts = true
 
 [homeSection]
-  enableLatestPodcast = false
+  enableLatestPodcast = true
 
 [cookies]
   enabled = false   # true = bandeau actif, false = désactivé

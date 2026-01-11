@@ -51,6 +51,7 @@ uglyURLs = false
   [mediaTypes."application/rss+xml"]
     suffixes = ["xml"]
 
+disableKinds = ['taxonomy', 'term']
 # Define output formats
 [outputFormats]
   [outputFormats.RSS]
@@ -78,7 +79,7 @@ uglyURLs = false
 [outputs]
   home = ['HTML', 'RSS']
   section = ['HTML', 'RSS']
-  page = ['HTML', 'chapters', 'data']
+  page = ['HTML']
 
 # ==============================================================================
 # MINIFICATION - Disable XML minification to avoid issues

@@ -1,53 +1,9 @@
 {{ define "main" }}
 
 {{/* ══════════════════════════════════════════════════════════════════
-     VARIABLES - Récupération Audio via Partial Helper
+     DONNÉES ÉPISODE via Partial Centralisé
      ══════════════════════════════════════════════════════════════════ */}}
-
-{{- $audioData := partial "podcasts/get-audio-url.html" . -}}
-{{- $audioUrl := $audioData.url -}}
-{{- $audioFormat := $audioData.format -}}
-
-{{/*  debug  */}}
-<p> {{$audioUrl}} </p>
-
-{{/* Image : soit via Decap (cover), soit Page Bundle, soit cover_image, soit fallback */}}
-{{ $image := "" }}
-{{/* 1. Image via Decap (cover) */}}
-{{/*  {{ with .Params.cover }}
-  {{ if hasPrefix . "http" }}
-    {{ $image = . }}
-  {{ else }}
-    {{ $image = . | absURL }}
-  {{ end }}
-{{ end }}  */}}
-{{/* 2. Image dans le bundle */}}
-{{ if not $image }}
-  {{ $imageResource := index (.Resources.ByType "image") 0 }}
-  {{ with $imageResource }}
-    {{ $image = .Permalink }}
-  {{ end }}
-{{ end }}
-{{/* 3. Ancien champ cover_image */}}
-{{ if and (not $image) .Params.cover_image }}
-  {{ $image = .Params.cover_image | relURL }}
-{{ end }}
-{{/* 4. Fallback */}}
-{{ if not $image }}
-  {{ $image = "/img/fallback-podcast.jpg" | relURL }}
-{{ end }}
-
-{{/* Paramètres avec valeurs par défaut */}}
-{{ $season := .Params.season | default "01" }}
-{{ $episodeNum := .Params.episode_number | default 1 }}
-{{ $episodeType := .Params.episode_type | default "full" }}
-{{ $duration := .Params.duration | default "00:00" }}
-{{ $durationSeconds := .Params.duration_seconds | default 0 }}
-{{ $explicit := .Params.explicit | default false }}
-{{ $chapters := .Params.chapters | default slice }}
-{{ $guests := .Params.guests | default slice }}
-{{ $description := .Params.description | default "" }}
-{{ $summary := .Params.summary | default "" }}
+{{- $ep := partial "podcasts/episode-data" . -}}
 
 {{/* ══════════════════════════════════════════════════════════════════
      SCHEMA.ORG - PodcastEpisode (SEO)
@@ -56,54 +12,41 @@
 {
   "@context": "https://schema.org",
   "@type": "PodcastEpisode",
-  "name": "{{ .Title }}",
-  "description": "{{ with $description }}{{ . | plainify }}{{ else }}{{ .Content | plainify | truncate 160 }}{{ end }}",
-  "url": "{{ .Permalink }}",
-  "datePublished": "{{ .Date.Format "2006-01-02" }}",
-  {{/* Durée au format ISO 8601 (PT1H30M45S) */}}
-  {{- if $durationSeconds }}
-  {{- $hours := div $durationSeconds 3600 }}
-  {{- $minutes := div (mod $durationSeconds 3600) 60 }}
-  {{- $seconds := mod $durationSeconds 60 }}
+  "name": {{ $ep.title | jsonify }},
+  "description": {{ $ep.description | plainify | jsonify }},
+  "url": {{ $ep.permalink | jsonify }},
+  "datePublished": "{{ $ep.date.Format "2006-01-02" }}",
+  {{- if $ep.audio.duration }}
+  {{- $hours := div $ep.audio.duration 3600 }}
+  {{- $minutes := div (mod $ep.audio.duration 3600) 60 }}
+  {{- $seconds := mod $ep.audio.duration 60 }}
   "duration": "PT{{ if gt $hours 0 }}{{ $hours }}H{{ end }}{{ $minutes }}M{{ $seconds }}S",
-  {{- else if $duration }}
-  {{- $parts := split $duration ":" }}
-  {{- if eq (len $parts) 3 }}
-  "duration": "PT{{ index $parts 0 }}H{{ index $parts 1 }}M{{ index $parts 2 }}S",
-  {{- else if eq (len $parts) 2 }}
-  "duration": "PT{{ index $parts 0 }}M{{ index $parts 1 }}S",
   {{- end }}
-  {{- end }}
-  "episodeNumber": {{ $episodeNum }},
-  {{- if $image }}
-  "image": "{{ $image }}",
-  {{- end }}
-  {{- if $audioUrl }}
+  "episodeNumber": {{ $ep.episode_number }},
+  "image": {{ $ep.image | jsonify }},
+  {{- if $ep.audio.url }}
   "associatedMedia": {
     "@type": "MediaObject",
-    "contentUrl": "{{ $audioUrl }}"
+    "contentUrl": {{ $ep.audio.url | jsonify }}
   },
   {{- end }}
   "partOfSeries": {
     "@type": "PodcastSeries",
-    "name": "{{ site.Params.podcast.title | default "Podcast MGC Coaching" }}",
-    "url": "{{ "/podcasts/" | absURL }}"
+    "name": {{ site.Params.podcast.title | default "Podcast MGC Coaching" | jsonify }},
+    "url": {{ "/podcasts/" | absURL | jsonify }}
   },
   "partOfSeason": {
     "@type": "PodcastSeason",
-    "seasonNumber": {{ $season }}
+    "seasonNumber": {{ $ep.season }}
   }
-  {{- with $guests }},
+  {{- with $ep.guests }}{{ if gt (len .) 0 }},
   "actor": [
     {{- range $i, $guest := . }}
     {{- if $i }},{{ end }}
-    {
-      "@type": "Person",
-      "name": "{{ $guest }}"
-    }
+    {"@type": "Person", "name": {{ $guest | jsonify }}}
     {{- end }}
   ]
-  {{- end }}
+  {{- end }}{{ end }}
 }
 </script>
 
@@ -126,20 +69,20 @@
                     <header class="mb-6">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
-                                S{{ $season }}E{{ $episodeNum }}
+                                S{{ $ep.season }}E{{ $ep.episode_number }}
                             </span>
-                            {{ if eq $episodeType "trailer" }}
+                            {{ if eq $ep.episode_type "trailer" }}
                             <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
-                            {{ else if eq $episodeType "bonus" }}
+                            {{ else if eq $ep.episode_type "bonus" }}
                             <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                             {{ end }}
                         </div>
-                        <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
-                        <h2 class="font-extrabold text-secondary mt-1">{{ .Title }}</h2>
+                        <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Podcast" }}</p>
+                        <h2 class="font-extrabold text-secondary mt-1">{{ $ep.title }}</h2>
                     </header>
                     
                     {{/* Invités - Mobile */}}
-                    {{ with $guests }}
+                    {{ with $ep.guests }}{{ if gt (len .) 0 }}
                     <div class="flex flex-col items-start gap-2 mb-8 p-4 border-l-4 border-t-4 border-accent-primary text-primary">
                         {{ range . }}
                         <div>
@@ -148,24 +91,23 @@
                         </div>
                         {{ end }}
                     </div>
-                    {{ end }}    
+                    {{ end }}{{ end }}    
                 </div>
                 
                 {{/* Image Principale */}}
                 <figure class="shadow-2xl rounded-lg overflow-hidden mb-6 relative">
-                    <img src="{{ $image }}" 
-                         alt="Couverture de l'épisode : {{ .Title }}" 
+                    <img src="{{ $ep.image }}" 
+                         alt="Couverture de l'épisode : {{ $ep.title }}" 
                          class="w-full object-cover aspect-square">
-                    {{/* Badge épisode sur l'image */}}
                     <div class="absolute top-3 left-3">
                         <span class="bg-accent-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-                            S{{ $season }}E{{ $episodeNum }}
+                            S{{ $ep.season }}E{{ $ep.episode_number }}
                         </span>
                     </div>
                 </figure>
 
                 {{/* Player Audio */}}
-                {{ if $audioUrl }}
+                {{ if $ep.audio.url }}
                     {{ partial "components/podcast-player.html" . }}
                 {{ else }}
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
@@ -180,18 +122,18 @@
                 <div class="p-4 my-5 bg-primary rounded-lg text-sm text-primary space-y-2">
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">timer</span>
-                        <span><strong>Durée :</strong> {{ $duration }}</span>
+                        <span><strong>Durée :</strong> {{ .Params.duration | default "00:00" }}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">calendar_today</span>
-                        <span><strong>Publié :</strong> {{ .Date.Format "02 janvier 2006" }}</span>
+                        <span><strong>Publié :</strong> {{ $ep.date.Format "02 janvier 2006" }}</span>
                     </div>
-                    {{ if eq $episodeType "trailer" }}
+                    {{ if eq $ep.episode_type "trailer" }}
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">movie</span>
                         <span><strong>Type :</strong> Bande-annonce</span>
                     </div>
-                    {{ else if eq $episodeType "bonus" }}
+                    {{ else if eq $ep.episode_type "bonus" }}
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">star</span>
                         <span><strong>Type :</strong> Épisode bonus</span>
@@ -199,7 +141,7 @@
                     {{ end }}
                 </div>
 
-                {{/* Liens plateformes (si renseignés) */}}
+                {{/* Liens plateformes */}}
                 {{ with .Params.platforms }}
                 {{ if or .spotify .apple_podcasts .deezer .youtube }}
                 <div class="mt-6 p-4 bg-primary rounded-lg">
@@ -214,21 +156,18 @@
                             <i class="fa-brands fa-spotify icon-lg"></i>
                         </a>
                         {{ end }}
-                        
                         {{ with .apple_podcasts }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
                            class="inline-flex items-center justify-center w-16 h-16 bg-[#9933FF] text-white rounded-full hover:opacity-90 transition-opacity">
                             <i class="fa-solid fa-podcast icon-lg"></i>
                         </a>
                         {{ end }}
-                        
                         {{ with .deezer }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
                            class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0092] text-white rounded-full hover:opacity-90 transition-opacity">
                             <i class="fa-brands fa-deezer icon-lg"></i>
                         </a>
                         {{ end }}
-                        
                         {{ with .youtube }}
                         <a href="{{ . }}" target="_blank" rel="noopener" 
                            class="inline-flex items-center justify-center w-16 h-16 bg-[#FF0000] text-white rounded-full hover:opacity-90 transition-opacity">
@@ -252,23 +191,18 @@
             <div class="hidden md:block">
                 <header class="mb-6">
                     <div class="flex items-center gap-2 mb-2">
-                        {{ if eq $episodeType "trailer" }}
+                        {{ if eq $ep.episode_type "trailer" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
-                        {{ else if eq $episodeType "bonus" }}
+                        {{ else if eq $ep.episode_type "bonus" }}
                         <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                         {{ end }}
                     </div>
-                    <p class="text-sm font-semibold text-tertiary uppercase">{{ .Params.subtitle | default "Podcast" }}</p>
-                    <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ .Title }}</h1>
+                    <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Podcast" }}</p>
+                    <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ $ep.title }}</h1>
                 </header>
                 
-                {{/* Description courte */}}
-                {{/*  {{ with $description }}
-                <p class="text-lg text-tertiary mb-6 leading-relaxed">{{ . }}</p>
-                {{ end }}  */}}
-                
                 {{/* Invités - Desktop */}}
-                {{ with $guests }}
+                {{ with $ep.guests }}{{ if gt (len .) 0 }}
                 <div class="flex flex-wrap items-center gap-4 mb-8 p-4 border-l-4 border-t-4 border-accent-primary text-primary bg-primary rounded-r-lg">
                     {{ range . }}
                     <div class="flex items-center gap-2">
@@ -278,7 +212,7 @@
                     </div>
                     {{ end }}
                 </div>
-                {{ end }}
+                {{ end }}{{ end }}
             </div>
             
             {{/* Contenu Markdown */}}
@@ -337,14 +271,6 @@
             </div>
             {{ end }}
             {{ end }}
-
-            {{/* Note de bas de page */}}
-            {{/*  <div class="text-sm text-tertiary p-4 bg-primary rounded-lg">
-                <p class="flex items-start gap-2">
-                    <span class="material-symbols-outlined text-accent-primary text-lg">info</span>
-                    Retrouvez la transcription complète et les ressources mentionnées dans la description ci-dessus.
-                </p>
-            </div>  */}}
 
         </div>
     </article>

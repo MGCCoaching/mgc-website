@@ -1,0 +1,133 @@
+{{- /* 
+  Retourne un dict avec toutes les données d'un épisode
+  Usage: {{ $data := partial "podcast/episode-data" . }}
+*/ -}}
+
+{{- $audioUrl := "" -}}
+{{- $audioFormat := .Params.audio_format | default "audio/mpeg" -}}
+{{- $fileSize := .Params.file_size_bytes | default 0 -}}
+
+{{- /* 1️⃣ CDN / Decap */ -}}
+{{- $prefix := .Params.audio_url_prefix | default "" -}}
+{{- $fileName := .Params.file_name | default "" -}}
+{{- if and $prefix $fileName -}}
+  {{- $seasonFormatted := printf "s%02d" (int (.Params.season | default 1)) -}}
+  {{- $audioUrl = printf "%s/%s/%s" $prefix $seasonFormatted $fileName -}}
+{{- end -}}
+
+{{- /* 2️⃣ Fichier local */ -}}
+{{- if not $audioUrl -}}
+  {{- $audioFile := .Params.audio_file -}}
+  {{- $resource := "" -}}
+  {{- if and $audioFile (not (hasPrefix $audioFile "http")) (not (strings.Contains $audioFile "/")) -}}
+    {{- $resource = .Resources.GetMatch $audioFile -}}
+  {{- else if not $audioFile -}}
+    {{- $resource = index (.Resources.ByType "audio") 0 -}}
+  {{- end -}}
+  {{- with $resource -}}
+    {{- $audioUrl = .Permalink -}}
+    {{- $audioFormat = .MediaType.Type -}}
+    {{- if eq (int $fileSize) 0 -}}
+      {{- with .Data.Size }}{{ $fileSize = . }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 3️⃣ URL directe */ -}}
+{{- if not $audioUrl -}}
+  {{- $manualUrl := .Params.audio_file | default .Params.audio_url -}}
+  {{- if $manualUrl -}}
+    {{- if hasPrefix $manualUrl "http" -}}
+      {{- $audioUrl = $manualUrl -}}
+    {{- else -}}
+      {{- $audioUrl = printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $manualUrl) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 4️⃣ HEAD request */ -}}
+{{- if and $audioUrl (hasPrefix $audioUrl "http") (eq (int $fileSize) 0) -}}
+  {{- $opts := dict "method" "HEAD" -}}
+  {{- with try (resources.GetRemote $audioUrl $opts) -}}
+    {{- with .Value -}}
+      {{- $fileSize = .Data.ContentLength | default 0 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Duration */ -}}
+{{- $durationRaw := .Params.duration | default "00:00" -}}
+{{- $parts := split $durationRaw ":" -}}
+{{- $durationSeconds := 0 -}}
+{{- if eq (len $parts) 2 -}}
+  {{- $durationSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) -}}
+{{- else if eq (len $parts) 3 -}}
+  {{- $durationSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) -}}
+{{- end -}}
+
+{{- $durationFormatted := .Params.duration | default "00:00" -}}
+
+{{- /* Image */ -}}
+{{- $episodeImage := "" -}}
+{{- $cover := .Params.cover | default .Params.cover_image -}}
+{{- if $cover -}}
+  {{- if hasPrefix $cover "http" -}}
+    {{- $episodeImage = $cover -}}
+  {{- else -}}
+    {{- with .Resources.GetMatch $cover }}{{ $episodeImage = .Permalink }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $episodeImage -}}
+  {{- with index (.Resources.ByType "image") 0 -}}
+    {{- $episodeImage = .Permalink -}}
+  {{- else -}}
+    {{- $episodeImage = printf "%simg/fallback-podcast.jpg" $.Site.BaseURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Chapters */ -}}
+{{- $chapters := slice -}}
+{{- range .Params.chapters -}}
+  {{- if .title -}}
+    {{- $p := split .time ":" -}}
+    {{- $seconds := 0 -}}
+    {{- if eq (len $p) 2 -}}
+      {{- $seconds = add (mul (int (index $p 0)) 60) (int (index $p 1)) -}}
+    {{- else if eq (len $p) 3 -}}
+      {{- $seconds = add (add (mul (int (index $p 0)) 3600) (mul (int (index $p 1)) 60)) (int (index $p 2)) -}}
+    {{- end -}}
+    {{- $chapters = $chapters | append (dict "startTime" $seconds "title" .title) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Return dict */ -}}
+{{- return dict
+  "uuid" (md5 .Permalink)
+  "title" .Title
+  "subtitle" (.Params.subtitle | default "")
+  "slug" (path.Base (strings.TrimSuffix "/" .File.Dir))
+  "permalink" .Permalink
+  "description" (.Params.description | default (.Content | plainify | truncate 300))
+  "content" .Content
+  "date" .Date
+  "lastmod" .Lastmod
+  "draft" .Draft
+  "season" (int (.Params.season | default 1))
+  "episode_number" (int (.Params.episode_number | default 1))
+  "episode_type" (.Params.episode_type | default "full")
+  "explicit" (.Params.explicit | default false)
+  "audio" (dict 
+    "url" $audioUrl 
+    "format" $audioFormat 
+    "file_size" $fileSize 
+    "duration" $durationSeconds
+  )
+  "duration_formatted" $durationFormatted
+  "image" $episodeImage
+  "chapters" $chapters
+  "hasChapters" (gt (len $chapters) 0)
+  "tags" (.Params.tags | default slice)
+  "categories" (.Params.categories | default slice)
+  "guests" (.Params.guests | default slice)
+  "hosts" (.Params.hosts | default slice)
+-}}
