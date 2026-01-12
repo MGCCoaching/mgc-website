@@ -5,14 +5,14 @@
 {
   "@context": "https://schema.org",
   "@type": "PodcastSeries",
-  "name": "{{ .Title }}",
-  "description": "{{ .Content | plainify | truncate 160 }}",
-  "url": "{{ .Permalink }}",
+  "name": {{ .Title | jsonify }},
+  "description": {{ .Content | plainify | truncate 160 | jsonify }},
+  "url": {{ .Permalink | jsonify }},
   "author": {
     "@type": "Person",
-    "name": "{{ .Site.Params.author }}"
+    "name": {{ .Site.Params.podcast.author | default .Site.Params.author | jsonify }}
   },
-  "image": "{{ "/img/logo.webp" | absURL }}"
+  "image": {{ "/img/logo.webp" | absURL | jsonify }}
 }
 </script>
 
@@ -27,51 +27,33 @@
 <section class="bg-primary p-6 sm:p-12 bg-secondary">    
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
-        {{/* Chemin de l'image de secours (dans static/img) */}}
-        {{ $fallbackImagePath := "/img/fallback-podcast.webp" }}
-
         {{ range .Pages.ByDate.Reverse }}
-        
-        {{/* Récupère la première image trouvée dans le bundle */}}
-        {{ $image := (index (.Resources.ByType "image") 0) }}
-        
-        {{/* Extraction des paramètres avec fallbacks */}}
-        {{ $subtitle := .Params.subtitle | default "Épisode" }}
-        {{ $duration := .Params.duration | default "Non spécifiée" }}
+        {{- $ep := partial "podcasts/episode-data" . -}}
 
         {{/* Desktop view */}}
         <div class="hidden md:block">
-            <a href="{{ .Permalink }}" class="flex flex-col h-full bg-primary shadow-lg hover:shadow-2xl transition duration-500 hover:scale-102 border-2 border-accent hover:border-2 hover:border-accent-hover overflow-hidden">
+            <a href="{{ $ep.permalink }}" class="flex flex-col h-full bg-primary shadow-lg hover:shadow-2xl transition duration-500 hover:scale-102 border-2 border-accent hover:border-2 hover:border-accent-hover overflow-hidden">
                 
-                {{/* Image (Bundle ou Fallback) */}}
-                {{ if $image }}
-                    <img src="{{ $image.Permalink }}" alt="Couverture de l'épisode {{ .Title }}" class="w-full h-48 object-cover">
-                {{ else }}
-                    <img src="{{ $fallbackImagePath | relURL }}" alt="Image de couverture par défaut du podcast" class="w-full h-48 object-cover">
-                {{ end }}
+                <img src="{{ $ep.image }}" alt="Couverture de l'épisode {{ $ep.title }}" class="w-full h-48 object-cover">
 
-                {{/* Corps de la carte */}}
                 <div class="p-6 flex flex-col flex-grow">
-                    <p class="text-tertiary uppercase mb-1">{{ $subtitle }}</p>
-
-                    <h3 class="text-secondary font-bold mb-2">{{ .Title }}</h3>
-                    
+                    <p class="text-tertiary uppercase mb-1">{{ $ep.subtitle | default "Épisode" }}</p>
+                    <h3 class="text-secondary font-bold mb-2">{{ $ep.title }}</h3>
                     <p class="text-primary mb-3 text-sm">
-                        {{ .Content | plainify | truncate 100 }}...
+                        {{ $ep.description | plainify | truncate 100 }}...
                     </p>
                     
-                    {{/* Métadonnées : mt-auto pousse vers le bas */}}
                     <div class="mt-auto flex flex-wrap justify-between items-center gap-2 text-xs text-text-primary border-t border-accent-primary pt-3">
                         <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
-                            Ép. {{ .Params.episode_number | default "?" }}
+                            S{{ $ep.season }}E{{ $ep.episode_number }}
                         </p>
                         <div class="flex items-center whitespace-nowrap">
                             <span class="material-symbols-outlined mr-1 text-base">timer</span>
-                            <p>{{ $duration }}</p>
+                            <p>{{ .Params.duration | default "00:00" }}</p>
                         </div>
                         <div class="flex items-center whitespace-nowrap">
                             <span class="material-symbols-outlined mr-1 text-base">calendar_today</span>
-                            <p>{{ .Date.Format "02/01/06" }}</p>
+                            <p>{{ $ep.date.Format "02/01/06" }}</p>
                         </div>
                     </div>
                 </div>
@@ -80,42 +62,31 @@
 
         {{/* Mobile view */}}
         <div class="md:hidden">
-            <a href="{{ .Permalink }}" class="relative block h-52 gap-2 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
+            <a href="{{ $ep.permalink }}" class="relative block h-52 gap-2 border-2 border-accent overflow-hidden shadow-lg animate-on-scroll-fade-up">
             
-                {{/* Image de fond */}}
-                {{ if $image }}
-                    <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="absolute inset-0 w-full h-full object-cover">
-                {{ else }}
-                    <img src="{{ $fallbackImagePath | relURL }}" alt="Podcast" class="absolute inset-0 w-full h-full object-cover">
-                {{ end }}
-            
-                {{/* Overlay sombre */}}
+                <img src="{{ $ep.image }}" alt="{{ $ep.title }}" class="absolute inset-0 w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/30"></div>
             
-                {{/* Contenu */}}
                 <div class="relative h-full flex flex-col justify-between p-3">
-                    
-                    {{/* Numéro d'épisode en haut */}}
                     <div>
                         <p class="inline-block bg-accent-primary text-secondary text-xs font-medium px-2 py-1 rounded-full">
-                            Épisode {{ .Params.episode_number | default "?" }}
+                            S{{ $ep.season }}E{{ $ep.episode_number }}
                         </p>
                     </div>
             
-                    {{/* Titre et durée en bas */}}
                     <div>
                         <h4 class="text-text-inverse font-bold text-sm leading-tight mb-1">
-                            {{ .Title }}
+                            {{ $ep.title }}
                         </h4>
                         <p class="text-text-inverse font-bold text-sm leading-tight mb-1">
-                            {{ $subtitle }}
+                            {{ $ep.subtitle | default "Épisode" }}
                         </p>
 
                         <div class="flex items-center gap-1 text-text-inverse text-xs">
                             <span class="material-symbols-outlined icon-xs icon-inverse">timer</span>
-                            <p>{{ $duration }}</p>
+                            <p>{{ .Params.duration | default "00:00" }}</p>
                             <span class="material-symbols-outlined ml-4 mr-1 text-base">calendar_today</span>
-                            <p>{{ .Date.Format "02/01/06" }}</p>
+                            <p>{{ $ep.date.Format "02/01/06" }}</p>
                         </div>
                     </div>
                 </div>
