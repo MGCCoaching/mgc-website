@@ -36,12 +36,13 @@
             </div>
           </div>
           
-          <form name="contact" method="POST" action="/merci/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+          <form name="contact" method="POST" action="/merci/" data-netlify="true" netlify-honeypot="bot-field" data-netlify-recaptcha="true" class="space-y-6">
             {{/* Honeypot anti-spam */}}
             <input type="hidden" name="form-name" value="contact">
             <p class="hidden">
               <label>Ne pas remplir : <input name="bot-field"></label>
             </p>
+            
 
             {{/* Nom & Email - 2 colonnes sur tablette+ */}}
             <div class="grid sm:grid-cols-2 gap-5">
