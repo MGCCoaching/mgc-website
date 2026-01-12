@@ -132,53 +132,53 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mail reveal 
   // -----------------------------------------------------------------------------
 
-
   document.addEventListener("DOMContentLoaded", () => {
-    const revealLink = document.getElementById("magic-at");
-    if (!revealLink) return;
+
+    /* EMAIL */
+    document.querySelectorAll(".magic-at").forEach(card => {
+      card.addEventListener("click", () => {
   
-    revealLink.addEventListener("click", (e) => {
-      e.preventDefault();
+        if (card.dataset.revealed === "true") return;
   
-      const user   = revealLink.dataset.emailUser;
-      const domain = revealLink.dataset.emailDomain;
+        const user   = card.dataset.emailUser;
+        const domain = card.dataset.emailDomain;
+        if (!user || !domain) return;
   
-      if (!user || !domain) return;
+        const email = `${user}@${domain}`;
   
-      const email = `${user}@${domain}`;
+        const text = card.querySelector(".magic-text-at");
+        if (text) text.textContent = email;
   
-      const text = revealLink.querySelector("#magic-text-at");
-      if (text) text.textContent = email;
+        // Mobile : ouvrir le mail si tap long / double tap
+        card.addEventListener("dblclick", () => {
+          window.location.href = `mailto:${email}`;
+        }, { once: true });
   
-      // Optionnel : activer mailto après révélation
-      // revealLink.href = `mailto:${email}`;
-  
-      revealLink.style.cursor = "default";
+        card.dataset.revealed = "true";
+      });
     });
-  });
   
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".magic-allo").forEach(link => {
+    /* TÉLÉPHONE */
+    document.querySelectorAll(".magic-allo").forEach(card => {
+      card.addEventListener("click", () => {
   
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
+        if (card.dataset.revealed === "true") return;
   
-        const phone = link.dataset.phone;
-        const tel   = link.dataset.phoneTel;
-  
+        const phone = card.dataset.phone;
+        const tel   = card.dataset.phoneTel;
         if (!phone || !tel) return;
   
-        // Remplacer le texte
-        const text = link.querySelector(".phone-text");
+        const text = card.querySelector(".phone-text");
         if (text) text.textContent = phone;
   
-        // Activer l’appel après révélation
-        link.href = `tel:${tel}`;
+        // Mobile : appel direct après révélation
+        card.addEventListener("dblclick", () => {
+          window.location.href = `tel:${tel}`;
+        }, { once: true });
   
-        link.style.cursor = "default";
+        card.dataset.revealed = "true";
       });
-  
     });
+  
   });
   
