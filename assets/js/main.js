@@ -126,3 +126,59 @@ document.addEventListener('DOMContentLoaded', () => {
       observer.observe(element);
     });
   }
+
+
+
+  // Mail reveal 
+  // -----------------------------------------------------------------------------
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const revealLink = document.getElementById("magic-at");
+    if (!revealLink) return;
+  
+    revealLink.addEventListener("click", (e) => {
+      e.preventDefault();
+  
+      const user   = revealLink.dataset.emailUser;
+      const domain = revealLink.dataset.emailDomain;
+  
+      if (!user || !domain) return;
+  
+      const email = `${user}@${domain}`;
+  
+      const text = revealLink.querySelector("#magic-text-at");
+      if (text) text.textContent = email;
+  
+      // Optionnel : activer mailto après révélation
+      // revealLink.href = `mailto:${email}`;
+  
+      revealLink.style.cursor = "default";
+    });
+  });
+  
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".magic-allo").forEach(link => {
+  
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+  
+        const phone = link.dataset.phone;
+        const tel   = link.dataset.phoneTel;
+  
+        if (!phone || !tel) return;
+  
+        // Remplacer le texte
+        const text = link.querySelector(".phone-text");
+        if (text) text.textContent = phone;
+  
+        // Activer l’appel après révélation
+        link.href = `tel:${tel}`;
+  
+        link.style.cursor = "default";
+      });
+  
+    });
+  });
+  

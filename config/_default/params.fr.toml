@@ -64,6 +64,11 @@ keywords = [
   phone = '+33 6 16 45 74 78'
   address = 'Amiens et ses alentours, France'
 
+  email_user   = "mariegaetanecomte"
+  email_domain = "gmail.com"
+
+  phone_parts = ["06", "16", "45", "74", "78"]
+
 # Copyright
 # ------------------------------------------------------------------------------
 copyright = '© {year} MGC Coaching. Tous droits réservés.'
@@ -82,7 +87,7 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
   podcasts = true
 
 [homeSection]
-  enableLatestPodcast = true
+  enableLatestPodcast = false
 
 [cookies]
   enabled = false   # true = bandeau actif, false = désactivé
