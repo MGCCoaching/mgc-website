@@ -131,54 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mail reveal 
   // -----------------------------------------------------------------------------
-
-  document.addEventListener("DOMContentLoaded", () => {
-
-    /* EMAIL */
-    document.querySelectorAll(".magic-at").forEach(card => {
-      card.addEventListener("click", () => {
+  document.addEventListener('DOMContentLoaded', () => {
   
-        if (card.dataset.revealed === "true") return;
+    const setupReveal = (selector, textSelector) => {
+      const container = document.querySelector(selector);
+      if (!container) return;
   
-        const user   = card.dataset.emailUser;
-        const domain = card.dataset.emailDomain;
-        if (!user || !domain) return;
+      const handleClick = (e) => {
+        // On récupère la valeur encodée
+        const encoded = container.getAttribute('data-v');
+        if (!encoded) return;
   
-        const email = `${user}@${domain}`;
+        // On décode et on injecte dans le <p>
+        const targetText = container.querySelector(textSelector);
+        targetText.textContent = atob(encoded);
   
-        const text = card.querySelector(".magic-text-at");
-        if (text) text.textContent = email;
+        // On retire le curseur pointer et l'événement pour éviter les bugs
+        container.classList.remove('cursor-pointer');
+        container.style.pointerEvents = 'none'; // Empêche tout bug de clic résiduel
+        targetText.style.pointerEvents = 'auto'; // Permet quand même de sélectionner le texte
+        
+        container.removeEventListener('click', handleClick);
+      };
   
-        // Mobile : ouvrir le mail si tap long / double tap
-        card.addEventListener("dblclick", () => {
-          window.location.href = `mailto:${email}`;
-        }, { once: true });
+      container.addEventListener('click', handleClick);
+    };
   
-        card.dataset.revealed = "true";
-      });
-    });
-  
-    /* TÉLÉPHONE */
-    document.querySelectorAll(".magic-allo").forEach(card => {
-      card.addEventListener("click", () => {
-  
-        if (card.dataset.revealed === "true") return;
-  
-        const phone = card.dataset.phone;
-        const tel   = card.dataset.phoneTel;
-        if (!phone || !tel) return;
-  
-        const text = card.querySelector(".phone-text");
-        if (text) text.textContent = phone;
-  
-        // Mobile : appel direct après révélation
-        card.addEventListener("dblclick", () => {
-          window.location.href = `tel:${tel}`;
-        }, { once: true });
-  
-        card.dataset.revealed = "true";
-      });
-    });
-  
+    // Initialisation pour l'email et le téléphone de façon indépendante
+    setupReveal('.magic-at', '.magic-text-at');
+    setupReveal('.magic-allo', '.phone-text');
   });
-  
