@@ -5,8 +5,6 @@ outputs:
   - chapters
 categories:
   - Podcast
-tags:
-  - podcast
 audio_format: audio/mpeg
 title: Sample 01
 subtitle: Sample avec jingle via lien CDN

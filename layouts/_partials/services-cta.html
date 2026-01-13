@@ -1,0 +1,24 @@
+<section class="bg-primary py-16 md:py-24 border-t border-accent-primary/10">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-text-primary mb-4">
+          Besoin d'aller plus loin ?
+        </h2>
+        <p class="text-text-secondary max-w-2xl mx-auto">
+          Découvrez comment je peux vous accompagner concrètement dans vos prises de parole.
+        </p>
+      </div>
+  
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {{ range where site.RegularPages "Section" "features" }}
+        <a href="{{ .Permalink }}" class="group bg-secondary p-6 rounded-xl shadow-themed hover:shadow-themed-lg transition-all">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="material-symbols-outlined text-accent-primary">{{ .Params.icon | default "star" }}</span>
+            <h4 class="font-semibold text-text-primary group-hover:text-accent-primary transition-colors">{{ .Title }}</h4>
+          </div>
+          <p class="text-text-secondary text-sm line-clamp-3">{{ .Params.subtitle }}</p>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+  </section>

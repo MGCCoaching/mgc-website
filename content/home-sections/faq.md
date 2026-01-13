@@ -32,4 +32,6 @@ faqs:
       
       Les tarifs sont établis sur devis, en fonction de vos besoins, de vos objectifs et du format choisi. Chaque accompagnement est unique, parce que chaque prise de parole l'est aussi.
     icon: "location_on"
+sitemap:
+  disable: true
 ---

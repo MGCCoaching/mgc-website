@@ -1,6 +1,7 @@
 ---
 title: "Prise de parole en public"
 subtitle: "Captivez votre audience et faites passer vos messages avec assurance"
+description: "Captivez votre audience et faites passer vos messages avec assurance"
 icon: "mic_external_on"
 category: "Coaching"
 image: "/img/prise-de-parole.webp"
