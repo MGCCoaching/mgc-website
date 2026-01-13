@@ -1,4 +1,5 @@
 ---
+is_episode: true
 outputs:
   - html
   - data
