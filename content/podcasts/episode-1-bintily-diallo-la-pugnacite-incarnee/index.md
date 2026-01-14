@@ -27,7 +27,9 @@ description: Rencontre avec Bintily Diallo, journaliste, chanteuse,
 explicit: false
 block: false
 ---
-Rencontre avec Bintily Diallo, journaliste, chanteuse, stand-uppeuse parisienne. Issue d’une famille nombreuse, Bintily a décidé de se faire entendre et de se faire une place. Sa voix est son arme pour dire ce qu’elle a sur le coeur. Dans ses textes, elle parle d’amour, de rupture, de souffrance, de la  famille, du célibat, de féminisme. Dans cet épisode elle nous parle du stress et de sa façon de le gérer. Elle évoque aussi toutes les fois où elle est confrontée au racisme. La route est encore longue mais c’est le poing levé qu’elle veut la continuer. Son premier album “Nouveau départ” sort en février.  
+Rencontre avec Bintily Diallo, journaliste, chanteuse, stand-uppeuse parisienne. Issue d’une famille nombreuse, Bintily a décidé de se faire entendre et de se faire une place. Sa voix est son arme pour dire ce qu’elle a sur le coeur. Dans cet épisode elle nous parle notamment du stress et de sa façon de le gérer. Dans ses textes, elle parle d’amour, de rupture, de souffrance, de la  famille, du célibat, de féminisme. Dans cet épisode elle nous parle du stress et de sa façon de le gérer. Elle évoque aussi toutes les fois où elle est confrontée au racisme. La route est encore longue mais c’est le poing levé qu’elle veut la continuer. Son premier album “Nouveau départ” sort en février.  
+
+
 
 <https://www.youtube.com/@bintilymusique>
 
