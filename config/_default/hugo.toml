@@ -30,11 +30,11 @@ canonifyURLs = false
 relativeURLs = false
 uglyURLs = false
 
-# Taxonomies
+# Taxonomies & RSS Global - Désactivés pour un Sitemap propre
 # ------------------------------------------------------------------------------
-# [taxonomies]
-#   tag = 'tags'
-#   category = 'categories'
+disableKinds = ["taxonomy", "term"]
+[taxonomies]
+
 
 # Permalinks
 # ------------------------------------------------------------------------------
@@ -46,13 +46,10 @@ uglyURLs = false
 # OUTPUT FORMATS - CRITICAL FOR RSS
 # ==============================================================================
 
-# Define media types
 [mediaTypes]
   [mediaTypes."application/rss+xml"]
     suffixes = ["xml"]
 
-disableKinds = ['taxonomy', 'term']
-# Define output formats
 [outputFormats]
   [outputFormats.RSS]
     mediaType = "application/rss+xml"
@@ -60,11 +57,11 @@ disableKinds = ['taxonomy', 'term']
     isPlainText = true
     notAlternative = false
   
-  [outputFormats.PodcastRSS]
-    mediaType = "application/rss+xml"
-    baseName = "index"
-    isPlainText = true
-    path = ""
+  # [outputFormats.PodcastRSS]
+  #   mediaType = "application/rss+xml"
+  #   baseName = "index"
+  #   isPlainText = true
+  #   path = ""
 
   [outputFormats.chapters]
     mediaType = "application/json"
@@ -77,12 +74,14 @@ disableKinds = ['taxonomy', 'term']
     isPlainText = true
 
 [outputs]
-  home = ['HTML', 'RSS']
-  section = ['HTML', 'RSS']
+  home = ['HTML']
+  section = ['HTML']
   page = ['HTML']
+  taxonomy = ["HTML"]  
+  term = ["HTML"]
 
 # ==============================================================================
-# MINIFICATION - Disable XML minification to avoid issues
+# MINIFICATION
 # ==============================================================================
 [minify]
   disableCSS = false
@@ -90,9 +89,32 @@ disableKinds = ['taxonomy', 'term']
   disableJS = false
   disableJSON = false
   disableSVG = false
-  disableXML = true       # ← Disable XML minification for RSS
+  disableXML = true       # Important pour ne pas corrompre les flux RSS
   minifyOutput = true
 
+# ==============================================================================
+# BUILD SETTINGS (Tailwind & Sitemap)
+# ==============================================================================
+[build]
+  [build.buildStats]
+    enable = true
+  
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+
+  # Exclure les sections techniques du sitemap et du rendu
+  [[build.rules]]
+    values = { section = "home-sections" }
+    build = "never"
+    sitemap = { disable = true }
+    
+  [[build.rules]]
+    values = { section = "features", kind = "section" }
+    sitemap = { disable = true }
 # Module Mounts
 # ------------------------------------------------------------------------------
 [module]
@@ -103,18 +125,6 @@ disableKinds = ['taxonomy', 'term']
     disableWatch = true
     source = 'hugo_stats.json'
     target = 'assets/notwatching/hugo_stats.json'
-
-# Build Settings for Tailwind
-# ------------------------------------------------------------------------------
-[build]
-  [build.buildStats]
-    enable = true
-  [[build.cachebusters]]
-    source = 'assets/notwatching/hugo_stats\.json'
-    target = 'css'
-  [[build.cachebusters]]
-    source = '(postcss|tailwind)\.config\.js'
-    target = 'css'
 
 # Markup Settings
 # ------------------------------------------------------------------------------
@@ -135,7 +145,6 @@ disableKinds = ['taxonomy', 'term']
     languageName = 'Français'
     weight = 1
     title = 'Marie-Gaëtane Comte'
-
 
 [params.colors]
   accent = "#D4A574"      # Pour le player

@@ -197,66 +197,38 @@
           
           {{/* Contenu */}}
           <div class="p-6 space-y-4">
-            {{/* Email - reveal on click */}}
-            {{/* Email - reveal on click */}}
-            <div
-              class="block group cursor-pointer magic-at"
-              data-email-user="{{ .Site.Params.contact.email_user }}"
-              data-email-domain="{{ .Site.Params.contact.email_domain }}"
-            >
+            {{/* Data Preparation */}}
+            {{ $email := print .Site.Params.contact.email_user "@" .Site.Params.contact.email_domain }}
+            {{ $phone := delimit .Site.Params.contact.phone_parts " " }}
 
+            <div class="block group cursor-pointer magic-at" data-v="{{ $email | base64Encode }}">
               <div class="flex items-start gap-3 p-4 bg-primary rounded-xl hover:shadow-themed transition-all relative">
-
                 <div class="bg-accent-primary text-white p-2 flex items-center rounded-lg shrink-0">
                   <span class="material-symbols-outlined">mail</span>
                 </div>
-
                 <div class="flex-1 min-w-0">
-                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">
-                    Email
-                  </p>
-
-                  <!-- TEXTE COPIABLE -->
-                  <p
-                    class="magic-text-at text-text-primary font-medium break-all select-text transition-colors">
+                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Email</p>
+                  <p class="magic-text-at text-text-primary font-medium break-all select-text transition-colors">
                     Afficher l’email
                   </p>
                 </div>
-
                 <span class="material-symbols-outlined text-text-tertiary group-hover:text-accent-primary group-hover:translate-x-1 transition-all">
                   call_received
                 </span>
               </div>
             </div>
 
-            
-
-            {{/* Téléphone - reveal on click */}}
-            {{/* Téléphone - reveal on click */}}
-            <div
-              class="block group cursor-pointer magic-allo"
-              data-phone="{{ delimit .Site.Params.contact.phone_parts " " }}"
-              data-phone-tel="+33{{ delimit .Site.Params.contact.phone_parts "" | strings.TrimPrefix "0" }}"
-            >
-
-              <div class="flex items-start gap-3 p-4 bg-primary rounded-xl hover:shadow-themed transition-all">
-
+            <div class="block group cursor-pointer magic-allo" data-v="{{ $phone | base64Encode }}">
+              <div class="flex items-start gap-3 p-4 bg-primary rounded-xl hover:shadow-themed transition-all relative">
                 <div class="bg-success text-white p-2 flex items-center rounded-lg shrink-0">
                   <span class="material-symbols-outlined">call</span>
                 </div>
-
                 <div class="flex-1 min-w-0">
-                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">
-                    Téléphone
-                  </p>
-
-                  <!-- TEXTE COPIABLE -->
-                  <p
-                    class="phone-text text-text-primary font-medium break-all select-text transition-colors">
+                  <p class="text-text-tertiary text-xs uppercase tracking-wider mb-1">Téléphone</p>
+                  <p class="phone-text text-text-primary font-medium break-all select-text transition-colors">
                     Afficher le numéro
                   </p>
                 </div>
-
                 <span class="material-symbols-outlined text-text-tertiary group-hover:text-success group-hover:translate-x-1 transition-all">
                   call_received
                 </span>

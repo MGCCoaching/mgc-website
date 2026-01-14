@@ -8,7 +8,7 @@ local_backend: true
 backend:
   name: git-gateway
   repo: MGCCoaching/mgc-website
-  branch: mod
+  branch: main
   auth_type: pkce
   base_url: https://auth.decapbridge.com
   auth_endpoint: /sites/5cdd74d8-4be1-4c81-961d-5930b10bef6f/pkce
@@ -63,11 +63,14 @@ collections:
     filter:
       field: is_episode
       value: true
-    summary: "S{{season}}E{{episode_number}} - {{title}}"
+    summary: "S{{season}}E{{episode_number}} - {{title}}   (Publié le: {{date | date('DD MMM YYYY')}}) "
     sortable_fields: ["date", "episode_number", "title"]
     view_groups:
       - label: "Saison"
         field: season
+      - label: "Brouillon"
+        field: "draft"
+  
     fields:
       # ══════════════════════════════════════════════════════════════════
       # CHAMPS CACHÉS (système)
@@ -91,6 +94,11 @@ collections:
         name: "audio_format"
         widget: "hidden"
         default: "audio/mpeg"
+
+      - label: "Filter for episod in decap"
+        name: "is_episode"
+        widget: "hidden"
+        default: true
 
       # ══════════════════════════════════════════════════════════════════
       # INFORMATIONS PRINCIPALES
@@ -317,8 +325,14 @@ collections:
         file: "content/podcasts/_index.md"
         fields:
           - { label: "Titre", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text", required: false }
+          - { label: "Description for SEO", name: "description", widget: "text", required: false, hint: "Pour moteur de recherche" }
           - { label: "Contenu", name: "body", widget: "markdown" }
+          - label: "Layout (État du site)"
+            name: "layout"
+            widget: "select"
+            options:
+              - { label: "⏳ En attente (Coming Soon)", value: "coming-soon" }
+              - { label: "🚀 En direct (Live)", value: " " } 
       
       - label: "Contact"
         name: "contact"

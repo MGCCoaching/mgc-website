@@ -3,7 +3,8 @@
 
 # SEO & Meta Tags
 # ------------------------------------------------------------------------------
-description = 'Révélez votre voix unique grâce au coaching média. Je vous aide à construire une marque personnelle forte et crédible en ligne. Parlez avec impact et authenticité pour fidéliser votre audience sur tous les canaux médiatiques.'
+seoTitle= "Marie-Gaëtane Comte | Média Training & Prise de Parole à Paris et Hauts-de-France"
+description = 'Gagnez en impact lors de vos interventions avec une ex-journaliste Radio France. Média training et prise de parole à Paris, Hauts-de-France ou en visio partout en France.'
 author = 'Marie-Gaëtane Comte'
 author_subtitle = "Média training & prise de parole"
 keywords = [
@@ -15,8 +16,11 @@ keywords = [
   "storytelling", 
   "préparation interview", 
   "communication de crise",
-  "coach média Amiens",
-  "formation prise de parole"
+  "coach média",
+  "formation prise de parole",
+  "Amiens",
+  "Paris",
+  "Hauts-de-France"
 ]
 
 # Open Graph / Social Media
@@ -87,7 +91,7 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
   podcasts = true
 
 [homeSection]
-  enableLatestPodcast = false
+  enableLatestPodcast = true
 
 [cookies]
   enabled = false   # true = bandeau actif, false = désactivé

@@ -24,6 +24,8 @@ features:
       Tables rondes, conférences, séminaires, gala, colloque. Confiez-moi l'animation de vos évènements. Mon rôle est de rendre les échanges fluides et mémorables.
 
       Vous avez un message à faire passer, des experts à faire dialoguer ou un événement à incarner ? Je mets mon expérience du micro, du direct et de la transmission au service de votre projet. Vous méritez de briller.
+sitemap:
+  disable: true
 ---
 
 Investissez en vous pour ne plus laisser vos prises de parole tomber dans l’oubli

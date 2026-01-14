@@ -5,6 +5,7 @@ icon: "tv_signin"
 category: "Formation"
 image: "/img/media_training.webp"
 weight: 1
+description: 'Préparez-vous à réussir chaque interview avec impact et authenticité'
 
 ---
 Répondre aux questions des journalistes peut sembler être un exercice insurmontable. Certains préfèrent ne pas communiquer du tout plutôt que de dire "des bêtises". Je pense que c'est une erreur. Et ça laisse la place à des interprétations.

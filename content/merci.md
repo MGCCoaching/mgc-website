@@ -1,4 +1,7 @@
-+++
-title = 'Merci !'
-layout = 'merci'
-+++
+---
+title: 'Merci !'
+layout: 'merci'
+sitemap:
+  disable: true
+
+---
