@@ -11,7 +11,7 @@ audio_format: audio/mpeg
 is_episode: true
 title: "Episode 1: La voix de Bintily Diallo "
 date: 2026-01-14
-draft: true
+draft: false
 season: 1
 episode_number: 1
 episode_type: full
