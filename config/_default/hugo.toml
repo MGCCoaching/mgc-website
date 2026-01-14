@@ -32,7 +32,9 @@ uglyURLs = false
 
 # Taxonomies & RSS Global - Désactivés pour un Sitemap propre
 # ------------------------------------------------------------------------------
-disableKinds = ["taxonomy", "term", "RSS"]
+disableKinds = ["taxonomy", "term"]
+[taxonomies]
+
 
 # Permalinks
 # ------------------------------------------------------------------------------
@@ -55,11 +57,11 @@ disableKinds = ["taxonomy", "term", "RSS"]
     isPlainText = true
     notAlternative = false
   
-  [outputFormats.PodcastRSS]
-    mediaType = "application/rss+xml"
-    baseName = "index"
-    isPlainText = true
-    path = ""
+  # [outputFormats.PodcastRSS]
+  #   mediaType = "application/rss+xml"
+  #   baseName = "index"
+  #   isPlainText = true
+  #   path = ""
 
   [outputFormats.chapters]
     mediaType = "application/json"
@@ -75,6 +77,8 @@ disableKinds = ["taxonomy", "term", "RSS"]
   home = ['HTML']
   section = ['HTML']
   page = ['HTML']
+  taxonomy = ["HTML"]  
+  term = ["HTML"]
 
 # ==============================================================================
 # MINIFICATION
@@ -107,8 +111,10 @@ disableKinds = ["taxonomy", "term", "RSS"]
     values = { section = "home-sections" }
     build = "never"
     sitemap = { disable = true }
-  
-
+    
+  [[build.rules]]
+    values = { section = "features", kind = "section" }
+    sitemap = { disable = true }
 # Module Mounts
 # ------------------------------------------------------------------------------
 [module]

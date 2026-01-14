@@ -8,7 +8,7 @@ local_backend: true
 backend:
   name: git-gateway
   repo: MGCCoaching/mgc-website
-  branch: mod
+  branch: main
   auth_type: pkce
   base_url: https://auth.decapbridge.com
   auth_endpoint: /sites/5cdd74d8-4be1-4c81-961d-5930b10bef6f/pkce
