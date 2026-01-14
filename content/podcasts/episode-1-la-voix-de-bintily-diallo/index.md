@@ -35,4 +35,4 @@ Rencontre avec Bintily Diallo, journaliste, chanteuse et stand-uppeuse. Issue d'
 
 [](https://www.youtube.com/user/bintilydiallo)
 
-[](https://www.youtube.com/user/bintilydiallo)[](https://www.youtube.com/user/bintilydiallo)
+<https://www.youtube.com/user/bintilydiallo>[](https://www.youtube.com/user/bintilydiallo)[](https://www.youtube.com/user/bintilydiallo)
