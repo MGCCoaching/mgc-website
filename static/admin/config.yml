@@ -42,6 +42,8 @@ slug:
   clean_accents: true
   sanitize_replacement: "-"
 
+publish_mode: editorial_workflow
+
 # ══════════════════════════════════════════════════════════════════════════════
 # COLLECTIONS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -267,6 +269,10 @@ collections:
           - { label: "Apple Podcasts", name: "apple_podcasts", widget: "string", required: false }
           - { label: "Deezer", name: "deezer", widget: "string", required: false }
           - { label: "YouTube", name: "youtube", widget: "string", required: false }
+
+
+      - { label: "Vidéo YouTube 01 (URL ou ID)", name: "youtube_video_url_01", widget: "string", required: false, hint: "Collez l'URL YouTube complète ou l'identifiant de la vidéo." }
+      - { label: "Vidéo YouTube 02 (URL ou ID)", name: "youtube_video_url_02", widget: "string", required: false, hint: "Optionnel : deuxième vidéo associée." }
 
   # ────────────────────────────────────────────────────────────────────────────
   # SECTIONS PAGE D'ACCUEIL

@@ -74,8 +74,8 @@ disableKinds = ["taxonomy", "term"]
     isPlainText = true
 
 [outputs]
-  home = ['HTML']
-  section = ['HTML']
+  home = ['HTML', 'RSS']
+  section = ['HTML', 'RSS']
   page = ['HTML']
   taxonomy = ["HTML"]  
   term = ["HTML"]

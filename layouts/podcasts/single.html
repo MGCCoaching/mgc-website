@@ -78,7 +78,7 @@
                             {{ end }}
                         </div>
                         <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Podcast" }}</p>
-                        <h2 class="font-extrabold text-secondary mt-1">{{ $ep.title }}</h2>
+                        <h1 class="podcast-section font-extrabold text-secondary mt-1">{{ $ep.title }}</h1>
                     </header>
                     
                     {{/* Invités - Mobile */}}
@@ -198,7 +198,7 @@
                         {{ end }}
                     </div>
                     <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Podcast" }}</p>
-                    <h1 class="text-3xl font-extrabold text-secondary mt-1">{{ $ep.title }}</h1>
+                    <h1 class="podcast-section text-3xl font-extrabold text-secondary mt-1">{{ $ep.title }}</h1>
                 </header>
                 
                 {{/* Invités - Desktop */}}
@@ -272,14 +272,53 @@
             {{ end }}
             {{ end }}
 
+{{/* ══════════════════════════════════════════════════════════════════
+     VIDÉOS YOUTUBE (Auto-extraction de l'ID)
+     ══════════════════════════════════════════════════════════════════ */}}
+
+     {{ if or .Params.youtube_video_url_01 .Params.youtube_video_url_02 }}
+     <section class="mt-12 mb-8">
+         <h3 class="font-bold text-primary mb-6 flex items-center gap-2">
+             <span class="material-symbols-outlined text-accent-primary">videocam</span>
+             Vidéos associées
+         </h3>
+         
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+             {{/* Vidéo 01 */}}
+             {{ with .Params.youtube_video_url_01 }}
+                 {{ $id := replaceRE "^.*(?:(?:youtu\\.be\\/|v\\/|vi\\/|u\\/\\w\\/|embed\\/|shorts\\/)|(?:(?:watch)?\\?v(?:i)?=|\\&v(?:i)?=))([^#\\&\\?]*).*" "$1" . }}
+                 <div class="rounded-xl overflow-hidden shadow-lg bg-black aspect-video">
+                     {{ (printf `{{< youtube "%s" >}}` $id) | $.Page.RenderString }}
+                 </div>
+             {{ end }}
+     
+             {{/* Vidéo 02 */}}
+             {{ with .Params.youtube_video_url_02 }}
+                 {{ $id := replaceRE "^.*(?:(?:youtu\\.be\\/|v\\/|vi\\/|u\\/\\w\\/|embed\\/|shorts\\/)|(?:(?:watch)?\\?v(?:i)?=|\\&v(?:i)?=))([^#\\&\\?]*).*" "$1" . }}
+                 <div class="rounded-xl overflow-hidden shadow-lg bg-black aspect-video">
+                     {{ (printf `{{< youtube "%s" >}}` $id) | $.Page.RenderString }}
+                 </div>
+             {{ end }}
+         </div>
+     </section>
+     {{ end }}
         </div>
     </article>
 </div>
 
 {{/* Autres épisodes */}}
-{{/*  <div>
+{{/* On définit les variables pour compter les épisodes */}}
+{{ $currentPage := . }}
+{{ $allPodcasts := where site.RegularPages "Section" "podcasts" }}
+{{ $otherPodcasts := where $allPodcasts "Permalink" "ne" $currentPage.Permalink }}
+
+{{/* Condition : on affiche le div et le partial seulement si >= 2 */}}
+{{ $otherPodcasts := where (where site.RegularPages "Section" "podcasts") "Permalink" "ne" .Permalink }}
+{{ if ge (len $otherPodcasts) 2 }}
+  <div>
     {{ partial "other_podcasts.html" . }}
-</div>  */}}
+  </div>
+{{ end }}
 
 <div>
     {{ partial "services-cta.html" . }}
