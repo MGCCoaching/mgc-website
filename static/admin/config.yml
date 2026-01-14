@@ -3,7 +3,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL
-local_backend: true
+#local_backend: true
 
 backend:
   name: git-gateway
@@ -192,7 +192,7 @@ collections:
         name: "cover"
         widget: "image"
         required: false
-        hint: "1400x1400px recommandé. Sinon : première image du dossier ou fallback."
+        hint: "1400x1400px - 3000x3000px recommandé. Sinon : première image du dossier ou fallback."
 
       - label: "📄 Description"
         name: "description"
