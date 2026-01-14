@@ -32,3 +32,5 @@ Rencontre avec Bintily Diallo, journaliste, chanteuse, stand-uppeuse parisienne.
 <https://www.youtube.com/@bintilymusique>
 
 [](https://www.youtube.com/@bintilydiallo)
+
+<https://www.youtube.com/@bintilydiallo>
