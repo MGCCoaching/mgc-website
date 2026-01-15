@@ -16,7 +16,7 @@ season: 1
 episode_number: 1
 episode_type: full
 audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
-file_name: 01-Bintily DialloOK.mp3
+file_name: 01-BintilyDialloOK.mp3
 duration: 32:08
 cover: photo-bintily-ok.jpeg
 description: "Rencontre avec Bintily Diallo, journaliste, chanteuse et
