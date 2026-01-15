@@ -22,6 +22,16 @@
     </div>
     <h2 class="text-center text-primary font-bold mb-4 text-3xl">{{ .Title }}</h2>
     <div class="text-primary p-3 prose prose-lg max-w-none mx-auto animate-on-scroll-fade-up animate-stagger-2">{{ .Content }}</div>
+    {{/* Lien Spotify */}}
+    {{ with .Site.Params.social.spotify }}
+    <div class="flex justify-center mt-6 animate-on-scroll-fade-up animate-stagger-3">
+        <a href="{{ . }}" target="_blank" rel="noopener" 
+        class="inline-flex items-center gap-3 px-6 py-3 bg-[#1DB954] hover:bg-[#1ed760] text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+            <i class="fa-brands fa-spotify text-2xl"></i>
+            <span>Écouter sur Spotify</span>
+        </a>
+    </div>
+    {{ end }}
 </section>
 
 <section class="bg-primary p-6 sm:p-12 bg-secondary">    

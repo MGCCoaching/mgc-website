@@ -30,6 +30,8 @@ keywords = [
 
   instagram = 'https://instagram.com/marie_gaetane_comte'
 
+  spotify = 'https://open.spotify.com/show/5YD1jn2aviIjCh2vl3rCZL?si=8d3a44651b3f4f40'
+
 [opengraph]
   image = '/img/logo.webp'
   imageWidth = 1200
