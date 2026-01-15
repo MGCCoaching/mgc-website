@@ -3,7 +3,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 
 # ⚠️  DÉCOMMENTER POUR TEST LOCAL
-#local_backend: true
+local_backend: true
 
 backend:
   name: git-gateway

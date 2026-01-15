@@ -56,16 +56,25 @@
 {{- end -}}
 
 {{- /* Duration */ -}}
-{{- $durationRaw := .Params.duration | default "00:00" -}}
+{{- /* On force la conversion en string avec printf "%v" au cas où YAML l'interprète comme une heure */ -}}
+{{- $durationRaw := printf "%v" .Params.duration | default "00:00" -}}
+
+{{- /* Si YAML a converti 09:28 en secondes totales ou format spécial, on s'assure d'avoir du texte */ -}}
 {{- $parts := split $durationRaw ":" -}}
 {{- $durationSeconds := 0 -}}
+
 {{- if eq (len $parts) 2 -}}
-  {{- $durationSeconds = add (mul (int (index $parts 0)) 60) (int (index $parts 1)) -}}
+  {{- $m := index $parts 0 | strings.TrimLeft "0" | default "0" -}}
+  {{- $s := index $parts 1 | strings.TrimLeft "0" | default "0" -}}
+  {{- $durationSeconds = add (mul (int $m) 60) (int $s) -}}
 {{- else if eq (len $parts) 3 -}}
-  {{- $durationSeconds = add (add (mul (int (index $parts 0)) 3600) (mul (int (index $parts 1)) 60)) (int (index $parts 2)) -}}
+  {{- $h := index $parts 0 | strings.TrimLeft "0" | default "0" -}}
+  {{- $m := index $parts 1 | strings.TrimLeft "0" | default "0" -}}
+  {{- $s := index $parts 2 | strings.TrimLeft "0" | default "0" -}}
+  {{- $durationSeconds = add (add (mul (int $h) 3600) (mul (int $m) 60)) (int $s) -}}
 {{- end -}}
 
-{{- $durationFormatted := .Params.duration | default "00:00" -}}
+{{- $durationFormatted := $durationRaw -}}
 
 {{- /* Image */ -}}
 {{- $episodeImage := "" -}}
