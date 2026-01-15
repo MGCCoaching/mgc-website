@@ -26,6 +26,8 @@ description: Rencontre avec Bintily Diallo, journaliste, chanteuse,
   et de sa façon de le gérer.
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/33eSPj3PCahFAtknYlItbf?si=5e061728b47b45af
 youtube_video_url_01: https://www.youtube.com/watch?v=k2rfqNcTog4
 youtube_video_url_02: https://www.youtube.com/watch?v=gNg7T6J0TBY&t=4s
 ---
