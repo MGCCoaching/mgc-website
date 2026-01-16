@@ -91,8 +91,6 @@
   },
   "url": "{{ $.Site.BaseURL }}",
   "description": "{{ $.Site.Params.description }}",
-  {{ with $.Site.Params.contact.email }}"email": "{{ . }}",{{ end }}
-  {{ with $.Site.Params.contact.phone }}"telephone": "{{ . }}",{{ end }}
   "sameAs": [
     {{ with $.Site.Params.social.linkedin }}"{{ . }}"{{ end }}
   ]
