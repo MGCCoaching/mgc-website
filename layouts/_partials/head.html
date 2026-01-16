@@ -98,6 +98,18 @@
 </script>
 {{ end }}
 
+{{/* --- 6b. Schema.org (JSON-LD) - WebSite (nom du site dans Google) --- */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Marie-Gaëtane Comte - Media Training",
+  "alternateName": ["MGC Coaching", "MGC"],
+  "url": "{{ .Site.BaseURL }}"
+}
+</script>
+
+
 {{/* --- 7. Schema.org (JSON-LD) - BreadcrumbList --- */}}
 {{ if not .IsHome }}
 <script type="application/ld+json">
