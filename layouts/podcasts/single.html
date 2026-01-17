@@ -68,16 +68,16 @@
                 <div class="md:hidden">
                     <header class="mb-6">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                            {{/*  <span class="inline-block bg-accent-primary text-white text-xs font-bold px-2 py-1 rounded-full">
                                 S{{ $ep.season }}E{{ $ep.episode_number }}
-                            </span>
+                            </span>  */}}
                             {{ if eq $ep.episode_type "trailer" }}
                             <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bande-annonce</span>
                             {{ else if eq $ep.episode_type "bonus" }}
                             <span class="inline-block bg-tertiary text-white text-xs px-2 py-1 rounded-full">Bonus</span>
                             {{ end }}
                         </div>
-                        <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Podcast" }}</p>
+                        <p class="text-sm font-semibold text-tertiary uppercase">{{ $ep.subtitle | default "Les voix des Phénix" }}</p>
                         <h1 class="podcast-section font-extrabold text-secondary mt-1">{{ $ep.title }}</h1>
                     </header>
                     
