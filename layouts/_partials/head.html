@@ -100,15 +100,109 @@
 
 {{/* --- 6b. Schema.org (JSON-LD) - WebSite (nom du site dans Google) --- */}}
 <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Marie-Gaëtane Comte - Média Training",
+    "alternateName": ["MGC Coaching", "MGC", "Marie-Gaëtane Comte"],
+    "url": "{{ .Site.BaseURL }}",
+    "description": "{{ .Site.Params.description }}",
+    "inLanguage": "fr-FR",
+    "publisher": {
+      "@type": "Person",
+      "name": "Marie-Gaëtane Comte",
+      "url": "{{ .Site.BaseURL }}"
+    }
+  }
+  </script>
+
+{{/* --- 6c. Schema.org (JSON-LD) - LocalBusiness (recherche locale & Google Maps) --- */}}
+{{ if .IsHome }}
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Marie-Gaëtane Comte - Media Training",
-  "alternateName": ["MGC Coaching", "MGC"],
-  "url": "{{ .Site.BaseURL }}"
+  "@type": "LocalBusiness",
+  "@id": "{{ .Site.BaseURL }}#business",
+  "name": "MGC Coaching - Marie-Gaëtane Comte",
+  "description": {{ .Site.Params.description | jsonify | safeJS }},
+  "url": "{{ .Site.BaseURL }}",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ "/favicon_io/android-chrome-512x512.png" | absURL }}",
+    "width": 512,
+    "height": 512
+  },
+  "image": [
+    "{{ "/img/logo.webp" | absURL }}",
+    "{{ "/favicon_io/android-chrome-512x512.png" | absURL }}"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Amiens",
+    "addressRegion": "Hauts-de-France",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 49.894067,
+    "longitude": 2.295753
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Amiens"
+    },
+    {
+      "@type": "City", 
+      "name": "Paris"
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Hauts-de-France"
+    },
+    {
+      "@type": "Country",
+      "name": "France"
+    }
+  ],
+  "priceRange": "€€",
+  "sameAs": [
+    {{ with .Site.Params.social.linkedin }}"{{ . }}"{{ end }}{{ if and .Site.Params.social.linkedin .Site.Params.social.instagram }},{{ end }}
+    {{ with .Site.Params.social.instagram }}"{{ . }}"{{ end }}
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Services de coaching",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Média Training",
+          "description": "Préparation aux interviews et relations presse"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Prise de parole en public",
+          "description": "Coaching pour réunions, conférences et présentations"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Animation d'événements",
+          "description": "Animation de tables rondes, conférences et séminaires"
+        }
+      }
+    ]
+  }
 }
 </script>
-
+{{ end }}
 
 {{/* --- 7. Schema.org (JSON-LD) - BreadcrumbList --- */}}
 {{ if not .IsHome }}

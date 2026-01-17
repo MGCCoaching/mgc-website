@@ -3,7 +3,7 @@ title: "Qui suis-je?"
 weight: 30
 section: "about"
 image: "/img/profil.webp"
-imageDecription: "Marie-Gaëtane Comte, ex-journaliste Radio France et coach en prise de parole"
+imageDecription: "Marie-Gaëtane Comte, coach en prise de parole (ex-journaliste Radio France)"
 sitemap:
   disable: true
 ---
