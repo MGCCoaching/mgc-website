@@ -5,7 +5,7 @@ icon: "tv_signin"
 category: "Formation"
 image: "/img/media_training.webp"
 weight: 1
-description: 'Préparez-vous à réussir chaque interview avec impact et authenticité'
+description: "Média training avec Marie-Gaëtane Comte, 15 ans d'expérience Radio France. Apprenez à répondre aux journalistes, gérer le stress et faire passer vos messages. Amiens, Paris, Hauts-de-France, visio."
 
 ---
 Répondre aux questions des journalistes peut sembler être un exercice insurmontable. Certains préfèrent ne pas communiquer du tout plutôt que de dire "des bêtises". Je pense que c'est une erreur. Et ça laisse la place à des interprétations.
