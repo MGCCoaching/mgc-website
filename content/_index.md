@@ -7,5 +7,8 @@
 # show_notification: false
 # hide_action_buttons: true 
 
+# Image principale de la page d'accueil
+image: "/img/profil.webp"
+
 ---
 
