@@ -1,7 +1,7 @@
 # Hugo Core Configuration
 # ==============================================================================
 
-baseURL = 'https://mariegaetanecomte.fr/'
+baseURL = 'https://www.mariegaetanecomte.fr/'
 title = 'Marie-Gaëtane Comte'
 defaultContentLanguage = 'fr'
 defaultContentLanguageInSubdir = false

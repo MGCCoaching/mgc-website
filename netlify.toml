@@ -38,9 +38,15 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Redirection canonique vers www (doit être en premier)
+[[redirects]]
+  from = "https://mariegaetanecomte.fr/*"
+  to = "https://www.mariegaetanecomte.fr/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/fr/*"
   to = "/:splat"
   status = 301
   force = false
-
