@@ -204,6 +204,42 @@
 </script>
 {{ end }}
 
+{{/* --- 6d. Schema.org (JSON-LD) - Person (Marie-Gaëtane Comte) --- */}}
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marie-Gaëtane Comte",
+  "url": "{{ .Site.BaseURL }}",
+  "image": "{{ "/img/profil.webp" | absURL }}",
+  "jobTitle": "Coach en média training et prise de parole",
+  "description": "Ancienne journaliste Radio France avec 15 ans d'expérience. Spécialisée en média training, coaching prise de parole en public et animation d'événements.",
+  "knowsAbout": [
+    "Média training",
+    "Prise de parole en public",
+    "Coaching communication",
+    "Animation d'événements",
+    "Journalisme"
+  ],
+  "alumniOf": {
+    "@type": "Organization",
+    "name": "Radio France"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Amiens",
+    "addressRegion": "Hauts-de-France",
+    "addressCountry": "FR"
+  },
+  "sameAs": [
+    {{ with .Site.Params.social.linkedin }}"{{ . }}"{{ end }}{{ if and .Site.Params.social.linkedin .Site.Params.social.instagram }},{{ end }}
+    {{ with .Site.Params.social.instagram }}"{{ . }}"{{ end }}
+  ]
+}
+</script>
+{{ end }}
+
 {{/* --- 7. Schema.org (JSON-LD) - BreadcrumbList --- */}}
 {{ if not .IsHome }}
 <script type="application/ld+json">
