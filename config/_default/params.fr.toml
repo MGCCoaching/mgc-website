@@ -8,19 +8,37 @@ description = 'Gagnez en impact lors de vos interventions avec une ex-journalist
 author = 'Marie-Gaëtane Comte'
 author_subtitle = "Média training & prise de parole"
 keywords = [
-  "coaching média", 
-  "media training", 
-  "prise de parole en public", 
-  "communication professionnelle", 
-  "gestion du stress à l'oral",
-  "storytelling", 
-  "préparation interview", 
-  "communication de crise",
-  "coach média",
-  "formation prise de parole",
+  # Services principaux
+  "media training Amiens",
+  "coach prise de parole Paris",
+  "formation média training Hauts-de-France",
+  "préparation interview journaliste",
+  "coach communication orale",
+  
+  # Problèmes clients (longue traîne)
+  "comment gérer stress interview",
+  "comment réussir intervention média",
+  "apprendre à parler en public",
+  "préparation passage télé radio",
+  "répondre aux questions journalistes",
+  
+  # USP (différenciation)
+  "media training ex-journaliste",
+  "coach ancienne journaliste Radio France",
+  "formation prise de parole journaliste professionnel",
+  
+  # Public cible
+  "media training dirigeant",
+  "coaching communication entrepreneur",
+  "prise de parole manager",
+  "formation oral soutenance",
+  
+  # Local
   "Amiens",
-  "Paris",
-  "Hauts-de-France"
+  "Paris", 
+  "Hauts-de-France",
+  "Somme",
+  "formation en visio France"
 ]
 
 # Open Graph / Social Media
