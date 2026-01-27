@@ -1,12 +1,11 @@
 ---
-title: "Mentions Légales & Politique de Confidentialité"
+title: Mentions Légales & Politique de Confidentialité
 date: 2025-01-01
-lastUpdate: "Décembre 2025"
-layout: "legal"
-subtitle: "Informations légales et protection de vos données"
+layout: legal
+lastUpdate: Décembre 2025
+subtitle: Informations légales et protection de vos données
 draft: false
 ---
-
 ## Mentions Légales
 
 Ce site web est accessible librement à toute personne ayant un accès internet. Il contient la liste des différents services.
@@ -19,22 +18,22 @@ En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance
 
 **Propriétaire du site**
 
-- URL : [mariegaetanecomte.fr](https://mariegaetanecomte.fr/)
-- Nom : Marie-Gaëtane Comte EI
-- Adresse : 29 rue Tronchet, 75008 Paris
-- SIRET : 488 951112 00025
-- Email : mariegaetanecomte@gmail.com
+* URL : [mariegaetanecomte.fr](https://mariegaetanecomte.fr/)
+* Nom : Marie-Gaëtane Comte EI
+* Adresse : 29 rue Tronchet, 75008 Paris
+* SIRET : 488 951112 00025
+* Email : mariegaetanecomte@gmail.com
 
 **Responsable des publications**
 
-- Nom : Charles Aurélien
-- Email : charlesaurelienpro@gmail.com
+* Nom : Charles Aurélien
+* Email : charlesaurelienpro@gmail.com
 
 **Hébergeur**
 
-- Nom : Netlify, Inc.
-- Adresse : 512 2nd Street, Suite 200, San Francisco, CA 94107, USA
-- Site : [netlify.com](https://www.netlify.com)
+* Nom : Netlify, Inc.
+* Adresse : 512 2nd Street, Suite 200, San Francisco, CA 94107, USA
+* Site : [netlify.com](https://www.netlify.com)
 
 ### 2. Conditions d'utilisation
 
@@ -72,9 +71,14 @@ Le site peut contenir des liens hypertextes, notamment vers d'autres sites. Le p
 
 Les présentes mentions légales sont régies par le droit français en vigueur. Tout litige en relation avec l'utilisation du site est soumis au droit français et devra être examiné exclusivement à la lumière de la réglementation française applicable.
 
-*Dernière mise à jour : 25 décembre 2025*
+Conformément aux articles L.616-1 et R.616-1 du code de la consommation, notre société a mis en place un dispositif de médiation de la consommation.
+L'entité de médiation retenue est : NotreAccord Consommation.
+En cas de litige, tout consommateur pourra déposer sa réclamation sur le site : [https://mediation-consommation.notreaccord.com](https://mediation-consommation.notreaccord.com/)
+ou par voie postale en écrivant à :
+Centre de médiation NotreAccord,
+38 rue d'Aviau - 33000 Bordeaux
 
----
+- - -
 
 ## Politique de Confidentialité
 
@@ -94,10 +98,10 @@ Ces données personnelles sont collectées lorsque l'utilisateur effectue l'une 
 
 L'entreprise Marie-Gaëtane Comte EI garantit que les données personnelles sont traitées de manière licite, loyale et transparente au regard de la personne concernée. Les données sont collectées à des fins déterminées, notamment :
 
-- Fournir et améliorer nos services
-- Communiquer avec vous
-- Personnaliser votre expérience
-- Analyser l'utilisation de notre site
+* Fournir et améliorer nos services
+* Communiquer avec vous
+* Personnaliser votre expérience
+* Analyser l'utilisation de notre site
 
 ### 2. Sécurité des informations
 
@@ -105,10 +109,10 @@ L'entreprise Marie-Gaëtane Comte EI s'engage à prendre les mesures raisonnable
 
 ### 3. Responsable de traitement et délégué à la protection des données (DPO)
 
-**Responsable du traitement**  
+**Responsable du traitement**\
 Comte Marie-Gaëtane — mariegaetanecomte@gmail.com
 
-**Délégué à la protection des données (DPO)**  
+**Délégué à la protection des données (DPO)**\
 Comte Marie-Gaëtane — mariegaetanecomte@gmail.com
 
 Le DPO est désigné par le responsable du traitement afin de fournir des conseils et des informations sur la mise en place de mesures techniques et organisationnelles adéquates, garantissant la conformité au RGPD.
@@ -121,13 +125,13 @@ Le délégué à la protection des données est chargé de mettre en œuvre la c
 
 Conformément aux dispositions du RGPD, l'utilisateur dispose des droits suivants :
 
-- **Droit de retrait du consentement** — L'utilisateur peut révoquer son consentement à tout moment concernant le traitement de ses données personnelles.
-- **Droit d'accès** — L'utilisateur a le droit d'obtenir l'accès à l'ensemble de ses données personnelles faisant l'objet d'un traitement.
-- **Droit de rectification** — L'utilisateur a le droit d'obtenir, dans les meilleurs délais, la rectification des données personnelles le concernant qui sont inexactes, et le cas échéant, le droit de modifier ou compléter les informations le concernant.
-- **Droit à l'effacement (droit à l'oubli)** — L'utilisateur a le droit de faire effacer l'ensemble des données personnelles le concernant.
-- **Droit à la limitation du traitement** — L'utilisateur a le droit de demander que le traitement des données personnelles le concernant soit limité.
-- **Droit à la portabilité des données** — L'utilisateur a le droit de récupérer tout ou partie des données le concernant dans un format lisible par une « machine » au sens de la CNIL.
-- **Droit d'opposition** — L'utilisateur a le droit de s'opposer à tout moment à un traitement de ses données à caractère personnel.
+* **Droit de retrait du consentement** — L'utilisateur peut révoquer son consentement à tout moment concernant le traitement de ses données personnelles.
+* **Droit d'accès** — L'utilisateur a le droit d'obtenir l'accès à l'ensemble de ses données personnelles faisant l'objet d'un traitement.
+* **Droit de rectification** — L'utilisateur a le droit d'obtenir, dans les meilleurs délais, la rectification des données personnelles le concernant qui sont inexactes, et le cas échéant, le droit de modifier ou compléter les informations le concernant.
+* **Droit à l'effacement (droit à l'oubli)** — L'utilisateur a le droit de faire effacer l'ensemble des données personnelles le concernant.
+* **Droit à la limitation du traitement** — L'utilisateur a le droit de demander que le traitement des données personnelles le concernant soit limité.
+* **Droit à la portabilité des données** — L'utilisateur a le droit de récupérer tout ou partie des données le concernant dans un format lisible par une « machine » au sens de la CNIL.
+* **Droit d'opposition** — L'utilisateur a le droit de s'opposer à tout moment à un traitement de ses données à caractère personnel.
 
 Pour toute réclamation, l'utilisateur pourra contacter indifféremment le responsable de traitement des données ou le DPO. Il aura également la possibilité de contacter directement la [Commission nationale de l'informatique et des libertés (CNIL)](https://www.cnil.fr/).
 
@@ -135,4 +139,4 @@ Pour toute réclamation, l'utilisateur pourra contacter indifféremment le respo
 
 La politique de confidentialité pourra faire l'objet de modifications à tout moment. Nous vous informerons de toute modification en publiant la nouvelle politique de confidentialité sur notre site internet.
 
-*Dernière mise à jour : 25 décembre 2025*
+*Dernière mise à jour : 27 janvier 2026*
