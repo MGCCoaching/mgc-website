@@ -30,7 +30,9 @@ explicit: false
 block: false
 youtube_video_url_01: https://www.youtube.com/watch?v=FgXlElGTNB0&list=PLumEKEgj_rlXSTb7i1yCbOPHSRcz3pI-f
 ---
-Rencontre avec Petula Goldfever, artiste burlesque et maîtresse de cérémonie. Cette ancienne prof de lettres-anglais dans un lycée professionnelle à Amiens a tout quitté pour devenir effeuilleuse dans des cabarets. Elle a donné une conférence Tedex à Amiens en 2023, où elle raconte son parcours et l’injustice qui l’a poussé à quitter l’enseignement. A travers le burlesque elle revendique un engagement artistique et politique où la femme a le droit de disposer de son corps. Sur scène elle se libère de toutes les injonctions sociales et montre à quel point les femmes sont belles quand elles se font confiance. Une femme qui incarne la confiance et la liberté, si impressionnante que je passe du tutoiement au vouvoiement pendatn 
-toute l’interview!.
+
+Rencontre avec Petula Goldfever, artiste burlesque et maîtresse de cérémonie. Cette ancienne prof de lettres-anglais dans un lycée professionnelle à Amiens a tout quitté pour devenir effeuilleuse dans des cabarets. Elle a donné une conférence Tedex à Amiens en 2023, où elle raconte son parcours et l’injustice qui l’a poussé à quitter l’enseignement. A travers le burlesque elle revendique un engagement artistique et politique où la femme a le droit de disposer de son corps. Sur scène elle se libère de toutes les injonctions sociales et montre à quel point les femmes sont belles quand elles se font confiance. Une femme qui incarne la confiance et la liberté, si impressionnante que je passe du tutoiement au vouvoiement pendant toute l’interview!
+
+
 
 [Site internet de Petula Goldfever](https://www.petulagoldfever.com/presentatrice)
