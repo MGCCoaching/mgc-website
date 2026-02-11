@@ -10,7 +10,7 @@ tags:
 audio_format: audio/mpeg
 is_episode: true
 title: "Episode 2: Petula Goldfever, le burlesque et la politique "
-date: 2026-02-12
+date: 2026-02-11
 draft: true
 season: 1
 episode_number: 2
