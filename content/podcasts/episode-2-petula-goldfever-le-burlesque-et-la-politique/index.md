@@ -28,6 +28,8 @@ description: "Rencontre avec Petula Goldfever, artiste burlesque et maîtresse d
   a le droit de disposer de son corps. "
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/2fee5Nyv6eqBly8PDxkqqr?si=d61c86a0d4bb4eeb
 youtube_video_url_01: https://www.youtube.com/watch?v=FgXlElGTNB0&list=PLumEKEgj_rlXSTb7i1yCbOPHSRcz3pI-f
 ---
 
