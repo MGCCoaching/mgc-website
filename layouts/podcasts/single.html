@@ -126,7 +126,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-accent-primary text-lg">calendar_today</span>
-                        <span><strong>Publié :</strong> {{ $ep.date.Format "02 janvier 2006" }}</span>
+                        <span><strong>Publié :</strong> {{ $ep.date.Format "02" }} {{ i18n ($ep.date.Format "January") }} {{ $ep.date.Format "2006" }}</span>
                     </div>
                     {{ if eq $ep.episode_type "trailer" }}
                     <div class="flex items-center gap-2">

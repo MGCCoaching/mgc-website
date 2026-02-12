@@ -47,3 +47,41 @@ other = '{{ .Count }} minutes de lecture'
 [comments]
 one = '{{ .Count }} commentaire'
 other = '{{ .Count }} commentaires'
+
+
+# Mois
+[January]
+other = "janvier"
+
+[February]
+other = "février"
+
+[March]
+other = "mars"
+
+[April]
+other = "avril"
+
+[May]
+other = "mai"
+
+[June]
+other = "juin"
+
+[July]
+other = "juillet"
+
+[August]
+other = "août"
+
+[September]
+other = "septembre"
+
+[October]
+other = "octobre"
+
+[November]
+other = "novembre"
+
+[December]
+other = "décembre"
