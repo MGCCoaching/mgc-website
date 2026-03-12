@@ -11,7 +11,7 @@ audio_format: audio/mpeg
 is_episode: true
 title: "Episode 3: Guillaume Camous ou les vertiges de l’Impro"
 date: 2026-03-12
-draft: true
+draft: false
 season: 1
 episode_number: 3
 episode_type: full
