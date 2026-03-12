@@ -16,7 +16,7 @@ season: 1
 episode_number: 3
 episode_type: full
 audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
-file_name: 03-GuillaumeCamous.mp3
+file_name: 03-GuillaumeCamous.mp3.mp3
 duration: 33:45
 cover: photo-guillaume.jpeg.jpg
 description: "Rencontre avec Guillaume Camous, acteur, metteur en scène,
