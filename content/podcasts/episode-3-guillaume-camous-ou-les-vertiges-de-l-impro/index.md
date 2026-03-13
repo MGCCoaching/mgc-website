@@ -26,6 +26,8 @@ description: "Rencontre avec Guillaume Camous, acteur, metteur en scène,
   vers le théâtre. "
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/2rtj2d82W8xRCdLPhJndWB?si=EqgOK8VvQimenYNM7o5X6A
 ---
 Rencontre avec Guillaume Camous, acteur, metteur en scène, professeur d’improvisation et de théâtre au Cours Florent à Paris, coach et formateur en prise de parole et leadership. Après avoir commencé sa carrière dans la finance, il décide d’écouter sa petite voix intérieure qui le pousse vers le théâtre. Sur scène il se sent vivant. Il évoque dans cet épisode ce qu’est l’improvisation pour lui: “c’est un jeu vertigineux, c’est la vie” et quelle est la place du sport en haute montagne dans sa vie.
 
