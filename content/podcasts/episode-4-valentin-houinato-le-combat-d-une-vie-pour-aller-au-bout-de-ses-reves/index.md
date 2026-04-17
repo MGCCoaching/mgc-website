@@ -27,6 +27,9 @@ description: Valentin Houinato est journaliste et athlète de haut niveau. Il
   Angeles en 2028.
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/2fC1AYR7vMTWqybypgvrqe?si=ee0b623dd5184422
 ---
-
 Valentin Houinato est journaliste et athlète de haut niveau. Il pratique le judo depuis près de 25 ans et rêve de décrocher une médaille olympique. Il a fait les Jeux Olympiques de Paris en 2024 sous les couleurs du Bénin dans la catégorie des moins de 81 kilos, et il prépare les JO de Los Angeles en 2028. Il vit pour la compétition, tout en réussissant à exercer ce passionnant métier de journaliste qui met la lumière sur les zones d’ombre selon lui. Le judo lui a appris à bien tomber, et à tirer un enseignement de chaque chute. Valentin incarne le code moral du judo: la politesse, le courage, la sincérité, l'honneur, la modestie, le respect, le contrôle de soi, et l'amitié.
+
+C'est ici pour le suivre sur [Instagram](https://www.instagram.com/nato81_/)
