@@ -12,7 +12,7 @@ is_episode: true
 title: "Episode 4: Valentin Houinato, le combat d’une vie pour aller au bout de
   ses rêves "
 date: 2026-04-17
-draft: true
+draft: false
 season: 1
 episode_number: 4
 episode_type: full
