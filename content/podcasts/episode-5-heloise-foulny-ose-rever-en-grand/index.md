@@ -11,7 +11,7 @@ audio_format: audio/mpeg
 is_episode: true
 title: "Episode 5: Héloïse Foulny ose rêver en grand"
 date: 2026-05-18
-draft: true
+draft: false
 season: 1
 episode_number: 5
 episode_type: full
