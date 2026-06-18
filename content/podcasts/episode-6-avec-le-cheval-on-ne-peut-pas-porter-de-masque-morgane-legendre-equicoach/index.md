@@ -26,6 +26,10 @@ description: "Morgane Legendre a grandi avec les chevaux, et maintenant elle
   les autres et leur posture. "
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/6PRDeVNHfYrh6zw83SFfqW?si=73872160a0e242e5
+youtube_video_url_01: https://www.youtube.com/watch?v=BU0Jxe5FUXY
+youtube_video_url_02: https://www.youtube.com/watch?v=9xnJUX9XnA8
 ---
 Morgane Legendre a grandi avec les chevaux, et maintenant elle travaille avec eux. Depuis un an elle est équicoach certifiée. L’équicoaching permet aux particuliers et aux entreprises d’améliorer leurs relations avec les autres et leur posture. Le cheval est un miroir de nos émotions, et si il n’y a pas de cohérence entre ce qu’on dit, ce qu’on dégage et ce qu’on fait, la relation avec le cheval ne va pas fonctionner. C’est comme dans un groupe. Ce travail nous permet aussi de prendre conscience de l’impact de notre communication non verbale.
 
