@@ -12,7 +12,7 @@ is_episode: true
 title: "Episode 6: “Avec le cheval on ne peut pas porter de masque” Morgane
   Legendre équicoach"
 date: 2026-06-18
-draft: true
+draft: false
 season: 1
 episode_number: 6
 episode_type: full
