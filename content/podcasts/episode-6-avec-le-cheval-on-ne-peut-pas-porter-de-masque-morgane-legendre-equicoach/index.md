@@ -26,6 +26,8 @@ description: "Morgane Legendre a grandi avec les chevaux, et maintenant elle
   les autres et leur posture. "
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/6PRDeVNHfYrh6zw83SFfqW?si=73872160a0e242e5
 youtube_video_url_01: https://www.youtube.com/watch?v=BU0Jxe5FUXY
 youtube_video_url_02: https://www.youtube.com/watch?v=9xnJUX9XnA8
 ---
