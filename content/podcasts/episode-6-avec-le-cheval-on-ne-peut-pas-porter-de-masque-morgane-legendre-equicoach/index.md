@@ -17,7 +17,7 @@ season: 1
 episode_number: 6
 episode_type: full
 audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
-file_name: 06-MorganeLegendre.mp3
+file_name: 06-MorganeLegendre.mp3.mp3
 duration: 33:41
 cover: photo-morgane.jpg
 description: "Morgane Legendre a grandi avec les chevaux, et maintenant elle
