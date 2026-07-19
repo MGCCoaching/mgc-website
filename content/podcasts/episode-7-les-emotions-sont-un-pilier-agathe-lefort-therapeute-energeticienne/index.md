@@ -9,7 +9,7 @@ tags:
   - podcast
 audio_format: audio/mpeg
 is_episode: true
-title: "Episode 7: “Les émotions sont un pilier”, Agathe Lefort thérapeute
+title: "Episode 7: “Les émotions sont un pilier” Agathe Lefort thérapeute
   énergéticienne "
 date: 2026-07-20
 draft: false
