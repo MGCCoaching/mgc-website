@@ -11,7 +11,7 @@ audio_format: audio/mpeg
 is_episode: true
 title: "Episode 7: “Les émotions sont un pilier” Agathe Lefort thérapeute
   énergéticienne "
-date: 2026-07-20
+date: 2026-07-19
 draft: false
 season: 1
 episode_number: 7
