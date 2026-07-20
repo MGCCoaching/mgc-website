@@ -17,7 +17,7 @@ season: 1
 episode_number: 7
 episode_type: full
 audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
-file_name: 07-AgatheLefort.mp3.mp3
+file_name: 07-AgatheLefortok.mp3.mp3
 duration: 36:40
 cover: photo-agathe-lefort.jpg.jpg
 description: Agathe Lefort est une ancienne kiné. Aujourd'hui elle accompagne
