@@ -27,7 +27,7 @@ description: Agathe Lefort est une ancienne kiné. Aujourd'hui elle accompagne
 explicit: false
 block: false
 platforms:
-  spotify: ""
+  spotify: https://open.spotify.com/episode/1tCDLchEAx3XLZj25di1DI?si=ssfK8rUgTiCWq7344RQvjQ
 ---
 Agathe Lefort est une ancienne kiné. Aujourd'hui elle accompagne les femmes à se libérer de leurs tensions physiques et émotionnelles. Son approche est holistique c’est à dire qu’elle prend en compte une personne dans sa globalité et pas uniquement à travers ses symptômes. Dans cet échange nous avons parlé du lien entre le corps et les émotions, de burn out comme point de départ d’une prise de conscience, d’acceptation comme début de la guérison, de féminin sacré, de spiritualité et de divin. 
 
