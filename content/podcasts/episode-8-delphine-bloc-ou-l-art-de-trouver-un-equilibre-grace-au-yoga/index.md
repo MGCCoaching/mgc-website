@@ -19,7 +19,7 @@ audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
 file_name: 08-DelphineBloc.mp3.mp3
 duration: 40:32
 cover: photo-delphine-bloc.jpg
-description: "Rencontre avec Delphine Bloc, professeur de Hatha Yoga
+description: "Rencontre avec Delphine Bloc, professeure de Hatha Yoga
   traditionnel au centre Sumah Yoga d’Amiens. Delphine a enseigné les arts
   plastiques pendant 25 ans et a entamé une reconversion il y a 8 ans. Le yoga a
   toujours fait partie de sa vie, et a pris une plus grande place au fur et à
