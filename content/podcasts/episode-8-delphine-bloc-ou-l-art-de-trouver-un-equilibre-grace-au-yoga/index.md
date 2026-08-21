@@ -11,7 +11,7 @@ audio_format: audio/mpeg
 is_episode: true
 title: "Episode 8: Delphine Bloc ou l’Art de trouver un équilibre grâce au yoga "
 date: 2026-08-21
-draft: true
+draft: false
 season: 1
 episode_number: 8
 episode_type: full
