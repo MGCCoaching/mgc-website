@@ -2,7 +2,7 @@
 title: Mentions Légales & Politique de Confidentialité
 date: 2025-01-01
 layout: legal
-lastUpdate: Décembre 2025
+lastUpdate: Septembre 2026
 subtitle: Informations légales et protection de vos données
 draft: false
 ---
@@ -61,7 +61,12 @@ Un cookie, au sens de la réglementation RGPD précitée, est un petit fichier d
 
 L'utilisation de cookies nécessite le consentement éclairé de l'utilisateur, sauf pour les cookies strictement nécessaires au fonctionnement du site.
 
-Le présent site utilise des cookies pour améliorer l'expérience utilisateur. Vous pouvez choisir de désactiver les cookies non nécessaires en modifiant les paramètres de votre navigateur.
+Le présent site utilise deux types de traceurs :
+
+* **Traceurs strictement nécessaires** — ils mémorisent votre thème d'affichage (clair ou sombre) et votre choix concernant les cookies. Ils sont stockés dans votre navigateur et ne nécessitent pas de consentement.
+* **Traceurs publicitaires (pixel Meta)** — uniquement si vous les acceptez, le site charge le pixel de Meta Platforms Ireland Ltd (Facebook, Instagram). Il permet de mesurer l'efficacité de nos publicités diffusées sur ces réseaux et de proposer des annonces personnalisées aux personnes ayant visité le site. Il dépose notamment le cookie `_fbp` (durée : 90 jours) et transmet à Meta les pages consultées, votre adresse IP et des informations sur votre navigateur. Marie-Gaëtane Comte EI et Meta sont responsables conjoints de cette collecte. Meta peut transférer ces données hors de l'Union européenne, notamment vers les États-Unis. Pour en savoir plus : [politique de confidentialité de Meta](https://www.facebook.com/privacy/policy/).
+
+Votre choix est conservé pendant 12 mois. Vous pouvez le modifier ou retirer votre consentement à tout moment grâce au lien « Gérer les cookies » en bas de chaque page.
 
 ### 7. Liens hypertextes
 
@@ -139,4 +144,4 @@ Pour toute réclamation, l'utilisateur pourra contacter indifféremment le respo
 
 La politique de confidentialité pourra faire l'objet de modifications à tout moment. Nous vous informerons de toute modification en publiant la nouvelle politique de confidentialité sur notre site internet.
 
-*Dernière mise à jour : 27 janvier 2026*
+*Dernière mise à jour : 11 septembre 2026*

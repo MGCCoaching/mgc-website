@@ -1,10 +1,8 @@
-
-
-
-
-  // =============================================================================
+// =============================================================================
 // Cookie Consent Management
 // =============================================================================
+// Consent is stored in localStorage as { necessary, marketing, timestamp }.
+// Third-party trackers (Meta Pixel) are only injected after marketing consent.
 
 document.addEventListener('DOMContentLoaded', () => {
   initCookieConsent();
@@ -19,7 +17,9 @@ function initCookieConsent() {
   const settingsBtn = document.getElementById('cookie-settings-btn');
   const settingsPanel = document.getElementById('cookie-settings-panel');
   const savePreferencesBtn = document.getElementById('cookie-save-preferences');
-  const analyticsCheckbox = document.getElementById('cookie-analytics');
+  const marketingCheckbox = document.getElementById('cookie-marketing');
+  // Only rendered in production builds (see cookie-consent.html)
+  const metaPixelId = banner.dataset.metaPixelId;
 
   // Check if user has already made a choice
   const consent = getCookieConsent();
@@ -38,7 +38,7 @@ function initCookieConsent() {
   acceptBtn?.addEventListener('click', () => {
     const consent = {
       necessary: true,
-      analytics: true,
+      marketing: true,
       timestamp: new Date().toISOString()
     };
     saveCookieConsent(consent);
@@ -50,7 +50,7 @@ function initCookieConsent() {
   rejectBtn?.addEventListener('click', () => {
     const consent = {
       necessary: true,
-      analytics: false,
+      marketing: false,
       timestamp: new Date().toISOString()
     };
     saveCookieConsent(consent);
@@ -74,12 +74,17 @@ function initCookieConsent() {
   savePreferencesBtn?.addEventListener('click', () => {
     const consent = {
       necessary: true,
-      analytics: analyticsCheckbox?.checked ?? false,
+      marketing: marketingCheckbox?.checked ?? false,
       timestamp: new Date().toISOString()
     };
     saveCookieConsent(consent);
     applyConsent(consent);
     hideBanner();
+  });
+
+  // "Gérer les cookies" links (footer)
+  document.querySelectorAll('[data-cookie-settings]').forEach((link) => {
+    link.addEventListener('click', window.openCookieSettings);
   });
 
   // Helper functions
@@ -99,6 +104,9 @@ function initCookieConsent() {
       if (!consent) return null;
       
       const parsed = JSON.parse(consent);
+
+      // Ignore choices saved before the marketing category existed
+      if (typeof parsed.marketing !== 'boolean') return null;
       
       // Check if consent is older than 12 months (RGPD requirement)
       const consentDate = new Date(parsed.timestamp);
@@ -121,58 +129,60 @@ function initCookieConsent() {
   }
 
   function applyConsent(consent) {
-    if (consent.analytics) {
-      enableAnalytics();
+    if (consent.marketing) {
+      enableMarketing();
     } else {
-      disableAnalytics();
+      disableMarketing();
     }
     
     // Update checkbox state if visible
-    if (analyticsCheckbox) {
-      analyticsCheckbox.checked = consent.analytics;
+    if (marketingCheckbox) {
+      marketingCheckbox.checked = consent.marketing;
     }
   }
 
-  function enableAnalytics() {
-    // Google Analytics example - uncomment and configure if needed
-    // window['ga-disable-GA_MEASUREMENT_ID'] = false;
-    
-    // Or load GA script dynamically
-    // loadGoogleAnalytics('G-XXXXXXXXXX');
-    
-    console.log('Analytics cookies enabled');
+  function enableMarketing() {
+    if (!metaPixelId) return;
+
+    // Pixel already loaded on this page (consent re-granted after a revoke)
+    if (window.fbq) {
+      window.fbq('consent', 'grant');
+      return;
+    }
+
+    loadMetaPixel(metaPixelId);
   }
 
-  function disableAnalytics() {
-    // Disable Google Analytics
-    // window['ga-disable-GA_MEASUREMENT_ID'] = true;
-    
-    // Clear existing GA cookies
-    deleteCookie('_ga');
-    deleteCookie('_gid');
-    deleteCookie('_gat');
-    
-    console.log('Analytics cookies disabled');
+  function disableMarketing() {
+    // Stop the pixel if it was loaded earlier on this page
+    if (window.fbq) {
+      window.fbq('consent', 'revoke');
+    }
+
+    deleteCookie('_fbp');
+    deleteCookie('_fbc');
   }
 
   function deleteCookie(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    const expired = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = expired;
+    // Meta sets its cookies on the registrable domain (e.g. .mariegaetanecomte.fr)
+    const rootDomain = location.hostname.split('.').slice(-2).join('.');
+    document.cookie = `${expired} domain=.${rootDomain};`;
   }
 
-  // Optional: Load Google Analytics dynamically
-  function loadGoogleAnalytics(measurementId) {
-    if (document.getElementById('ga-script')) return;
-    
-    const script = document.createElement('script');
-    script.id = 'ga-script';
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', measurementId);
+  // Official Meta Pixel base code, kept as provided by Meta
+  function loadMetaPixel(pixelId) {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', pixelId);
+    window.fbq('track', 'PageView');
   }
 }
 
@@ -180,6 +190,7 @@ function initCookieConsent() {
 window.openCookieSettings = function() {
   const banner = document.getElementById('cookie-consent');
   const settingsPanel = document.getElementById('cookie-settings-panel');
+  const settingsBtn = document.getElementById('cookie-settings-btn');
   
   if (banner) {
     banner.classList.remove('translate-y-full');
@@ -188,5 +199,9 @@ window.openCookieSettings = function() {
   
   if (settingsPanel) {
     settingsPanel.classList.remove('hidden');
+  }
+
+  if (settingsBtn) {
+    settingsBtn.textContent = 'Masquer';
   }
 };

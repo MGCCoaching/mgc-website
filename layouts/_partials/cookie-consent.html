@@ -9,10 +9,16 @@
   Activer/Désactiver dans config/_default/params.fr.toml :
   [cookies]
     enabled = true
+    metaPixelID = '...'
+
+  The Meta Pixel ID is only exposed in production builds, so local
+  `hugo server` sessions never send events to Marie's ad account.
 */}}
 
 {{ if site.Params.cookies.enabled }}
-<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 z-50 transform translate-y-full transition-transform duration-500 ease-out">
+<div id="cookie-consent"
+  {{- if hugo.IsProduction }}{{ with site.Params.cookies.metaPixelID }} data-meta-pixel-id="{{ . }}"{{ end }}{{ end }}
+  class="fixed bottom-0 left-0 right-0 z-50 transform translate-y-full transition-transform duration-500 ease-out">
   <div class="bg-secondary border-t border-border-primary shadow-2xl">
     <div class="container mx-auto px-4 py-4 md:py-6">
       <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
@@ -23,9 +29,9 @@
           <div>
             <h4 class="text-text-primary font-semibold mb-1">Nous utilisons des cookies</h4>
             <p class="text-text-secondary text-sm leading-relaxed">
-              Ce site utilise des cookies pour améliorer votre expérience de navigation et analyser le trafic. 
-              En cliquant sur « Accepter », vous consentez à l'utilisation de tous les cookies. 
-              <a href="/legale/#cookies" class="text-accent-primary hover:underline">En savoir plus</a>
+              Avec votre accord, ce site utilise le pixel Meta (Facebook et Instagram) pour mesurer l'efficacité de ses publicités et vous proposer des annonces adaptées.
+              Vous pouvez modifier votre choix à tout moment via le lien « Gérer les cookies » en bas de page.
+              <a href="{{ with site.GetPage "/legal" }}{{ .RelPermalink }}{{ end }}#6-cookies" class="text-accent-primary hover:underline">En savoir plus</a>
             </p>
           </div>
         </div>
@@ -41,13 +47,13 @@
             Personnaliser
           </button>
           
-          {{/* Refuser */}}
+          {{/* Refuser - same visual weight as Accepter (CNIL: refusing must be as easy as accepting) */}}
           <button 
             id="cookie-reject"
             type="button"
-            class="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border border-border-primary rounded-lg hover:bg-primary transition-colors"
+            class="px-6 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-hover rounded-lg transition-colors"
           >
-            Refuser
+            Tout refuser
           </button>
           
           {{/* Accepter */}}
@@ -56,7 +62,7 @@
             type="button"
             class="px-6 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-hover rounded-lg transition-colors"
           >
-            Accepter tout
+            Tout accepter
           </button>
         </div>
       </div>
@@ -70,19 +76,19 @@
           <div class="flex items-center justify-between p-3 bg-primary rounded-lg">
             <div>
               <p class="text-text-primary font-medium text-sm">Cookies strictement nécessaires</p>
-              <p class="text-text-tertiary text-xs mt-1">Indispensables au fonctionnement du site</p>
+              <p class="text-text-tertiary text-xs mt-1">Mémorisent votre thème d'affichage et votre choix sur les cookies</p>
             </div>
             <span class="text-xs text-text-tertiary bg-secondary px-2 py-1 rounded">Toujours actifs</span>
           </div>
 
-          {{/* Cookies analytiques */}}
-          <div class="flex items-center justify-between p-3 bg-primary rounded-lg">
+          {{/* Cookies publicitaires - unchecked by default (CNIL: no pre-ticked boxes) */}}
+          <div class="flex items-center justify-between gap-4 p-3 bg-primary rounded-lg">
             <div>
-              <p class="text-text-primary font-medium text-sm">Cookies analytiques</p>
-              <p class="text-text-tertiary text-xs mt-1">Nous aident à comprendre comment vous utilisez le site</p>
+              <p class="text-text-primary font-medium text-sm">Cookies publicitaires (Meta)</p>
+              <p class="text-text-tertiary text-xs mt-1">Mesure de nos publicités Facebook et Instagram et annonces personnalisées</p>
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="cookie-analytics" class="sr-only peer" checked>
+            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+              <input type="checkbox" id="cookie-marketing" class="sr-only peer" aria-label="Autoriser les cookies publicitaires Meta">
               <div class="w-11 h-6 bg-border-primary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-primary"></div>
             </label>
           </div>
