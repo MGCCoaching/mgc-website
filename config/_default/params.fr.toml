@@ -114,7 +114,9 @@ copyright = '© {year} MGC Coaching. Tous droits réservés.'
   enableLatestPodcast = true
 
 [cookies]
-  enabled = false   # true = bandeau actif, false = désactivé
+  enabled = true   # true = bandeau actif, false = désactivé
+  # Meta Pixel (Facebook/Instagram ads): injected only after consent, production builds only
+  metaPixelID = '1834240901288714'
 
 
 
