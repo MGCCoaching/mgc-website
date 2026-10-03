@@ -12,7 +12,7 @@ is_episode: true
 title: "Episode 9: Camille Emmanuelle: “Avec l’arrêt de l’alcool j’ai gagné du
   temps de vie”"
 date: 2026-10-05
-draft: true
+draft: false
 season: 1
 episode_number: 9
 episode_type: full
