@@ -9,7 +9,7 @@ tags:
   - podcast
 audio_format: audio/mpeg
 is_episode: true
-title: "Episode 9: Camille Emmanuelle: “Avec l’arrêt de l’alcool j’ai gagné du
+title: "Episode 9: Camille Emmanuelle: “avec l’arrêt de l’alcool j’ai gagné du
   temps de vie”"
 date: 2026-10-05
 draft: false
