@@ -9,7 +9,7 @@ tags:
   - podcast
 audio_format: audio/mpeg
 is_episode: true
-title: "Episode 9: Camille Emmanuelle: “Avec l’arrêt de l’alcool j’ai gagné du
+title: "Episode 9: Camille Emmanuelle: “avec l’arrêt de l’alcool j’ai gagné du
   temps de vie”"
 date: 2026-10-05
 draft: false
@@ -17,7 +17,7 @@ season: 1
 episode_number: 9
 episode_type: full
 audio_url_prefix: https://media.mariegaetanecomte.fr/podcasts
-file_name: 09-CamilleEmmanuelle.mp3
+file_name: 09-CamilleEmmanuelle.mp3.mp3
 duration: 58:31
 cover: photo-camille-emmanuelle.jpg
 description: >
