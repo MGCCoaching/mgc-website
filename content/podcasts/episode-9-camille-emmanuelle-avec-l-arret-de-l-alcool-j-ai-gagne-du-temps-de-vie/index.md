@@ -29,7 +29,7 @@ description: >
 explicit: false
 block: false
 platforms:
-  spotify: https://open.spotify.com/episode/7bBXHhtbXsbmBDQmQhI4TN?si=KYmJ65aSQ3ObcojIWoL-Lw
+  spotify: https://open.spotify.com/episode/7bBXHhtbXsbmBDQmQhI4TN?si=ZYtYp3N1RiazgATlqiWG4A
 ---
 Camille Emmanuelle est autrice, journaliste spécialisée sur les questions de sexualité et de féminisme, elle est aussi coordinatrice d’intimité certifiée pour l’audiovisuelle.
 
