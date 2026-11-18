@@ -25,6 +25,8 @@ description: "Léopoldine Raynal a ouvert, il y a un an, la librairie-café Les
   culturel au bord de la mer, une invitation au voyage permanent. "
 explicit: false
 block: false
+platforms:
+  spotify: https://open.spotify.com/episode/1JUSwOIcwSrMv8BznqYIUH?si=FVlrFTDWTLG7E5bfq-phUg
 ---
 Léopoldine Raynal a ouvert, il y a un an, la librairie café [Les Bucoliques](https://www.lesbucoliques.fr/) au Tréport, dans une ancienne salle paroissiale. Son objectif est de désacraliser la librairie et d’en faire un lieu ouvert pour que les non habitués s’y sentent à l’aise et se mettent à la lecture. Pour y parvenir, Léopoldine mêle ses livres à de nombreuses activités: des expositions, des récitals (il y a un magnifique piano dans la librairie), des brocantes, du yoga, du taï chi…Pour accéder au programme c’est sur la page [Instagram](https://www.instagram.com/lesbucoliques.letreport/) des Bucoliques ou sur sa page [Facebook](https://www.facebook.com/profile.php?id=61576103645375). [](https://www.instagram.com/lesbucoliques.letreport/)
 
