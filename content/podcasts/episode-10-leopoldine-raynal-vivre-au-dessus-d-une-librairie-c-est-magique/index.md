@@ -12,7 +12,7 @@ is_episode: true
 title: "Episode 10: Léopoldine Raynal  “vivre au dessus d’une librairie c’est
   magique!” "
 date: 2026-11-18
-draft: true
+draft: false
 season: 1
 episode_number: 10
 episode_type: full
